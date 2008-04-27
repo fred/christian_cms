@@ -1,0 +1,94 @@
+<div id="col-three">
+	
+	<% if !logged_in? %>
+	<div class="boxed">
+		<h2 class="title">Login</h2>
+		<div class="content">
+			<% form_tag session_path, :class => "niceform" do -%>
+			<table>
+				<tr>
+					<td><label for="login">Login</label></td>
+					<td><%= text_field_tag 'login', nil, :size => 10 %></td>
+				</tr>
+				<tr>
+					<td><label for="password">Password</label></td>
+					<td><%= password_field_tag 'password', nil, :size => 10 %></td>
+				</tr>
+				<tr>
+					<td><label for="remember_me">Save:</label></td>
+					<td><%= check_box_tag 'remember_me' %></td>
+				</tr>
+			</table>
+			<p><%= submit_tag 'Log in' %></p>
+			<% end -%>
+		</div>
+	</div>
+	<% end %>
+	
+	
+	<div class="boxed">
+		<h2 class="title">Buscar en el Sitio</h2>
+		<div class="content">
+			<% form_for :search, :url => {:controller => 'articles', :action => "search"}, :html => {:class => "niceform"} do -%>
+			<table>
+				<tr>
+					<td> <%= text_field :search_article, :q, :size => 14 %></td>
+				</tr>
+			</table>
+			<p> <%= submit_tag 'Buscar' %> </p>
+			<% end -%>
+		</div>
+	</div>
+	
+	<div class="boxed">
+		<h2 class="title">Ultimas Noticias</h2>
+		<div class="content">
+			<ul>
+				<% Article.get_noticias.each do |article| %>
+					<li><%= link_to article.title, permalink_url(article.permalink) %></li>
+				<% end %>
+				<li> <%= link_to "* Ver Todas...", articles_path %></li>
+			</ul>
+		</div>
+	</div>
+		
+	<div class="boxed">
+		<h2 class="title">Boletines del Mes:</h2>
+		<div class="content">
+			<ul>
+				<% Buletin.get_latest.each do |buletin| %>
+					<li>
+						<%= link_to buletin.created_at.strftime(" %B %d, %Y "), buletin.public_filename %>
+					</li>
+				<% end %>
+				<li> <%= link_to "* Ver Todos...", buletins_path %> </a></li>
+			</ul>
+		</div>	
+	</div>
+	
+	<div class="boxed">
+		<h2 class="title">Eventos Del Mes</h2>
+		<div class="content">
+			<ul>
+				<% Event.find(:all).each do |event| %>
+					<li><%= link_to event.title, event_path(event) %></li>
+				<% end %>
+				<li> <%= link_to "* Ver Todos...", events_path %></li>
+			</ul>
+		</div>
+	</div>
+	
+	<div class="boxed">
+		<h2 class="title">Cumpleaños del Mes</h2>
+		<div class="content">
+			<ul>
+				<% Birthday.get_this_month.each do |t| %>
+				<li> <%= t.birthdate.strftime("%b %d") %>, <%= t.first_name %> <%= t.last_name %> </li>
+				<% end %>
+				<li> <%= link_to "* Ver Todos...", birthdays_path%></a></li>
+			</ul>
+		</div>
+	</div>
+	
+</div>
+<!-- end #col-three -->

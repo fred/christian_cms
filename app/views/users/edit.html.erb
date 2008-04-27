@@ -1,0 +1,124 @@
+
+<h1> Editando mi Informacion Personal </h1>
+
+<% form_for(:user, :url => user_path(@user), :html => {:method => :put, :multipart => true}) do |f| %>
+
+
+<table>
+	<tr>
+		<td> </td>
+		<td><%= error_message_on :user, :first_name, "Nombre ", "","inputError" %></td>
+	</tr>
+	<tr>
+		<td> <label> Email </label></td>
+		<td><%= f.text_field 'email', :size => 22  %></td>
+	</tr>
+	<tr>
+		<td> <label> Nombre </label></td>
+		<td><%= f.text_field 'first_name', :size => 22  %></td>
+	</tr>
+	<tr>
+		<td> <label> Apellido </label></td>
+		<td><%= f.text_field 'last_name', :size => 22  %></td>
+	</tr>
+	<tr>
+		<td> <label> Apellido Medio </label></td>
+		<td><%= f.text_field 'middle_name', :size => 22  %></td>
+	</tr>
+	<tr>
+		<td> <label> Familia </label></td>
+		<td><%= f.text_field 'family_name', :size => 22  %></td>
+	</tr>
+	<tr>
+		<td> <label> Nacionalidad </label></td>
+		<td><%= f.text_field 'nationality', :size => 22  %></td>
+	</tr>
+	<tr>
+		<td> <label> Parentesco </label></td>
+		<td><%= f.text_field 'family_role', :size => 22  %></td>
+	</tr>
+	<tr>
+		<td> <label> Cumpleaños </label></td>
+		<td><%= f.date_select 'birthday', :start_year => 1940, :end_year => Time.now.year %></td>
+	</tr>
+	<tr>
+		<td> <label> Estado Civil </label></td>
+		<td><%= f.text_field 'civil_state', :size => 22  %></td>
+	</tr>
+	<tr>
+		<td> <label> Sacramentos </label></td>
+		<td><%= f.text_field 'sacraments', :size => 22  %></td>
+	</tr>
+	<tr>
+		<td> <label> Address 1 </label></td>
+		<td><%= f.text_field 'address1', :size => 22  %></td>
+	</tr>
+	<tr>
+		<td> <label> Address 2 </label></td>
+		<td><%= f.text_field 'address2', :size => 22  %></td>
+	</tr>
+	
+	<tr> 
+		<td> </td>
+	</tr>
+	
+	<tr>
+		<td> </td>
+		<td><h2>Telefonos </h2></td>
+	</tr>
+	<tr>
+		<td> <label> Casa </label></td>
+		<td><%= f.text_field 'home_phone', :size => 22  %></td>
+	</tr>
+	<tr>
+		<td> <label> Mobile </label></td>
+		<td><%= f.text_field 'mobile_phone', :size => 22  %></td>
+	</tr>
+	<tr>
+		<td> <label> Trabajo </label></td>
+		<td><%= f.text_field 'office_phone', :size => 22  %></td>
+	</tr>
+
+	<tr> 
+		<td> </td>
+	</tr>
+	
+	<tr>
+		<td> </td>
+		<td><h2> Información de Login </h2> </td>
+	</tr>
+	<tr>
+		<td> </td>
+		<td><%= error_message_on :user, :login, "Nombre ", "","inputError" %></td>
+	</tr>
+	<tr>
+		<td> <label> Login </label></td>
+		<td><%= f.text_field 'login', :size => 22  %></td>
+	</tr>
+	<tr>
+		<td> </td>
+		<td><%= error_message_on :user, :password, "Password ", "","inputError" %></td>
+	</tr>
+	<tr>
+		<td> <label> Password </label></td>
+		<td><%= f.password_field 'password', :size => 22  %></td>
+	</tr>
+	<tr>
+		<td> </td>
+		<td><%= error_message_on :user, :password_confirmation, "Confirmacion de Password ", "","inputError" %></td>
+	</tr>
+	<tr>
+		<td> <label> Confirmación del Password </label></td>
+		<td><%= f.password_field 'password_confirmation', :size => 22  %></td>
+	</tr>
+	<tr>
+		<td> <label> Mostrar mi Información al Público? </label></td>
+		<td><%= f.check_box 'approved' %></td>
+	</tr>
+
+	
+</table>
+
+
+<p><%= f.submit 'Salvar' %></p>
+<% end -%>

@@ -1,0 +1,35 @@
+
+<h2> Editar Buletin </h2>
+
+<%= error_messages_for :buletin %>
+
+<% form_for @buletin do |f| -%>
+
+<table>
+	
+	<tr>
+		<td><label>File: </label></td>
+		<td> <%= @buletin.public_filename %> (Read-only)</td>
+	</tr>
+		
+	<tr>
+		<td><label>Nombre: </label></td>
+		<td> <%= f.text_field :title, :size => 20 %></td>
+	</tr>
+	
+	<tr>
+		<td><label>Fecha: </label></td>
+		<td> <%= f.date_select :created_at, :start_year => 2005 %></td>
+	</tr>
+	
+	<tr>
+		<td> </td>
+		<td> <%= submit_tag 'Salvar' %> </td>
+	</tr>
+	
+</table>
+
+<% end -%>
+
+<br/>
+<%= link_to 'Volver a Lista', :action => 'index' %>

@@ -1,0 +1,99 @@
+<div id="subContent">
+	<img src="/images/igles2.gif" alt="Comunidad Catolica, Bangkok" class="iglesia"/>
+	<% if false && !logged_in? %>
+			<% form_tag session_path do -%>
+			<table>
+				<tr>
+					<td><label for="login">Login</label></td>
+					<td><%= text_field_tag 'login', nil, :size => 10 %></td>
+				</tr>
+				<tr>
+					<td><label for="password">Password</label></td>
+					<td><%= password_field_tag 'password', nil, :size => 10 %></td>
+				</tr>
+				<tr>
+					<td><label for="remember_me">Save:</label></td>
+					<td><%= check_box_tag 'remember_me' %></td>
+				</tr>
+			</table>
+			<p><%= submit_tag 'Log in' %></p>
+			<% end -%>
+	<% end %>
+	
+	
+	<% cache "side_menu" do %>
+		<h1> La Comunidad </h1>
+		<ul>
+			<li> <%= link_to "Quienes Somos", permalink_url("quienes-somos") %> </li>
+			<li> <%= link_to "Miembros", users_path %></li>
+			<li> <%= link_to "Contactenos", permalink_url("contactenos") %> </li>
+			<li> <%= link_to "Mapa/Como llegar", permalink_url("mapa") %> </li>
+		</ul>
+		<h2> <%= link_to "Eventos Del Mes", events_path %> </h2>
+		<ul>
+			<% Event.get_this_month.each do |event| %>
+				<li><%= link_to event.title, event_path(event) %> <br /><%= event.start_date.to_s(:short) %></li>
+			<% end %>
+		</ul>
+		<h2> <%= link_to "Ultimas Noticias.", articles_path %> </h2>
+		<ul>
+			<% Article.get_latest.each do |article| %>
+				<li><%= link_to article.title, permalink_url(article.permalink) %></li>
+			<% end %>
+		</ul>
+		<h2> <%= link_to "Cumpleanos del Mes", month_birthdays_path %> </h2>
+		<ul>
+			<% Birthday.get_this_month.each do |t| %>
+				<li> <%= t.birthdate.strftime("%b %d") %>, <%= t.first_name %> <%= t.last_name %> </li>
+			<% end %>
+		</ul>
+		<h2> <%= link_to "Boletines del Mes", buletins_path %> </h2>
+		<ul>
+			<% Buletin.get_latest.each do |buletin| %>
+				<li> <%= link_to buletin.created_at.strftime(" %B %d, %Y "), buletin.public_filename %>	</li>
+			<% end %>
+		</ul>
+	<% end %>
+	
+	<br />
+	<h2> Links </h2>
+	<ul>
+		<li><a href="http://www.pueblosdeasia.org">Pueblos de Asia</a></li>
+		<li><a href="http://sitio.yarumal.org">Missioneros de Yarumal</a></li>
+		<li><a href="http://www.bibletime.info/">Biblia Software BibleTime</a></li>
+		<li><a href="http://www.crosswire.org/sword/index.jsp">Biblia Software Sword</a></li>
+	</ul>
+	
+	<h2> Time in Bangkok </h2>
+	<ul>
+		<li><%= @time.to_s(:long) %> </li>
+	</ul>
+	
+	<h2> Exchange Rate </h2>
+	<ul>
+		<li><%= @rate.convert_result %> </li>
+	</ul>
+	
+	<!-- 
+	<table class="weather">
+		<tr>
+			<td class="title"> Today : </td>
+			<td class="title"> Tomorrow : </td>
+		</tr>
+		<tr>
+			<td> Min: <%= #@today.low 
+			%> C </td>
+			<td> Min: <%= #@tomorrow.low 
+			%> C </td>
+		</tr>
+		<tr>
+			<td> Max: <%= #@today.high 
+			%> C </td>
+			<td> Max: <%= #@tomorrow.high 
+			%> C </td>
+		</tr>
+	</table>
+	-->
+	<br />
+	
+</div>

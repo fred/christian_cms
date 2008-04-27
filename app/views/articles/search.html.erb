@@ -1,0 +1,28 @@
+<div class="article">
+	<h2 class="flash_notice"> Articulos Encontrados: </h2>
+	<% if @articles && !@articles.empty? %>
+		<%= render :partial => "articles_list" %>
+	<% else %>
+		<h3><red> None </red> </h3>
+	<% end %>
+</div>
+
+<div class="article">
+	<h2 class="flash_notice"> Usuarios encontrados: </h1>
+	<% if @users && !@users.empty? %>
+		<%= render :partial => "users_list" %>
+	<% else %>
+		<h3><red> None </red> </h3>
+	<% end %>
+</div>
+
+<div class="article">
+	<h2 class="flash_notice"> Cumpleanos encontrados: </h2>
+	<% if @birthdays && !@birthdays.empty? %>
+		<%= render :partial => "birthdays_list" %>
+	<% else %>
+		<h3><red> None </red> </h3>
+	<% end %>
+</div>
+
+

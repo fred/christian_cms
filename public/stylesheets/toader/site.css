@@ -1,0 +1,470 @@
+/*---------------------------------------------------------
+
+template:	lorem
+version:	1.0
+author:		gorotron
+website:	http://www.gorotron.com
+
+usage:		creative commons attribution v3.0
+
+---------------------------------------------------------*/
+
+/* FRED */
+
+/* Layout
+---------------------------------------------------------*/
+
+* {
+	padding:0;
+	margin:0;	
+	list-style:none;
+}
+
+body {
+	background:#000;
+}
+
+#header {
+	background:url(/images/toader/bg.gif) bottom repeat-x;
+	width:100%;
+	height:17em;
+	position:relative;
+}
+#masthead	{
+	width:700px;
+	margin:0 auto;
+	padding:5em 0 5.8em 15em;
+	height:6.2em;
+	position:relative;
+}
+/*
+#masthead	{
+	width:67em;
+	margin:0 auto;
+	padding:5em 0 5.8em 15em;
+	height:6.2em;
+	position:relative;
+}
+*/
+#masthead ul {
+	position:absolute;
+	bottom:0;	
+	z-index:0;
+}
+
+#masthead li {
+	float:left;
+	margin-right:10px;
+	background:#d8ed46 url(/images/toader/nav_over.gif) bottom repeat-x;
+}
+
+#masthead li a {
+	background:transparent url(/images/toader/nav_over_left.gif) top left no-repeat;
+	display:block;
+}
+
+#masthead li:hover {
+	background:#d8ed46 url(/images/toader/nav_under.gif) bottom repeat-x;
+}
+
+#masthead li a {
+	padding:0.5em 10px 0.5em 0; 
+	margin-left:10px;
+	display:block;	
+	background:transparent url(/images/toader/nav_over_right.gif) top right no-repeat;
+}
+
+#masthead img {
+	position:absolute;
+	height:16em;
+	width:12.8em;
+	border:0.1em solid #FFF;
+	left:0;
+	bottom:0.3em;
+	outline:0.2em solid #000;
+}
+
+#main {
+	background:#FFF url(/images/toader/main.gif) repeat-x;
+	width:100%;
+	z-index:2; /* Covers up annoying IE7 nav bar spacing issue. */
+	position:absolute;
+}
+
+#content {
+	font-size:1.1em;
+	background:#FFF;
+	width: 72em;
+	margin:0 auto;
+	padding:2em;
+	border: 0.1em solid #ccc;
+	/*min-height: 600px;*/
+}
+
+#subContent {
+	width:19em;	
+	padding-left:2em;
+	background:url(/images/toader/green_vr.gif) repeat-y;
+	float:right;
+	padding-bottom: 20em;
+}
+
+.article {
+	width: 65%;
+	padding-bottom: 1em;
+	padding-right: 2em;
+	margin-bottom: 1em;
+	background:url(/images/toader/hr.gif) right bottom no-repeat;
+	position:relative;
+}
+
+.articles {
+	width: 67%;
+	padding-bottom: 1em;
+	padding-right: 2em;
+	margin-bottom: 1em;
+	position:relative;
+}
+
+.articles a, .article a {
+	font-size: 1.0em;
+}
+.articles ul, .article ul {
+	margin:1em 0;	
+}
+select {
+	background-color: #FDFFcc;
+}
+select option {
+	background-color: #FDFF99;
+	font-size: 1.1em;
+	padding: 1px 3px 1px 3px;
+}
+input {
+	background-color: #fff;
+	border: 1px solid #888;
+	padding: 2px;
+	font-size: 1.2em;
+	margin: 2px;
+}
+textarea {
+	border: 1px solid #888;
+	padding: 1px;
+	margin: 2px;
+}
+
+.articles li, .article li {
+	margin-left:1.5em;
+	margin-bottom:0.5em;
+}
+
+.articles ul li, .article ul li, #subContent ul li {
+	background:url(/images/toader/bullet.gif) left no-repeat;
+	padding-left:1em;
+	font-size: 1.3em;
+}
+
+#subContent ul li {
+	font-size: 1.3em;
+	margin: 4px;
+}
+
+.comments {
+	position:absolute;
+	right:3em;	
+	bottom:3em;
+}
+
+.articles .comments li, .article .comments li {
+	display:inline;
+	margin:0;
+	padding:0;
+	background:none;
+	font-size: 1.3em;
+}
+
+.hr {
+	width:55em;
+	height:128px;
+}
+
+#footer {
+	width: 100%;
+	font-size: 1em;
+	clear:both;
+	background:#000;
+	height:15em;
+	position:relative;
+}
+
+#footer ul {
+	position:absolute;
+	text-align:right;
+	right:50%;
+	top:10%;
+	margin-top:0em;
+	padding:2em 1em;
+	border-right:1px solid #CF0;
+}
+#footer ul li {
+	font-size: 1.2em;
+}
+
+#footer img {
+	position:absolute;
+	left:50%;
+	top:11%;
+	margin-top:0em;
+	background:#CCC;
+	margin-left:1em;
+	height:103px;
+	width:136px;
+	border:4px solid #ddd;
+	outline:0.1em solid #333;
+}
+
+/* Typography
+---------------------------------------------------------*/
+
+body {
+	font:62.5% "Trebuchet MS"; /* Change this % to alter the size of the whole page */
+	color:#333;
+}
+
+a {
+	color:#090;
+}
+
+#content a {
+	font-size: 1.0em;
+}
+p {
+	line-height:1.3em;	
+	font-size:1.3em;
+	margin-bottom:0.3em;
+	margin-top:0.3em;
+}
+
+h1 {	
+	font-size: 3.4em;
+	padding:0;
+	margin:0;
+	color:#FFF;
+}
+
+h2 {
+	font-size:1.8em;	
+	line-height:1.5em;
+	margin-bottom:0.6em;
+}
+h3 {
+	font-size:1.4em;
+	margin-bottom:0.5em;
+}
+h4 {
+	font-size:1.2em;
+	margin-bottom:0.5em;
+}
+.articles li, .article li {
+	font-size:1.2em;
+}
+.articles label, .article label {
+	text-decoration: underline;
+}
+.articles .boxed, .article .boxed {
+	margin: 4px 0;
+	border: 1px dotted #888;
+	padding-left: 8px;
+}
+
+#content h1 {
+	font-size: 2.4em;
+	color: #444;
+}
+.comments {
+	font-size:0.95em;
+}
+
+/* CONTENT */
+#subContent h1 {
+	text-decoration: underline;
+	font-size:1.8em;
+	color: #333;
+	margin-top: 0em;
+	margin-bottom: 0.2em;
+}
+#subContent h2 {
+	text-decoration: underline;
+	font-size:1.6em;
+	color: #333;
+	margin-top: 1em;
+	margin-bottom: 0.2em;
+}
+#subContent h2 a {
+	color: #333;
+}
+#subContent p {
+	font-size:1.2em;
+}
+
+/* HEADER */
+#masthead h1 a {
+	text-decoration: none;
+	color: #eee;
+}
+#masthead p a {
+	/**color:#CF0;**/
+	color: #eee;
+	text-decoration: none;
+	margin-bottom: 4px;
+}
+#masthead li a {
+	font-size:1.4em;
+	color:#000;
+	text-decoration:none;
+	font-weight:bold;
+}
+#footer {
+	color:#CCC;	
+}
+
+#footer a {	
+	color:#FFF;	
+	text-decoration:none;
+}
+
+#footer a:hover {
+	text-decoration:underline;	
+}
+
+#footer p {
+	margin-bottom:0;
+}
+
+.created_at {
+	font-size:1.2em;
+	font-style: italic;
+	margin: 2px;
+}
+.flash_notice {
+	color: orange;
+}
+
+form table {
+	font-size:1.2em;
+}
+form table label {
+	font-size:1.2em;
+}
+.warning {
+	color: red;
+}
+.highlight {
+	color: black;
+	text-decoration: underline;
+	background-color: #adffc8;
+}
+pre {
+	font-size: 1.6em;
+	padding: 4px;
+	margin-top: 4px;
+	margin-bottom: 8px;
+	width: 99%;
+	white-space: pre-wrap;       /* css-3 */
+	white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+	white-space: -pre-wrap;      /* Opera 4-6 */
+	white-space: -o-pre-wrap;    /* Opera 7 */
+	word-wrap: break-word;       /* Internet Explorer 5.5+ */ 
+}
+.secreto {
+	color: #ffeffe;
+}
+.edit_item_menu {
+	font-size:1.3em;
+	color: red;
+	font-weight:bold;
+}
+.edit_item_menu a {
+	color: red;
+}
+
+
+.text_chapter {
+	font-size: 2.0em;
+	color: green;
+}
+.text_versicle {
+	font-size:1.2em;
+	color: orange;
+}
+.text_versicle {
+	
+}
+.chapter_index {
+	
+}
+.left_index {
+	float: right;
+	width: auto;
+	font-size: 1.5em;
+}
+.left_index li {
+	list-style-type: none
+}
+.left_index .box  {
+	border: 1px solid #9aafe5;
+	width: 40px;
+	text-align: center;
+	text-decoration: none;
+	padding: 2px;
+}
+.left_index .box a {
+	text-decoration: none; 
+	color: #2e6ab1;
+	padding: 2px;
+}
+.left_index .box a:hover {
+	border: 1px solid #2b66a5;
+	color: #000;
+	background-color: lightyellow;
+}
+
+
+
+.blockquote,
+.blockquote_tiny,
+.blockquote_small,
+.blockquote_medium,
+.blockquote_large,
+.blockquote_huge {
+	text-align:center;
+	margin-left:1em;
+	margin-bottom: 4px;
+	color:#666;
+	font-style: italic;
+}
+.blockquote_tiny {
+	font-size: 0.9em;
+}
+.blockquote_small {
+	font-size: 1.1em;
+}
+.blockquote_medium {
+	font-size: 1.2em;
+}
+.blockquote_large {
+	font-size: 1.3em;
+}
+.blockquote_huge {
+	font-size: 1.4em;
+}
+.read_more_link {
+	font-weight: bold;
+	color: blue;
+	font-size: 1.2em !important;
+	font-weight: bold !important;
+}
+.iglesia {
+	width: 10em;
+	margin-bottom: 12px;
+}

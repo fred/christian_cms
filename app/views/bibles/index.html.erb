@@ -1,0 +1,43 @@
+<h1>Bibles</h1>
+
+<div class="article">
+
+	<table class='nice_table'>
+		<thead>
+			<tr>
+				<td class='heading'><%= link_to "Title", :sort => "title" %></td>
+				<td class='heading'> Apostols </td>
+				<% if logged_in? %>
+					<td class='heading'> </td>
+					<td class='heading'> </td>
+				<% end %>
+			</tr>
+		</thead>
+	
+		<tbody>
+		<% for bible in @bibles %>
+	  	<tr class="<%= cycle("light", "dark", :name => "row_class") %>">
+			<td class='table_center'><%= link_to bible.title, bible %> </td>
+			<td class='table_center'><%= bible.apostols.size %> </td>
+			<% if logged_in? %>
+	    		<td class='table_center'><%= link_to 'Edit', edit_bible_path(bible) %></td>
+				<td class='table_center'><%= link_to 'Del', bible, :confirm => 'Are you sure?', :method => :delete %> </td>
+			<% end %>	
+	  	</tr>
+		<% end %>
+		</tbody>
+	
+	</table>
+<br />
+	
+<% if authorized_admin? %>
+	<div class="edit_item_menu">
+		<%= link_to 'Add Bible', new_bible_path %>
+		<%= link_to 'Upload Bible file', :action => 'upload' %>
+	</div>
+<% end %>
+
+</div>
+
+<p><%= will_paginate @bibles %></p>
+

@@ -1,0 +1,27 @@
+<h1>Eventos</h1>
+<br />
+
+<div class="article">
+
+	<% for event in @events %>
+		<div class="article_item">
+			<% if authorized_admin? %>
+				<div class="edit_item_menu">
+					<p> <%= link_to 'Edit', edit_event_path(event) %> |
+					<%= link_to 'Del', event, :confirm => 'Are you sure?', :method => :delete %> |
+					<%= link_to 'Crear un Evento', new_event_path %> 
+					</p>
+				</div>
+			<% end %>
+      <% #cache "event_#{event.id}" do 
+    %>
+				<%= render :partial => "event", :locals => {:event => event} %>
+        <% #end 
+      %>
+		</div>
+		<br />
+	<% end %>
+    
+	<% will_paginate @events %>
+	
+</div>

@@ -1,0 +1,11 @@
+<%= error_messages_for 'setting' %>
+
+<!--[form:setting]-->
+<p><label for="setting_var"> Settings name : </label><br/>
+<%= text_field 'setting', 'var', :size => 20  %></p>
+
+<p><label for="setting_value">Settings Value :</label><br/>
+<%= text_area 'setting', 'value', :rows => 4, :cols => 20  %></p>
+
+<!--[eoform:setting]-->
+

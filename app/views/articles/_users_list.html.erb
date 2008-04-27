@@ -1,0 +1,26 @@
+<table class='report'>
+	<thead>
+		<tr>
+			<td class='heading'><%= link_to "Nombre", 	 :sort => "first_name" %></td>
+			<td class='heading'><%= link_to "Appellido", :sort => "last_name" %></td>
+			<% if authorized_admin? %>
+				<td class='heading'> </td>
+				<td class='heading'> </td>
+			<% end %>
+		</tr>
+	</thead>
+	
+	<tbody>
+	<% for user in @users %>
+  	<tr class="<%= cycle("light", "dark", :name => "row_class") %>">
+		<td class='table_center'><%= link_to user.first_name, :controller => "users", :action => 'show', :id => user %> </td>
+		<td class='table_center'><%= link_to user.last_name, :controller => "users", :action => 'show', :id => user %></td>
+		<% if authorized_admin? %>
+    		<td class='table_center'><%= link_to 'Edit', :controller => "users", :action => 'edit', :id => user %></td>
+			<td class='table_center'><%= link_to 'Del', { :controller => "users", :action => 'destroy', :id => user }, :confirm => 'Are you sure?', :method => :post %></td>
+		<% end %>	
+  	</tr>
+	<% end %>
+	</tbody>
+	
+</table>

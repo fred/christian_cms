@@ -1,0 +1,71 @@
+
+/**** ERROR FORM FIELDS ****/
+.fieldWithErrors {
+  /*padding: 0px;
+  margin:0px;
+  background-color: #133E66;*/
+  display: inline;
+}
+.fieldWithErrors input {
+	border: 2px solid #ff9999;
+}
+#errorExplanation {
+  width: 280px;
+  border: 1px solid #133E66;
+  padding: 5px;
+  background-color: #f0f0f0;
+}
+#errorExplanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 6px 8px 6px 8px;
+  font-size: 12px;
+  margin: -7px;
+  background-color: #538ECC;
+  color: #fff;
+}
+#errorExplanation p {
+  color: #333;
+  margin-bottom: 0;
+  padding: 2px;
+}
+#errorExplanation ul {
+	padding: 0 0 0 12px;
+	margin:0;
+	line-height: 160%;
+}
+#errorExplanation ul li {
+  font-size: 12px;
+  list-style: square;
+  font-style: italic;
+}
+.inputError {
+	color: red;
+	font-size: 1.2em;
+}
+
+div.uploadStatus {
+  margin: 3px;
+}
+
+div.progressBar {
+  margin: 3px;
+}
+
+div.progressBar div.border {
+  background-color: #fff;
+  border: 1px solid grey;
+  width: 100%;
+}
+
+div.progressBar div.background {
+  background-color: #333;
+  height: 18px;
+  width: 0%;
+}
+
+.select_addressbook {
+	border: 1px solid #ccc;
+	padding: 5px;
+}
+

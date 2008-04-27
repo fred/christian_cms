@@ -1,0 +1,61 @@
+<h2> <%= @user.first_name %> <%= @user.middle_name %> <%= @user.last_name %></h2>
+
+<div class="article">
+
+	<table>
+		<tr>
+			<td class="label">E-mail: </td>
+			<td class="value"><%= h @user.email %> </td>
+		</tr>
+		<tr>
+			<td class="label">Phone Home: </td>
+			<td class="value"><%= h @user.home_phone %> </td>
+		</tr>
+		<tr>
+			<td class="label">Mobile: </td>
+			<td class="value"><%= h @user.mobile_phone %> </td>
+		</tr>
+		<tr>
+			<td class="label">Office Number: </td>
+			<td class="value"><%= h @user.office_phone %> </td>
+		</tr>
+		<tr>
+			<td class="label">Address1: </td>
+			<td class="value"><%= h @user.address1 %> </td>
+		</tr>
+		<tr>
+			<td class="label">Address2: </td>
+			<td class="value"><%= h @user.address2 %> </td>
+		</tr>
+		<tr>
+			<td class="label">Nacionalidad: </td>
+			<td class="value"><%= h @user.nationality %> </td>
+		</tr>
+		<tr>
+			<td class="label">Parentestco: </td>
+			<td class="value"><%= h @user.family_role %> </td>
+		</tr>
+		<tr>
+			<td class="label">Estado Civil: </td>
+			<td class="value"><%= h @user.civil_state %> </td>
+		</tr>
+		<tr>
+			<td class="label">Cumpleanos: </td>
+			<td class="value"><%= h @user.birthday.strftime("%b-%d") %> </td>
+		</tr>
+		<tr>
+			<td class="label">Sacramentos: </td>
+			<td class="value"><%= h @user.sacraments %> </td>
+		</tr>
+	</table>
+
+	<br />
+	<% if authorized_admin? %>
+		<p><%= link_to 'Editar', :action => 'edit', :id => @user %></p>
+	<% end %>
+
+</div>
+
+
+<h4> * Registrese para recibir mejor informacion de la Comunidad Catolica.</h4>
+	

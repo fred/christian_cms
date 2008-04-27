@@ -1,0 +1,1 @@
+#page.insert_html :bottom, "search_results", "Hello"

@@ -1,0 +1,308 @@
+h1. Header 1 	<h1>Header 1</h1>
+h2. Header 2	<h2>Header 2</h2>
+h3. Header 3	<h3>Header 3</h3>
+
+
+An old text 
+bq. A block quotation.
+Any old text
+
+<p>An old text</p>
+<blockquote>
+<p>A block quotation.</p>
+</blockquote>
+<p>Any old text</p>
+
+
+I _believe_ every word. 
+<p>I <em>believe</em> every word.</p>
+
+And then? She *fell*!
+<p>And then? She <strong>fell</strong>!</p>
+
+I __know__.
+I **really** __know__.
+
+<p>I <i>know</i>.
+I <b>really</b> <i>know</i>.</p>
+
+??Cat's Cradle?? by Vonnegut
+<p><cite>Cat&#8217; s Cradle</cite> by Vonnegut</p>
+
+Convert with @r.to_html@
+<p>Convert with <pre>r.to_html</pre></p>
+
+I'm -sure- not sure.
+<p>I&#8217; m <del>sure</del> not sure.</p>
+
+You are a +pleasant+ child.
+<p>You are a <ins>pleasant</ins> child.</p>
+
+a ^2^ + b ^2^ = c ^2^
+<p>a <sup>2</sup> + b <sup>2</sup> = c <sup>2</sup></p>
+
+log ~2~ x
+<p>log <sub>2</sub> x</p>
+
+
+HTML-Specific
+
+I'm %unaware% of most soft drinks.
+<p>I&#8217; m <span>unaware</span> of most soft drinks.</p>
+
+I'm %{color:red}unaware%
+of most soft drinks.
+<p>I&#8217; m <span style="color:red;">unaware</span>
+of most soft drinks.</p>
+
+p(example1). An example
+<p class="example1">An example</p>
+
+p(#big-red). Red here
+<p id="big-red">Red here</p>
+
+p(example1#big-red2). Red here
+<p class="example1" id="big-red2">Red here</p>
+
+p{color:blue;margin:30px}. Spacey blue
+<p style="color:blue; margin:30px;">Spacey blue</p>
+
+p[fr]. rouge
+<p lang="fr">rouge</p>
+
+
+I seriously *{color:red}blushed*
+when I _(big)sprouted_ that
+corn stalk from my
+%[es]cabeza%.
+
+<p>I seriously <strong style="color:red;">blushed</strong>
+when I <em class="big">sprouted</em> that
+corn stalk from my
+<span lang="es">cabeza</span>.</p>
+
+
+p<. align left
+<p style="text-align:left;">align left</p>
+
+p>. align right
+<p style="text-align:right;">align right</p>
+
+p=. centered
+<p style="text-align:center;">centered</p>
+
+p<>. justified
+<p style="text-align:justify;">justified</p>
+
+p(. left ident 1em
+<p style="padding-left:1em;">left ident 1em</p>
+
+p((. left ident 2em
+<p style="padding-left:2em;">left ident 2em</p>
+
+p))). right ident 3em
+<p style="padding-right:3em;">right ident 3em</p>
+
+
+<pre>
+# A first item
+# A second item
+# A third
+</pre>
+
+<ol>
+<li>A first item</li>
+<li>A second item</li>
+<li>A third</li>
+</ol>
+
+
+<pre>
+# Fuel could be:
+## Coal
+## Gasoline
+## Electricity
+# Humans need only:
+## Water
+## Protein
+</pre>
+
+<ol>
+<li>Fuel could be:
+<ol>
+<li>Coal</li>
+<li>Gasoline</li>
+<li>Electricity</li>
+</ol>
+</li>
+<li>Humans need only:
+<ol>
+<li>Water</li>
+<li>Protein</li>
+</ol></li>
+</ol>
+
+<pre>
+* A first item
+* A second item
+* A third
+</pre>
+	
+<ul>
+<li>A first item</li>
+<li>A second item</li>
+<li>A third</li>
+</ul>
+
+<pre>
+* Fuel could be:
+** Coal
+** Gasoline
+** Electricity
+* Humans need only:
+** Water
+** Protein
+</pre>
+
+
+<ul>
+<li>Fuel could be:
+<ul>
+<li>Coal</li>
+<li>Gasoline</li>
+<li>Electricity</li>
+</ul>
+</li>
+<li>Humans need only:
+<ul>
+<li>Water</li>
+<li>Protein</li>
+</ul></li>
+</ul>
+
+
+I searched "Google":http://google.com.
+<p>I searched <a href="http://google.com">Google</a>.</p>
+
+<pre>
+I am crazy about "Hobix":hobix
+and "it's":hobix "all":hobix I ever
+"link to":hobix!
+[hobix]http://hobix.com
+</pre>
+
+<p>I am crazy about <a href="http://hobix.com">Hobix</a>
+and <a href="http://hobix.com">it&#8217; s</a> <a href="http://hobix.com">all</a> I ever
+<a href="http://hobix.com">link to</a>!</p>
+
+!http://hobix.com/sample.jpg!
+<p><img src="http://hobix.com/sample.jpg" alt="" /></p>
+
+!openwindow1.gif(Bunny.)!
+<p><img src="openwindow1.gif" title="Bunny." alt="Bunny." /></p>
+
+!openwindow1.gif!:http://hobix.com/
+<p><a href="http://hobix.com/"><img src="openwindow1.gif" alt="" /></a></p>
+
+
+<h3>Tables</h3>
+
+
+<pre>
+| name | age | sex |
+| joan | 24 | f |
+| archie | 29 | m |
+| bella | 45 | f |
+</pre>
+
+<table>
+<tr>
+<td> name </td>
+<td> age </td>
+<td> sex </td>
+</tr>
+<tr>
+<td> joan </td>
+<td> 24 </td>
+<td> f </td>
+</tr>
+<tr>
+<td> archie </td>
+<td> 29 </td>
+<td> m </td>
+</tr>
+<tr>
+<td> bella </td>
+<td> 45 </td>
+<td> f </td>
+</tr>
+</table>
+
+
+<pre>
+|_. name |_. age |_. sex |
+| joan | 24 | f |
+| archie | 29 | m |
+| bella | 45 | f |	
+</pre>
+
+<table>
+<tr>
+<th>name </th>
+<th>age </th>
+<th>sex </th>
+</tr>
+<tr>
+<td> joan </td>
+<td> 24 </td>
+<td> f </td>
+</tr>
+<tr>
+<td> archie </td>
+<td> 29 </td>
+<td> m </td>
+</tr>
+<tr>
+<td> bella </td>
+<td> 45 </td>
+<td> f </td>
+</tr>
+</table>
+
+
+<pre>
+|_. attribute list |
+|<. align left |
+|>. align right|
+|=. center |
+|<>. justify |
+|^. valign top |
+|~. bottom |
+</pre>
+
+<table>
+<tr>
+<th>attribute list </th>
+</tr>
+<tr>
+<td style="text-align:left;">align left </td>
+</tr>
+<tr>
+<td style="text-align:right;">align right</td>
+</tr>
+<tr>
+<td style="text-align:center;">center </td>
+</tr>
+<tr>
+<td style="text-align:justify;">justify </td>
+</tr>
+<tr>
+<td style="vertical-align:top;">valign top </td>
+</tr>
+<tr>
+<td style="vertical-align:bottom;">bottom </td>
+</tr>
+</table>
+
+
+

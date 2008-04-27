@@ -1,0 +1,11 @@
+<h1>Editing bible</h1>
+
+<%= error_messages_for :bible %>
+
+<% form_for(@bible) do |f| %>
+	<%= render :partial => "form" %>
+  	<p><%= f.submit "Save" %></p>
+<% end %>
+
+<%= link_to 'Show', @bible %> |
+<%= link_to 'Back', bibles_path %>

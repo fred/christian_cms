@@ -1,0 +1,14 @@
+
+<h2> Registrarse </h2>
+
+<% form_for :user, :url => users_path do |f| -%>
+
+	<%= render :partial => "new_user_form" %>
+
+	<br />
+	<%= show_simple_captcha(:object=>"user", :image_style => "simply_red", :distortion => "medium") %>
+	<br />
+	
+	<p><%= submit_tag 'Registrar' %></p>
+
+<% end -%>

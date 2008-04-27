@@ -1,0 +1,14 @@
+<h2> Crear Nuevo Articulo </h2>
+
+<div class="article">
+<% form_for :article, :url => {:action => 'create'} do |f| %>
+
+	<%= render :partial => "form" %>
+
+<%= f.submit "Crear" %>
+
+<% end %>
+
+<%= link_to 'Volver', articles_path %>
+
+</div>

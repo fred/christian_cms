@@ -1,0 +1,11 @@
+<% form_for(:attachment, :url => {:controller => "bibles", "action" => "upload"}, :html => { :multipart => true }) do |f| %>
+	<table>
+		<tr>
+	  		<td class="label"> Upload a file </td>
+	 		<td> <%= f.file_field :uploaded_data %></td>
+		</tr>
+	</table>
+	<p>
+	  <%= submit_tag "Upload Now" %>
+	</p>
+<% end %>

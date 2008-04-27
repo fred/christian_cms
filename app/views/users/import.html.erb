@@ -1,0 +1,13 @@
+<% if authorized_admin? %>
+	
+	<% form_for :import, :html => {:multipart => true, :class => "niceform"} do %>
+
+	<tr>
+		<td> File name: </td>
+		<td> <%= text_field :import, :filename, :size => 12 %> </td>
+	</tr>
+
+	<p><%= submit_tag "Upload" %></p>
+	<% end %>
+
+<% end %>

@@ -1,0 +1,40 @@
+<h2>Lista de Usuarios</h2>
+
+<div class="article">
+	
+	<%= #render :partial => "search" 
+	%>
+	
+	<table class='nice_table'>
+		<thead>
+			<tr>
+				<td class='heading'><%= link_to "Nombre", 	 :sort => "first_name" %></td>
+				<td class='heading'><%= link_to "Appellido", :sort => "last_name" %></td>
+			</tr>
+		</thead>
+	
+		<tbody>
+		<% for user in @users %>
+	  	<tr class="<%= cycle("light", "dark", :name => "row_class") %>">
+			<td class='table_center'><%= link_to user.first_name, :action => 'show', :id => user %> </td>
+			<td class='table_center'><%= link_to user.last_name, :action => 'show', :id => user %></td>
+			<% if authorized_admin? %>
+	    		<td class='table_center'><%= link_to 'Edit', :action => 'edit', :id => user %></td>
+				<td class='table_center'><%= link_to 'Del', { :action => 'destroy', :id => user }, :confirm => 'Are you sure?', :method => :post %></td>
+			<% end %>	
+	  	</tr>
+		<% end %>
+		</tbody>
+	
+	</table>
+
+	<br />
+	<% if authorized_admin? %>
+		<%= link_to 'Adicionar Usuario', :action => 'new' %>
+	<% end %>
+
+</div>
+
+<%= will_paginate @users %>
+
+<h4> * Registrese con nosotros para recibir informacion de la Comunidad Catolica.</h4>

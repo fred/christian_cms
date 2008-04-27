@@ -1,0 +1,28 @@
+<table class='report'>
+	<thead>
+		<tr>
+			<td class='heading'><%= link_to "Nombre", :controller => "birthdays", :action => "index", :sort => "first_name" %></td>
+			<td class='heading'><%= link_to "Appellido", :controller => "birthdays", :action => "index", :sort => "last_name" %></td>
+			<td class='heading'><%= link_to "Fecha", :controller => "birthdays", :action => "index", :sort => "birthdate" %></td>
+			<% if logged_in? %>
+				<td class='heading'> </td>
+				<td class='heading'> </td>
+			<% end %>
+		</tr>
+	</thead>
+	
+	<tbody>
+	<% for birthday in @birthdays %>
+  	<tr class="<%= cycle("light", "dark", :name => "row_class") %>">
+		<td class='table_center'><%= birthday.first_name %> </td>
+		<td class='table_center'><%= birthday.last_name %> </td>
+		<td class='table_center'><%= birthday.birthdate.strftime("%b-%d") %> </td>
+		<% if logged_in? %>
+			<td class='table_center'><%= link_to 'Edit', :controller => "birthdays", :action => 'edit', :id => birthday %></td>
+			<td class='table_center'><%= link_to 'Del', { :controller => "birthdays", :action => 'destroy', :id => birthday }, :confirm => 'Are you sure?', :method => :post %></td>
+		<% end %>	
+  	</tr>
+	<% end %>
+	</tbody>
+	
+</table>

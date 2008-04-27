@@ -1,0 +1,8 @@
+<% form_for :search, :url => {:action => "search"} do -%>
+	<table>
+		<tr>
+			<td><%= text_field :search, :q, :size => 14 %></td>
+			<td> <%= submit_tag 'Buscar' %> </td>
+		</tr>
+	</table>
+<% end -%>

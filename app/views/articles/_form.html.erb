@@ -1,0 +1,54 @@
+<table>
+	<tr>
+		<td><label> </label></td>
+		<td><%= error_message_on :article, :title, "Title ", "","inputError" %></td>
+	</tr>
+	<tr>
+		<td><label>Title: </label></td>
+  		<td><%= text_field :article, 'title', :size => 20  %></td>
+	</tr>
+
+	<tr>
+		<td><label>Permalink: </label></td>
+  		<td><%= text_field :article, 'permalink', :size => 20  %></td>
+	</tr>
+	
+	<tr>
+		<td><label>Categoria: </label></td>
+  		<td><%= select :article, :category, Category::LIST.collect %></td>
+	</tr>
+	
+	<tr>
+		<td><label>Autor: </label></td>
+  		<td><%= text_field :article, :author, { :size => 20, :value => current_user.login} %></td>
+	</tr>
+
+	<tr>
+		<td><label> </label></td>
+		<td><%= error_message_on :article, :body, "Body ", "","inputError" %></td>
+	</tr>
+	
+	<tr>
+		<td><label>Texto Corto: </label></td>
+		<td> <%= textile_editor :article, :short_body -%> </td>
+	</tr>
+	
+	<tr>
+		<td><label>Texto: </label></td>
+		<td> <%= textile_editor :article, :body -%> </td>
+	</tr>
+	<tr>
+		<td><label>Publicado: </label></td>
+  		<td>
+			<%= check_box :article, :approved, {:id => "check2", :checked =>"checked"} %>
+			<label for="check2"> </label>
+		</td>
+	</tr>
+	<tr>
+		<td> <label>Fecha: </label></td>
+		<td><%= date_select :article, 'published_at', :start_year => Time.now.year-1, :end_year => Time.now.year+1 %></td>
+	</tr>
+</table>
+
+<%= textile_editor_initialize -%>
+

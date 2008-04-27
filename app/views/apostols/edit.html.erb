@@ -1,0 +1,12 @@
+<h1>Editing apostol</h1>
+
+<%= error_messages_for :apostol %>
+
+<% form_for(@apostol) do |f| %>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @apostol %> |
+<%= link_to 'Back', apostols_path %>

@@ -1,0 +1,18 @@
+<h1>Listing apostols</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% for apostol in @apostols %>
+  <tr>
+    <td><%= link_to 'Show', apostol %></td>
+    <td><%= link_to 'Edit', edit_apostol_path(apostol) %></td>
+    <td><%= link_to 'Destroy', apostol, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New apostol', new_apostol_path %>

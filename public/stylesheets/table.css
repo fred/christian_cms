@@ -1,0 +1,189 @@
+/* EXTRA by Fred */
+
+/* Table CSS for display GRID */
+table.nice_table {
+	border-collapse: collapse;
+	width: 96%;
+	margin-top: 20px;
+	font-size: 1.2em;
+}
+table.nice_table td{
+	padding: 3px 2px 3px 2px;
+	border: #bbb 1px solid;
+}
+table.nice_table td.heading {
+	font-size: 1.2em;
+	background: #dcecff;
+	font-weight: bold;
+	text-align: center;
+}
+table.nice_table td.heading:hover {
+	background: #c0ffc0;
+}
+table.nice_table td.table_left {
+	text-align: left;
+}
+table.nice_table td.table_center {
+	text-align: center;
+	padding-left: 1px;
+	padding-right: 1px;
+}
+table.nice_table td.table_right {
+	text-align: right;
+}
+table.nice_table tr.light {
+	background-color: #fff;
+}
+table.nice_table tr.dark {
+	background-color: #eee;
+}
+
+/*** Ajax Tables ***/
+
+.tabselector, .tab-selector {
+  width: auto;
+  border-bottom: 1px solid #c0c0c0;
+  padding: 10px 0 0 20px;
+}
+
+.tab-unselected {
+  display: inline;
+  padding: 2px 7px 0 7px;
+  background: #f0f0f0;
+  border: 1px solid #c0c0c0;
+  border-bottom: 0;
+  color: #c0c0c0;
+}
+
+.tab-selected {
+  display: inline;
+  padding: 3px 7px 1px 7px;
+  background: #ffffff;
+  border: 1px solid #c0c0c0;
+  border-bottom: 0;
+}
+
+.tab-unselected a {
+  padding: 6px;
+  color: #a0a0a0;
+}
+
+.tab-selected a {
+  font-weight: bold;
+  color: #0066CC;
+  padding: 6px;
+}
+
+.panes, .pane-selector {
+  width: 97%;
+  padding-left: 0px;
+  margin: 2%;
+  min-height: 300px;
+  overflow: auto;
+}
+
+.pane-selected {
+  list-style-type: none;
+  display: block;
+  padding: 10px;
+}
+
+.pane-unselected {
+  list-style-type: none;
+  display: none;
+}
+
+div.auto_complete {
+	width: 300px;
+	background: #fff;
+}
+div.auto_complete ul {
+  border:1px solid #888;
+  margin:0;
+  padding:0;
+  width:100%;
+  list-style-type:none;
+}
+div.auto_complete ul li {
+  margin:0;
+  padding:3px;
+}
+div.auto_complete ul li.selected { 
+  background-color: #ffb; 
+}
+div.auto_complete ul strong.highlight { 
+  color: #800; 
+  margin:0;
+  padding:0;
+}
+
+
+.align_center {
+	text-align: center;
+}
+.align_left {
+	text-align: left;
+}
+.align_right {
+	text-align: right;
+}
+.big {
+	font-size: 1.1em;
+}
+.bigger {
+	font-size: 1.3em;
+}
+.biggest {
+	font-size: 1.5em;
+}
+smaller {
+	font-size: 0.9em;
+}
+smallest {
+	font-size: 0.7em;
+}
+red {
+	color: red;
+}
+
+white {
+	color: white;
+}
+
+versiculo {
+	font-style: italic;
+	color: green;
+}
+.created_at {
+	color: #aaa;
+	border-bottom: 1px dotted #bbb;
+}
+td.label {
+	padding:4px;
+	font-weight: bold;
+	color: #777;
+	text-align: right;
+	font-size: 1.4em;
+}
+td.value {
+	font-size: 1.4em;
+	padding:4px;
+	text-align: left;
+}
+td.value:hover {
+	color: #AD1112;
+	background: #ddd;
+}
+
+.weather {
+	font-size: 1.3em;
+}
+.weather td {
+	padding: 4px 8px 4px 8px;
+}
+
+.weather td.heading {
+	background: #dcecff;
+	font-weight: bold;
+	text-align: center;
+}

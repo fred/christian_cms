@@ -1,0 +1,11 @@
+<h2> Editando Articulo </h2>
+
+<div class="article">
+
+<% form_for(:article, :url => article_path(@article), :html => {:method => :put}) do |f| %>
+	<%= render :partial => "form" %>
+	<%= f.submit "Salvar" %>
+<% end %>
+
+</div>
+<p><%= link_to 'Volver', articles_path %> </p>

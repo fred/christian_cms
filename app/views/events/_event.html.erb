@@ -1,0 +1,11 @@
+	<h3><%= link_to event.title, event %></h3>
+
+	<p> <label>Empieza:</label> <%= event.start_date.to_s(:long) %> </p>
+	<p> <label>Termina:</label> <%= event.end_date.to_s(:long) %> </p>
+	<p> <label>Prioridad:</label> <%= event.event_priority %> </p>
+
+	<div class="boxed"> <%= event.description %> </div>
+
+	<p class="created_at"><%= event.created_at.to_s(:long) %> </p>
+
+

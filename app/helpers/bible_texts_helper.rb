@@ -1,0 +1,2 @@
+module BibleTextsHelper
+end

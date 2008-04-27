@@ -1,0 +1,91 @@
+plugins:
+    swfchart:
+        url: "https://svn.elctech.com/svn/public/plugins/swfchart"
+    scope_controller_model:
+        url: "http://svn.elctech.com/svn/public/plugins/scope_controller_model"
+    akismetor:
+        url: "http://svn.railscasts.com/public/plugins/akismetor"
+    railspdf:
+        url: "svn://rubyforge.org/var/svn/railspdfplugin/railspdf"
+    backgroundrb:
+        url: "http://svn.devjavu.com/backgroundrb/trunk"
+    acts_as_scoped:
+        url: "svn://rubyforge.org/var/svn/saas/acts_as_scoped/trunk/acts_as_scoped"
+    acts_as_authenticated:
+        url: "http://svn.techno-weenie.net/projects/plugins/acts_as_authenticated"
+    cache_fu:
+        url: "svn://errtheblog.com/svn/plugins/cache_fu"
+    settings:
+        url: "http://beautifulpixel.textdriven.com/svn/plugins/settings"
+    calendar_date_select:
+        url: "http://calendardateselect.googlecode.com/svn/tags/calendar_date_select"
+    deprecated:
+        url: "http://topfunky.net/svn/plugins/deprecated"
+    retardase_inhibitor:
+        url: "http://svn.devjavu.com/malaysia-rb/plugins/retardase_inhibitor"
+    acts_as_textiled:
+        url: "svn://errtheblog.com/svn/plugins/acts_as_textiled"
+    paginating_find:
+        url: "http://svn.cardboardrocket.com/paginating_find"
+    will_paginate:
+        url: "svn://errtheblog.com/svn/plugins/will_paginate"
+    ar_fixtures:
+        url: "http://topfunky.net/svn/plugins/ar_fixtures"
+    permalink_fu:
+        url: "http://svn.techno-weenie.net/projects/plugins/permalink_fu"
+    acts_as_ferret:
+        url: "svn://projects.jkraemer.net/acts_as_ferret/tags/stable/acts_as_ferret"
+    restful_authentication:
+        url: "http://svn.techno-weenie.net/projects/plugins/restful_authentication/"  
+    rspec: 
+        url: "svn://rubyforge.org/var/svn/rspec/tags/REL_0_9_4/rspec"
+    rspec_on_rails: 
+        url: "svn://rubyforge.org/var/svn/rspec/tags/REL_0_9_4/rspec_on_rails"         
+    simply_helpful:
+        url: "http://dev.rubyonrails.org/svn/rails/plugins/simply_helpful/"
+    acts_as_commentable:
+        url: "http://juixe.com/svn/acts_as_commentable"
+    acts_as_rateable:
+        url: "http://juixe.com/svn/acts_as_rateable"    
+    attachment_fu:
+        url: "http://svn.techno-weenie.net/projects/plugins/attachment_fu/"
+    taggable_on_steroids:
+        url: "http://svn.viney.net.nz/things/rails/plugins/acts_as_taggable_on_steroids"
+    acts_as_bookmarkable:
+        url: "http://juixe.com/svn/acts_as_bookmarkable/"
+    userstamp:
+        url: "svn://delynnberry.com/code/plugins/userstamp/trunk"
+    sexy_migration:
+        url: "svn://errtheblog.com/svn/plugins/sexy_migrations"
+    acts_as_paranoid:
+        url: "http://svn.techno-weenie.net/projects/plugins/acts_as_paranoid/"
+    acts_as_versioned:
+        url: "http://svn.techno-weenie.net/projects/plugins/acts_as_versioned/" 
+    restful_controller:
+        url: "http://svn.superruby.com/svn/plugins/rest_controller"   
+    tabnav:
+        url: "svn://svn.seesaw.it/tabnav/trunk"
+    annotate_models:
+        url: "http://svn.pragprog.com/Public/plugins/annotate_models"    
+    exception_handler:
+        url: "svn://source.johnwilger.com/plugins/exception_handler"
+    exception_notification:
+        url: "http://dev.rubyonrails.org/svn/rails/plugins/exception_notification/"    
+    exception_logger:
+        url: "http://svn.techno-weenie.net/projects/plugins/exception_logger/"
+    tpl_formbuilder:
+        url: "svn://rubyforge.org/var/svn/tpl-formbuilder"
+    sql_session_store:
+        url: "http://railsexpress.de/svn/plugins/sql_session_store/trunk" 
+    resource_fu:
+        url: "http://svn.protocool.com/public/plugins/resource_fu/"
+    error_messages_for:
+        url: "svn://rubyforge.org/var/svn/railserrorsfor"
+    acts_as_draftable:
+        url: "http://svn.techno-weenie.net/projects/plugins/acts_as_draftable/"
+    dialog_helper:
+        url: "http://svn.techno-weenie.net/projects/plugins/dialog_helper/"
+    permalink_fu:
+        url: "http://svn.techno-weenie.net/projects/plugins/permalink_fu/"
+    white_list:
+        url: "http://svn.techno-weenie.net/projects/plugins/white_list/"

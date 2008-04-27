@@ -1,0 +1,63 @@
+<h1>Lista de Cumplaños</h1>
+
+<div class="article">
+
+	<h3>
+	<%= link_to "Ene", "/birthdays/?month=1" %> 
+	<%= link_to "Feb", "/birthdays/?month=2" %> 
+	<%= link_to "Mar", "/birthdays/?month=3" %> 
+	<%= link_to "Abr", "/birthdays/?month=4" %> 
+	<%= link_to "May", "/birthdays/?month=5" %> 
+	<%= link_to "Jun", "/birthdays/?month=6" %> 
+	<%= link_to "Jul", "/birthdays/?month=7" %> 
+	<%= link_to "Ago", "/birthdays/?month=8" %> 
+	<%= link_to "Sep", "/birthdays/?month=9" %> 
+	<%= link_to "Oct", "/birthdays/?month=10" %> 
+	<%= link_to "Nov", "/birthdays/?month=11" %> 
+	<%= link_to "Dic", "/birthdays/?month=12" %> 
+	<%= link_to "TODOS", birthdays_path %>
+	</h3>
+	
+	<p>  </p>
+	
+	<table class='nice_table'>
+		<thead>
+			<tr>
+				<td class='heading'><%= link_to "Nombre", 	 :sort => "first_name" %></td>
+				<td class='heading'><%= link_to "Appellido", :sort => "last_name" %></td>
+				<td class='heading'><%= link_to "Fecha",	 :sort => "birthdate" %></td>
+				<% if logged_in? %>
+					<td class='heading'> </td>
+					<td class='heading'> </td>
+				<% end %>
+			</tr>
+		</thead>
+	
+		<tbody>
+		<% for birthday in @birthdays %>
+	  	<tr class="<%= cycle("light", "dark", :name => "row_class") %>">
+			<td class='table_center'><%= birthday.first_name %> </td>
+			<td class='table_center'><%= birthday.last_name %> </td>
+			<td class='table_center'><%= birthday.birthdate.strftime("%b-%d") %> </td>
+			<% if logged_in? %>
+	    		<td class='table_center'><%= link_to 'Edit', edit_birthday_path(birthday) %></td>
+				<td class='table_center'><%= link_to 'Del', birthday, :confirm => 'Are you sure?', :method => :delete %> </td>
+			<% end %>	
+	  	</tr>
+		<% end %>
+		</tbody>
+	
+	</table>
+<br />
+	
+<% if authorized_admin? %>
+	<div class="edit_item_menu">
+		<%= link_to 'Adicionar Cumpleaños', :action => 'new' %>
+	</div>
+<% end %>
+
+</div>
+
+<% if !params[:month] %>
+	<p><%= will_paginate @birthdays %></p>
+<% end %>

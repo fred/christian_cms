@@ -1,0 +1,13 @@
+index/*
+db/*.sqlite3
+log/*.log
+tmp/**/*
+.DS_Store
+Thumbs.db
+doc/api
+doc/app
+config/memcached.yml
+config/database.yml
+config/ultrasphinx/*
+public/files
+public/buletins

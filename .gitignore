@@ -10,4 +10,4 @@ config/memcached.yml
 config/database.yml
 config/ultrasphinx/*
 public/files
-public/buletins
+public/buletinspublic/images/simple_captcha

@@ -2,6 +2,7 @@
 %>
 
 <% @articles.each do |article| %>
+
 		<div class="edit_item_menu">
 			<% if authorized_admin? %>
 				<%= link_to 'Editar', edit_article_path(article) %> | 
@@ -9,11 +10,11 @@
 				<%= link_to 'Crear', new_article_path %> 
 			<% end %>
 		</div>
+		
     <% cache "article_#{article.permalink}" do  %>
 			<%= render :partial => "article", :locals => {:article => article} %>
     <% end %>
+
 <% end %>
 
-<p>
 <%= will_paginate @articles %>
-</p>

@@ -1,10 +1,6 @@
 <div class="article">
 	<h2> <%= link_to(article.title, permalink_url(article.permalink)) %> </h2>
-	
-	<p> 
-		<%= article.short_body %>
-		<%= link_to("leer mas...", permalink_url(article.permalink), :class => 'read_more_link') %>
-	</p>
+	<p> <%= article.short_body %> </p>
+	<p> <%= link_to_if(!article.body.empty?, "leer mas...", permalink_url(article.permalink), :class => 'read_more_link') %> </p>
 	<p class="created_at"><%= article.created_at.strftime("%B %d, %Y") %></p>
-
 </div>

@@ -1,4 +1,4 @@
-<div id="subContent">
+<div class="subContent">
 	<img src="/images/igles2.gif" alt="Comunidad Catolica, Bangkok" class="iglesia"/>
 	<% if false && !logged_in? %>
 			<% form_tag session_path do -%>
@@ -22,7 +22,7 @@
 	
 	
 	<% cache "side_menu" do %>
-		<h1> La Comunidad </h1>
+		<h2> La Comunidad </h2>
 		<ul>
 			<li> <%= link_to "Quienes Somos", permalink_url("quienes-somos") %> </li>
 			<li> <%= link_to "Miembros", users_path %></li>
@@ -73,27 +73,5 @@
 	<ul>
 		<li><%= @rate.convert_result %> </li>
 	</ul>
-	
-	<!-- 
-	<table class="weather">
-		<tr>
-			<td class="title"> Today : </td>
-			<td class="title"> Tomorrow : </td>
-		</tr>
-		<tr>
-			<td> Min: <%= #@today.low 
-			%> C </td>
-			<td> Min: <%= #@tomorrow.low 
-			%> C </td>
-		</tr>
-		<tr>
-			<td> Max: <%= #@today.high 
-			%> C </td>
-			<td> Max: <%= #@tomorrow.high 
-			%> C </td>
-		</tr>
-	</table>
-	-->
-	<br />
 	
 </div>

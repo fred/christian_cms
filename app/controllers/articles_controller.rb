@@ -1,6 +1,5 @@
 class ArticlesController < ApplicationController
 
-  #layout 'pristine'
   layout 'toader'
     
   before_filter :admin, :except => [ :index, :list, :show, :search, :old_action ]
@@ -18,17 +17,7 @@ class ArticlesController < ApplicationController
     end
     per_page = 6
     current_page = (params[:page] ||= 1).to_i
-    
-    #if params[:type]
-    #  @articles = case params[:type]
-    #    when "noticia"    then Article.get_noticias
-    #    when "articulo"   then Article.get_articulos
-    #    when "actividad"  then Article.get_actividades
-    #    when "programa"   then Article.get_programas
-    #  end
-    #  @meta_title = @meta_title + " - " + params[:type] 
-    #end
-    
+
     if authorized_admin?
       @articles = Article.paginate :page => current_page, 
         :per_page => per_page, 
@@ -66,9 +55,6 @@ class ArticlesController < ApplicationController
   # GET /articles/1
   # GET /articles/1.xml
   def show
-    #if !@article = Article.find_permalink(params[:permalink])
-    #  @article = Article.find(params[:permalink])
-    #end
     @article = Article.find_permalink(params[:permalink]) || Article.find(params[:permalink])
     respond_to do |format|
       format.html # show.html.erb
@@ -134,9 +120,12 @@ class ArticlesController < ApplicationController
     end
   end
   
-  def old_action
-    flash[:notice] = "301 Moved Permanently"
-    @title = "301 Moved Permanently"
+  def moved_permanently
+    # this is good if you have old articles deleted 
+    # or changed the tittle of an article, then
+    # search engines will see 301 and delete it on their index.
+    flash[:notice] = "Sorry, Article not found or moved permanently"
+    @title = "Sorry, Article not found or moved permanently"
     headers["Status"] = "301 Moved Permanently"
     redirect_to "/"
   end  

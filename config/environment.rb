@@ -1,5 +1,10 @@
 # Be sure to restart your web server when you modify this file.
 require 'rubygems'
+require 'acts_as_ferret'
+require 'will_paginate'
+require 'fastercsv'
+require "google_query"
+require 'yahoo-weather'
 
 # Uncomment below to force Rails into production mode when
 # you don't control web/app server and can't set it the proper way
@@ -71,7 +76,11 @@ Rails::Initializer.run do |config|
   module SettingsDefaults
     DEFAULTS = {
       :subtitle => 'Comunidad Catolica',
-      :per_page => 20
+      :per_page => 20,
+      :site_title => 'Comunidad Catolica',
+      :site_subtitle => 'Donde los catolicos latinos se reunen en bangkok',
+      :site_copyrights => 'Copyrights 2008',
+      :email => "admin@ComunidadCatolica.com"
     }
   end
 
@@ -97,9 +106,4 @@ PASSWORD_SALT = 'XPeop348I25cag0ab580x26e2168698' unless Object.const_defined?(:
 #include Spawn
 #ActiveRecord::Base.allow_concurrency = true
 #Spawn::method :fork
-
-require 'will_paginate'
-require 'fastercsv'
-require "google_query"
-require 'yahoo-weather'
 

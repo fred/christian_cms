@@ -1,8 +1,5 @@
 class EventsController < ApplicationController
   
-  #layout 'pristine'
-  layout 'toader'
-  
   before_filter :admin, :except => [ :index, :list, :show, :search ]
 
   # GET /events

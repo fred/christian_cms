@@ -1,12 +1,7 @@
 class BirthdaysController < ApplicationController
   
-  #layout 'pristine'
-  layout 'toader'
-    
   before_filter :admin, :except => [ :index ]
-  
-  #require 'fastercsv'
-  
+
   def index
     if params[:sort]
       order = case params[:sort]

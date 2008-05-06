@@ -2,8 +2,6 @@ class SettingsController < ApplicationController
   
   before_filter :admin
 
-  layout 'toader'
-  
   # GET /settings
   # GET /settings.xml
   def index

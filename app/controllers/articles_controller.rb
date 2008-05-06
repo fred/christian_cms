@@ -1,7 +1,5 @@
 class ArticlesController < ApplicationController
 
-  layout 'toader'
-    
   before_filter :admin, :except => [ :index, :list, :show, :search, :old_action ]
 
   # GET /articles

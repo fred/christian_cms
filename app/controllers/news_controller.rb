@@ -1,7 +1,5 @@
 class NewsController < ApplicationController
-  
-  before_filter :login_from_cookie
-  
+
   before_filter :admin, :except => [ :index, :list, :show ]
   
   # GET /news

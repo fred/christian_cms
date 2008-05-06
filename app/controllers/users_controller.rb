@@ -1,9 +1,6 @@
 require 'digest/sha1'
 class UsersController < ApplicationController
   
-  #layout 'pristine'
-  layout 'toader'
-  
   before_filter :login_required, :except => [ :show, :index, :new, :create, :search ]
 
   def index

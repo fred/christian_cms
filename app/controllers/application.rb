@@ -6,8 +6,8 @@ class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   #include Spawn
   helper :all # include all helpers, all the time
-  #layout 'pristine'
-  layout 'toader'
+
+  layout "themes/#{Settings[:theme]}"
   
   before_filter :login_from_cookie
   before_filter :get_rate

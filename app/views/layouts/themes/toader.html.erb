@@ -3,10 +3,10 @@
 
 <head>
 	<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-	<meta name="keywords" content=<%= Settings[:content_keywords] %>/> 
-	<meta name="author" content=<%= Settings[:content_author] %>/>	
-	<title> <%= Settings[:meta_title] %> </title>
-	<meta name="description" content="<%= Settings[:meta_description] %>" />
+	<meta name="keywords" content=<%= Settings.content_keywords %>/> 
+	<meta name="author" content=<%= Settings.content_author %>/>	
+	<title> <%= Settings.meta_title %> </title>
+	<meta name="description" content="<%= Settings.meta_description %>" />
 	<%= stylesheet_link_tag 'scaffold' %>
 	<%= stylesheet_link_tag 'toader/site' %>
 	<%= stylesheet_link_tag 'table' %>
@@ -19,9 +19,9 @@
 
 <div id="header">
 		<div id="masthead">
-			<img src="/images/jesus.jpeg" alt="Comunidad Catolica, Bangkok" />
-			<h1> <%= link_to "Comunidad Catolica Latina", "/", :title => "Volver a Pagina Principal" %> </h1>
-			<p> <%= link_to "Donde Los Catolicos Latinos se Reúnen en Bangkok.", "/", :title => "Volver a Pagina Principal" %>
+			<img src="/images/jesus.jpeg" />
+			<h1> <%= link_to Settings.logo_title, "/", :title => Settings.logo_title %> </h1>
+			<p> <%= link_to Settings.logo_subtitle, "/", :title => Settings.logo_subtitle %>
 			</p>
 			<ul>
 				<li> <%= link_to "Noticias", articles_path %> </li>
@@ -30,7 +30,7 @@
 				<li> <%= link_to "Cumpleaños", month_birthdays_path %> </li>
 				<li> <%= link_to "Galeria de Fotos", "http://gallery.comunidad-catolica.com" %></li>
 				<% if !logged_in? %>
-					<li> <%= link_to "Registrarse", signup_url %> </li>
+					<li> <%= link_to _("Signup"), signup_url %> </li>
 				<% else %>
 					<li><%= link_to "Mi Profile", edit_user_path(current_user) %></li>
 					<li><a href="/logout">Logout</a></li>

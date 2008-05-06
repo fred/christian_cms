@@ -14,10 +14,10 @@
 development:
   adapter: mysql
   encoding: utf8
-  database: archivo_development
+  database: church_cms_dev
   username: root
   password:
-  socket: /var/run/mysqld/mysqld.sock
+  socket: /tmp/mysql.sock
 
 # Warning: The database defined as 'test' will be erased and
 # re-generated from your development database when you run 'rake'.
@@ -25,15 +25,15 @@ development:
 test:
   adapter: mysql
   encoding: utf8
-  database: archivo_test
+  database: church_cms_test
   username: root
   password:
-  socket: /var/run/mysqld/mysqld.sock
+  socket: /tmp/mysql.sock
 
 production:
   adapter: mysql
   encoding: utf8
-  database: archivo_production
+  database: church_cms_prodc
   username: root
   password: 
-  socket: /var/run/mysqld/mysqld.sock
+  socket: /tmp/mysql.sock

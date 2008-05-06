@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   #include Spawn
   helper :all # include all helpers, all the time
 
-  layout "themes/#{Settings[:theme]}"
+  layout "themes/#{Settings.theme}"
   
   before_filter :login_from_cookie
   before_filter :get_rate

@@ -16,29 +16,3 @@ config.action_controller.perform_caching             = true
 
 # Disable delivery errors, bad email addresses will be ignored
 # config.action_mailer.raise_delivery_errors = false
-
-#config.after_initialize do
-  #require 'application' unless Object.const_defined?(:ApplicationController)
-  #LoggedExceptionsController.class_eval do
-    #session :session_key => '_beast_session_id'
-    #include AuthenticationSystem
-    #before_filter :login_required
-    #self.application_name = "Beast"
-    
-    #protected
-    #  alias admin? authorized?
-      
-      # modify beast's login required to accept http basic auth
-      #def login_required_with_basic
-        #respond_to do |accepts|
-          #accepts.html { login_required_without_basic }
-          #accepts.js { login_required_without_basic }
-          #accepts.rss do
-          #  access_denied_with_basic_auth unless self.current_user = User.authenticate(*get_auth_data)
-          #end
-        #end
-      #end
-      
-      #alias_method_chain :login_required, :basic
-  #end
-#end

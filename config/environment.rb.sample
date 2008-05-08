@@ -62,7 +62,3 @@ require 'will_paginate'
 require 'fastercsv'
 require "google_query"
 require 'yahoo-weather'
-
-require "#{RAILS_ROOT}/lib/localization.rb"
-Localization.lang = 'es_ES'
-Localization.load

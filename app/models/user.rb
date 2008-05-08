@@ -130,13 +130,6 @@ class User < ActiveRecord::Base
     end
   end
   
-  def self.find_approved(id)
-    if authorized_admin?
-      self.find(id)
-    else
-      self.find(id, :conditions => ["approved = ?", true])
-    end
-  end
 
   protected
     # before filter 

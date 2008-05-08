@@ -1,14 +1,8 @@
 # Be sure to restart your web server when you modify this file.
-require 'rubygems'
-require 'acts_as_ferret'
-require 'will_paginate'
-require 'fastercsv'
-require "google_query"
-require 'yahoo-weather'
 
 # Uncomment below to force Rails into production mode when
 # you don't control web/app server and can't set it the proper way
-ENV['RAILS_ENV'] ||= 'production'
+ENV['RAILS_ENV'] ||= 'development'
 
 ENV['FERRET_USE_LOCAL_INDEX'] ||= "1"
 
@@ -40,7 +34,7 @@ Rails::Initializer.run do |config|
   # Your secret key for verifying cookie session data integrity.
   # If you change this key, all old sessions will become invalid!
   config.action_controller.session = {
-    :session_key => '_archivo_session',
+    :session_key => '_my_private_key',
     :secret      => '91cf382a47f45daadc6d8e0295875ca3'
   }
 
@@ -59,51 +53,16 @@ Rails::Initializer.run do |config|
   # Make Active Record use UTC-base instead of local time
   # config.active_record.default_timezone = :utc
 
-  # See Rails::Configuration for more options
-  
-  #config.action_mailer.delivery_method = :smtp
-  config.action_mailer.delivery_method = :sendmail
-  
-  config.action_mailer.smtp_settings = {
-    :address        => "www.comunidad-catolica.com",
-    :port           => 25,
-    :domain         => "www.comunidad-catolica.com"
-  }
-
-  # Application configuration should go into files in config/initializers
-  # -- all .rb files in that directory is automatically loaded
-  
-  module SettingsDefaults
-    DEFAULTS = {
-      :subtitle => 'Comunidad Catolica',
-      :per_page => 20,
-      :site_title => 'Comunidad Catolica',
-      :site_subtitle => 'Donde los catolicos latinos se reunen en bangkok',
-      :site_copyrights => 'Copyrights 2008',
-      :email => "admin@ComunidadCatolica.com"
-    }
-  end
-
-  config.load_paths += Dir["#{RAILS_ROOT}/vendor/**"].map do |dir| 
-    File.directory?(lib = "#{dir}/lib") ? lib : dir
-  end
 
 end
 
-ActionMailer::Base.sendmail_settings = {
-  :location       => '/usr/sbin/sendmail',
-  :arguments      => '-i -t -f admin@comunidad-catolica.com'
-}
+require 'rubygems'
+require 'acts_as_ferret'
+require 'will_paginate'
+require 'fastercsv'
+require "google_query"
+require 'yahoo-weather'
 
-# Include your application configuration below
-PASSWORD_SALT = 'XPeop348I25cag0ab580x26e2168698' unless Object.const_defined?(:PASSWORD_SALT)
-
-#ActionMailer::Base.sendmail_settings = {
-#  :location       => '/usr/sbin/sendmail',
-#  :arguments      => '-i -t -f fred@comunidad-catolica.com'
-#}
-
-#include Spawn
-#ActiveRecord::Base.allow_concurrency = true
-#Spawn::method :fork
-
+require "#{RAILS_ROOT}/lib/localization.rb"
+Localization.lang = 'es_ES'
+Localization.load

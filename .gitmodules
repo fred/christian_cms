@@ -1,3 +1,0 @@
-[submodule "vendor/plugins/rails-settings"]
-	path = vendor/plugins/rails-settings
-	url = git://github.com/Squeegy/rails-settings.git

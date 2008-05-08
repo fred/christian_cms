@@ -9,9 +9,7 @@ class Article < ActiveRecord::Base
   validates_uniqueness_of :title
     
   has_permalink :title
-  
-  #acts_as_ferret :fields => [ 'title', 'body', 'permalink', 'author']
-    
+
   def set_permalink
     if self.permalink.to_s.empty?
       self.permalink = (self.published_at.strftime("%Y_%m_%d"))+"-"+permalink_for(self.title.to_s)
@@ -44,17 +42,10 @@ class Article < ActiveRecord::Base
   end
   
   def self.find_permalink(permalink)
-    #if self.cached?(permalink)
-      #return self.get_cache(permalink)
-    #else
-      article = self.find_by_permalink(permalink)
-      #self.set_cache(permalink,article)
-    #end
-    article
+    self.find(:first, :conditions => ["permalink = ?", permalink])
   end
   
   def self.get_latest
-    #Article.get_all.find_all {|t| t.category == "noticia"}
     Article.find(:all, 
       :order => "created_at DESC", 
       :limit => 5,
@@ -63,22 +54,12 @@ class Article < ActiveRecord::Base
   end
 
   def self.get_articles
-    #Article.get_all.find_all {|t| t.category == "articulo"}
     Article.find(:all,
      :conditions =>  ["category = 'articulo'"], 
      :order => "created_at DESC",
      :limit => 5
     )
   end
-
-  
-  #def self.get_all
-  #  Article.cached(:all)
-  #end
-  
-  #def self.all
-  #  self.find(:all, :order => "created_at DESC")
-  #end
   
   ### Callback to clean the cached pages ###
   after_save :sweep_partial_cache

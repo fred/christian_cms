@@ -11,7 +11,6 @@ begin
   Settings.defaults[:content_keywords] = "Catholic Church, Bangkok, Iglesia Catolica, Latina, Hispano, Tailandia, Thailand, Spanish, Espanol, Misa, Mass"
   Settings.defaults[:content_author] = "Comunidad Catolica Latina en Bangkok, Tailandia"
 rescue => e
-  puts "Please run the migration first. Setting table not found"
-  return true
+  puts "Please run pending migrations first. Settings table was not found"
 end
   

@@ -1,20 +1,13 @@
 <!-- Footer -->	
 <div id="footer">
 	<ul>
-		<li>Comunidad Catolica Latina en Bangkok, Tailandia</li>
-		<li>Misas todos los sabados, 18:00 pm.</li>
-		<li> Casa Provincial de las Hermanas Salesianas </li>
-		<li> 124 Saladaeng Road, Bangkok 10500, Thailand </li>
-		<li> comunidadcatolicabk@gmail.com </li>
+		<li> <%= Settings[:site_footer1] %> </li>
+		<li> <%= Settings[:site_footer2] %> </li>
+		<li> <%= Settings[:site_address] %> </li>
+		<li> <%= Settings[:site_email] %> </li>
 	</ul>
 	<img src="/images/footer_logo.png" alt="" />
 </div>
 <span class="secreto"> 
-	Iglesia Catolica en Bangkok tailandia.
-	Catholic Church in Bangkok Thailand.
-	Spanish Mass, misa en Español en Tailandia.
-	Iglesia en Español en Bangkok Tailandia.
-	Misa en espanol.
-	misa en Italiano.
-	Italian mass
+	<%= Settings[:content_keywords] %>
 </span>

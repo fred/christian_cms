@@ -10,6 +10,11 @@ begin
   Settings.defaults[:email] = "admin@ComunidadCatolica.com"
   Settings.defaults[:content_keywords] = "Catholic Church, Bangkok, Iglesia Catolica, Latina, Hispano, Tailandia, Thailand, Spanish, Espanol, Misa, Mass"
   Settings.defaults[:content_author] = "Comunidad Catolica Latina en Bangkok, Tailandia"
+  Settings.defaults[:google_analytics_key] = "UA-737604-12"
+  Settings.defaults[:site_email] = "comunidadcatolicabk@gmail.com"
+  Settings.defaults[:site_address] = "Casa Provincial de las Hermanas Salesianas <br /> 124 Saladaeng Road, Bangkok 10500, Thailand"
+  Settings.defaults[:site_footer1] = "Comunidad Catolica Latina en Bangkok, Tailandia"
+	Settings.defaults[:site_footer2] = "Misas todos los sabados, 18:00 pm."
 rescue => e
   puts "Please run pending migrations first. Settings table was not found"
 end

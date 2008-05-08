@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es">
 
+<% cache do "site_head" %>
 <head>
 	<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 	<meta name="keywords" content=<%= Settings.content_keywords %>/> 
@@ -13,8 +14,9 @@
 	<%= stylesheet_link_tag 'pagination' %>	
 	<%= javascript_include_tag :defaults %>
 	<%= javascript_include_tag 'prototype' %>
-	
 </head>
+<% end %>
+
 <body>
 
 <div id="header">
@@ -44,7 +46,7 @@
 	<div id="content">
 	
 		<!-- Side Column -->
-		<%= render :partial => "/shared/theme/toader/side_column"%>
+		<%= render :partial => "/shared/theme/#{Settings.theme}/side_column"%>
 		
 		<!-- Content -->
 		<h2 class="flash_notice"><%= flash[:notice] %></h2>
@@ -59,21 +61,11 @@
 		
 	</div>
 	
-	<%= render :partial => "/shared/theme/toader/footer" %>
+	<%= render :partial => "/shared/theme/#{Settings.theme}/footer" %>
 	
 </div>
 
-<% if RAILS_ENV == "production" %>
-	<script type="text/javascript">
-		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-	</script>
-	<script type="text/javascript">
-		var pageTracker = _gat._getTracker("UA-737604-12");
-		pageTracker._initData();
-		pageTracker._trackPageview();
-	</script>		
-<% end %>
+<%= render :partial => "/shared/google_analytics" %>
 
 </body>
 </html>

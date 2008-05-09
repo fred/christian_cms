@@ -96,16 +96,7 @@ class UsersController < ApplicationController
     else
       @user = User.find(current_user.id)
     end
-    
-    #if params[:user_icon] && params[:user_icon][:uploaded_data]
-      #@user_icon = UserIcon.new(params[:user_icon])
-    #end
-    
     if @user.update_attributes(params[:user])
-      #if params[:user_icon] && params[:user_icon][:uploaded_data]
-        #@user_icon.user_id = @user.id
-        #@user_icon.save
-      #end
       flash[:notice] = 'Usuario fue Actualizado.'
       redirect_to user_path(@user)
     else
@@ -142,47 +133,10 @@ class UsersController < ApplicationController
     @users.each do |user|
       if user.email
         Notifier.deliver_mass_email(user,msg_time,msg_subject,msg_body)
-        sleep 2
+        sleep 5
       end
     end
     redirect_to "/"
   end
   
-  def import(filename)
-    # FORMAT : 
-    #Familia, 1. Apellido, 2. Apellido, Nombre, Nacionalidad, Parentesco, Estado civil, Cumpleanos, Aniv. Bodas,
-    #Domicilio, Tel. Habitacion, Tel. Mobil, E-mail, Sacramentos Recibidos (hijos)
-    
-    # EXAMPLE :
-    #De Souza Araujo,Araujo,De Souza,Federico,Brasil,Hijo,soltero,11-Jun,,
-    #"Sukhumvit Soi 12, Apt 3A, Bangkok",02-229-4598,083-779-7333,Fred.the.master@gmail.com,
-    
-    FasterCSV.foreach(filename) do |row|
-      random_login = rand(9999).to_s
-      if row[7]
-        date_array = row[7].split("-")
-        date = Time.parse("2000-#{date_array[1]}-#{date_array[0]}")
-      else
-        date = Time.now
-      end
-      User.create :family_name  => row[0],
-                  :last_name    => row[1],
-                  :middle_name  => row[2],
-                  :first_name   => row[3],
-                  :nationality  => row[4],
-                  :family_role  => row[5],
-                  :civil_state  => row[6],
-                  :address1     => row[9],
-                  :home_phone   => row[10],
-                  :mobile_phone => row[11],
-                  :email        => row[12],
-                  :sacraments   => row[13],
-                  :birthday     => date,
-                  :login                  => random_login,
-                  :password               => random_login,
-                  :password_confirmation  => random_login
-    end
-    
-  end
-
 end

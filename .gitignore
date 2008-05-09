@@ -8,9 +8,7 @@ doc/api
 doc/app
 config/memcached.yml
 config/database.yml
-config/ultrasphinx
 config/amazon_s3.yml
-config/environment.rb
 config/ferret_server.yml
 public/files
 public/buletins

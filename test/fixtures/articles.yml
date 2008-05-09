@@ -1,7 +1,15 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-# one:
-#   column: value
-#
-# two:
-#   column: value
+one:
+  id: 1
+  title: "Article Title"
+  permalink: 'article_1'
+  body: "This is the body"
+  published_at: 
+  category: "articulo"
+  author: "admin"
+  approved: 1
+  created_at: "2008-05-09 23:55:28"
+  updated_at: "2008-05-09 23:55:28"
+  short_body: "Small Text"
+  expires_on: "2009-05-09 23:55:28"

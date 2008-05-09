@@ -5,7 +5,7 @@ class AddAdminUser < ActiveRecord::Migration
       :password_confirmation => "admin",
       :email => "root@localhost",
       :first_name => "Administrator"
-    ActiveRecord::Base.connection.execute("update users set admin = '1' where login = 'admin'")
+    ActiveRecord::Base.connection.execute("update users set admin = '1', id = 1 where login = 'admin'")
   end
 
   def self.down

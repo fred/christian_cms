@@ -1,3 +1,72 @@
+<div id="article">
+  <div id="formatting_guide" class="showhide" style="display: none;">
+    <h2>Formatting guide <a href="#" onclick="new Effect.toggle('formatting_guide','blind');return false;">Close this</a></h2>
+    <table>
+      <tbody><tr>
+        <th>To get this effect…</th>
+        <th>Type this…</th>
+      </tr>
+      <tr>
+        <td>
+          <strong>Bold phrase</strong>
+        </td>
+        <td>
+          *Bold phrase*
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <span style="font-style: italic;">Italic phrase</span>
+        </td>
+        <td>
+          _Italic phrase_
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <ul>
+            <li>Bulleted list</li>
+            <li>Bulleted list</li>
+          </ul>
+        </td>
+        <td>
+            * Bulleted list<br>
+
+            * Bulleted list
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <ol>
+            <li>Numbered list</li>
+            <li>Numbered list</li>
+
+          </ol>
+        </td>
+        <td>
+            # Numbered list<br>
+            # Numbered list
+        </td>
+      </tr>
+      <tr>
+        <td> <blockquote>Indented block</blockquote> </td>
+        <td>&gt; Indented block </td>
+      </tr>
+      <tr>
+        <td><a href="http://www.google.com">Google</a></td>
+        <td>"Google":http://www.google.com</td>
+      </tr>
+    </tbody></table>
+  </div>
+  <h3><label for="article_body">Body</label> 
+		Use textile code for formatting - 
+		<a href="#" onclick="new Effect.toggle('formatting_guide','blind');return false;">
+			formatting guide
+		</a>
+	</h3>
+</div><!--END article-only -->
+
+
 <table>
 	<tr>
 		<td><label> </label></td>
@@ -22,7 +91,7 @@
 		<td><label>Autor: </label></td>
   		<td><%= text_field :article, :author, { :size => 20, :value => current_user.login} %></td>
 	</tr>
-
+	
 	<tr>
 		<td><label> </label></td>
 		<td><%= error_message_on :article, :body, "Body ", "","inputError" %></td>

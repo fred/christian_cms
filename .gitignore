@@ -13,3 +13,4 @@ config/ferret_server.yml
 public/files
 public/buletins
 public/images/simple_captcha
+.svn

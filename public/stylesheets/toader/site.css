@@ -468,3 +468,112 @@ pre {
 	width: 10em;
 	margin-bottom: 12px;
 }
+
+/*-------------------------------------------------
+FORMATTING GUIDE
+-------------------------------------------------*/
+
+div.formattingtips p {
+	font-size: 11px;
+	line-height: 14px;
+	margin: 0 0 10px 0;
+}
+
+.comments div.formattingtips {
+  padding-top: 5px;
+  border-top: 3px solid #dcdcdc;
+}
+
+
+div.markdownexamples p {
+	font-family: courier, "courier new";
+	font-size: 11px;
+}
+
+div#formatting_guide {
+  margin-right: 8px;
+}
+
+div#formatting_guide h2 {
+  font-size: 16px;
+  border: none;
+}
+
+div#formatting_guide table {
+  margin: 15px 0 15px 0;
+  background: #fff;
+  border-collapse: collapse;
+}
+
+div#formatting_guide table th {
+  text-align: left;
+  border: 1px solid #ddd;
+  padding: 6px;
+  font-weight: normal;
+  background: #666;
+  color: #fff;
+}
+
+div#formatting_guide table td {
+  border: 1px solid #ddd;
+  font-size: 12px;
+  padding: 6px;
+}
+
+div#formatting_guide table td ol,
+div#formatting_guide table td ul {
+  padding: 0;
+  margin: 5px 0 5px 20px;
+}
+
+div#formatting_guide table td ul li {
+  list-style-type: disc;
+}
+
+div#formatting_guide table td blockquote {
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+div#formatting_guide table td h1 {
+  font-size: 130%;
+}
+
+div#formatting_guide table td h2 {
+  font-size: 100%;
+}
+
+div#formatting_guide table td h3 {
+  font-size: 100%;
+}
+div.showhide {
+  background: #efefef;
+  padding: 10px 10px 1px 10px;
+  margin: 0 0 20px 0;
+  border: 2px solid #ccc;
+}
+
+div.showhide h2 {
+  margin: 0;
+  font-size: 12px;
+  border-bottom: 1px solid #ccc;
+}
+
+div.showhide p {
+  margin: 8px 0;
+  color: #000;
+  font-weight: normal;
+}
+
+ul.sub_topic {
+  list-style: none;
+  margin: 0 0 0 2em;
+  padding: 0;
+}
+
+.inactive, .inactive td {
+  color: #AAA;
+  background-color: #EEE;
+}

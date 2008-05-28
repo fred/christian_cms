@@ -1,8 +1,6 @@
-<% form_for :search, :url => {:action => "search"} do -%>
-	<table>
-		<tr>
-			<td><%= text_field :search, :q, :size => 14 %></td>
-			<td> <%= submit_tag 'Buscar' %> </td>
-		</tr>
-	</table>
-<% end -%>
+<div class="main_search">
+	<% form_for :search, :url => {:controller => "articles", :action => "search"} do -%>
+		<%= text_field :search, :q, :size => 14 %>
+		<%= submit_tag 'Buscar' %>
+	<% end %>
+</div>

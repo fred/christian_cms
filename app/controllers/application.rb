@@ -29,6 +29,11 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def strip_diacritics(s)
+    # latin1 subset only
+    s.tr("ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ",
+         "AAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy")
+  end
   
   protected
     def meta_defaults

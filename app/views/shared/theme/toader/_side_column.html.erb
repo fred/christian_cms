@@ -1,25 +1,7 @@
 <div class="subContent">
-	<img src="/images/igles2.gif" alt="Comunidad Catolica, Bangkok" class="iglesia"/>
-	<% if false && !logged_in? %>
-			<% form_tag session_path do -%>
-			<table>
-				<tr>
-					<td><label for="login">Login</label></td>
-					<td><%= text_field_tag 'login', nil, :size => 10 %></td>
-				</tr>
-				<tr>
-					<td><label for="password">Password</label></td>
-					<td><%= password_field_tag 'password', nil, :size => 10 %></td>
-				</tr>
-				<tr>
-					<td><label for="remember_me">Save:</label></td>
-					<td><%= check_box_tag 'remember_me' %></td>
-				</tr>
-			</table>
-			<p><%= submit_tag 'Log in' %></p>
-			<% end -%>
-	<% end %>
 	
+	<img src="/images/igles2.gif" alt="Comunidad Catolica, Bangkok" class="iglesia"/>
+	<%= render :partial => "/articles/search" %>
 	
 	<% cache "side_menu" do %>
 		<h2> La Comunidad </h2>

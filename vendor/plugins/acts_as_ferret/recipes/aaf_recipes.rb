@@ -45,11 +45,13 @@ namespace :ferret do
 
   desc "Stop the Ferret DRb server"
   task :stop, :roles => :app do
-    run "cd #{current_path}; script/ferret_server -e #{rails_env} stop"
+    rails_env = fetch(:rails_env, 'production')
+    run "cd #{current_path}; script/ferret_server -e #{rails_env} stop || true"
   end
 
   desc "Start the Ferret DRb server"
   task :start, :roles => :app do
+    rails_env = fetch(:rails_env, 'production')
     run "cd #{current_path}; script/ferret_server -e #{rails_env} start"
   end
 
@@ -63,8 +65,9 @@ namespace :ferret do
   namespace :index do
 
     desc "Rebuild the Ferret index. See aaf_recipes.rb for instructions."
-    task :rebuild, :roles => :app do
+    task :rebuild => :environment, :roles => :app do
       rake = fetch(:rake, 'rake')
+      rails_env = fetch(:rails_env, 'production')
       indexes = fetch(:ferret_indexes, nil)
       if indexes and indexes.any?
         run "cd #{current_path}; RAILS_ENV=#{rails_env} INDEXES='#{indexes.join(' ')}' #{rake} ferret:rebuild"

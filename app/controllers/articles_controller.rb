@@ -16,17 +16,10 @@ class ArticlesController < ApplicationController
     per_page = 6
     current_page = (params[:page] ||= 1).to_i
 
-    if authorized_admin?
-      @articles = Article.paginate :page => current_page, 
-        :per_page => per_page, 
-        :order => order, 
-        :conditions => ["articles.approved = ?", true]
-    else
-      @articles = Article.paginate :page => current_page, 
-        :per_page => per_page, 
-        :order => order
-    end
-    
+    @articles = Article.paginate :page => current_page, 
+      :per_page => per_page, 
+      :order => order, 
+      :conditions => ["articles.approved = ?", true]
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @articles }
@@ -35,15 +28,13 @@ class ArticlesController < ApplicationController
   
   
   def search
-    if params[:search] && params[:search][:q] != ""
+    if params[:search] && !params[:search][:q].to_s.empty?
       @query = params[:search][:q]
-      per_page = 10
+      per_page = 20
       current_page = (params[:page] ||= 1).to_i
       @articles = Article.find_with_ferret_paginated(@query, {:page => current_page, :per_page => per_page})
     else
-      per_page = 10
-      current_page = (params[:page] ||= 1).to_i
-      @articles = Article.paginate :page => current_page, :per_page => per_page
+      @articles = []
       flash[:notice] = 'No fue encrontrado ningún Articulo.'
     end
     render :action => "index"

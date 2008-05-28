@@ -2,6 +2,12 @@ class Article < ActiveRecord::Base
   
   acts_as_textiled :body, :short_body
   
+  acts_as_ferret :fields => { 
+      :title      => {:boost => 3},
+      :short_body => {:boost => 2},
+      :body       => {:boost => 1}
+  }
+  
   belongs_to :user
     
   validates_presence_of :title
@@ -22,10 +28,11 @@ class Article < ActiveRecord::Base
 
   def self.find_with_ferret_paginated(q,options = {})
      return nil if q.nil? or q==""
-     results = self.find_id_by_contents(q)
+     results = self.find_ids_with_ferret(q)
      page ||= options[:page]
      per_page ||= options[:per_page]
      id_array = []
+     # just get the ids.
      results[1].each do |t|
        id_array << t[:id]
      end

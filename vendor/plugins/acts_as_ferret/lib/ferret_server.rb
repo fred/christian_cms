@@ -61,13 +61,15 @@ module ActsAsFerret
       require 'unix_daemon'
       include(ActsAsFerret::Remote::UnixDaemon)
 
+
       ################################################################################
       cattr_accessor :running
 
       ################################################################################
       def initialize
-        @cfg = ActsAsFerret::Remote::Config.new
         ActiveRecord::Base.allow_concurrency = true
+        require 'ar_mysql_auto_reconnect_patch'
+        @cfg = ActsAsFerret::Remote::Config.new
         ActiveRecord::Base.logger = @logger = Logger.new(@cfg.log_file)
         ActiveRecord::Base.logger.level = Logger.const_get(@cfg.log_level.upcase) rescue Logger::DEBUG
         if @cfg.script

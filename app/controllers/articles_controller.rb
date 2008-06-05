@@ -1,7 +1,6 @@
 class ArticlesController < ApplicationController
 
   before_filter :admin, :except => [ :index, :list, :show, :search, :old_action ]
-  caches_page :show, :index, :new
 
   # GET /articles
   # GET /articles.xml

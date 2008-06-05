@@ -3,39 +3,47 @@
 	<img src="/images/igles2.gif" alt="Comunidad Catolica, Bangkok" class="iglesia"/>
 	<%= render :partial => "/articles/search" %>
 	
-	<% cache "side_menu" do %>
-		<h2> La Comunidad </h2>
-		<ul>
-			<li> <%= link_to "Quienes Somos", permalink_url("quienes-somos") %> </li>
-			<li> <%= link_to "Miembros", users_path %></li>
-			<li> <%= link_to "Contactenos", permalink_url("contactenos") %> </li>
-			<li> <%= link_to "Mapa/Como llegar", permalink_url("mapa") %> </li>
-		</ul>
-		<h2> <%= link_to "Eventos Del Mes", events_path %> </h2>
-		<ul>
-			<% Event.get_this_month.each do |event| %>
-				<li><%= link_to event.title, event_path(event) %> <br /><%= event.start_date.to_s(:short) %></li>
-			<% end %>
-		</ul>
-		<h2> <%= link_to "Ultimas Noticias.", articles_path %> </h2>
-		<ul>
-			<% Article.get_latest.each do |article| %>
-				<li><%= link_to article.title, permalink_url(article.permalink) %></li>
-			<% end %>
-		</ul>
-		<h2> <%= link_to "Cumpleanos del Mes", month_birthdays_path %> </h2>
-		<ul>
-			<% Birthday.get_this_month.each do |t| %>
-				<li> <%= t.birthdate.strftime("%b %d") %>, <%= t.first_name %> <%= t.last_name %> </li>
-			<% end %>
-		</ul>
-		<h2> <%= link_to "Boletines del Mes", buletins_path %> </h2>
-		<ul>
-			<% Buletin.get_latest.each do |buletin| %>
-				<li> <%= link_to buletin.created_at.strftime(" %B %d, %Y "), buletin.public_filename %>	</li>
-			<% end %>
-		</ul>
-	<% end %>
+	<h2> La Comunidad </h2>
+	<ul>
+		<li> <%= link_to "Quienes Somos", permalink_url("quienes-somos") %> </li>
+		<li> <%= link_to "Miembros", users_path %></li>
+		<li> <%= link_to "Contactenos", permalink_url("contactenos") %> </li>
+		<li> <%= link_to "Mapa/Como llegar", permalink_url("mapa") %> </li>
+	</ul>
+	
+	<h2> <%= link_to "Eventos Del Mes", events_path %> </h2>
+	<ul>
+		<% Event.get_this_month.each do |event| %>
+			<li><%= link_to event.title, event_path(event) %> <br /><%= event.start_date.to_s(:short) %></li>
+		<% end %>
+	</ul>
+	
+	<h2> <%= link_to "Ultimas Noticias.", articles_path %> </h2>
+	<ul>
+		<% Article.get_latest.each do |article| %>
+			<li>
+				<%= link_to article.title, permalink_url(article.permalink) %>
+			</li>
+		<% end %>
+	</ul>
+	
+	<h2> <%= link_to "Cumpleanos del Mes", month_birthdays_path %> </h2>
+	<ul>
+		<% Birthday.get_this_month.each do |t| %>
+			<li>
+				<%= t.birthdate.strftime("%b %d") %>, <%= t.first_name %> <%= t.last_name %>
+			</li>
+		<% end %>
+	</ul>
+	
+	<h2> <%= link_to "Boletines del Mes", buletins_path %> </h2>
+	<ul>
+		<% Buletin.get_latest.each do |buletin| %>
+			<li> 
+				<%= link_to buletin.created_at.strftime(" %B %d, %Y "), buletin.public_filename %>
+			</li>
+		<% end %>
+	</ul>
 	
 	<br />
 	<h2> Links </h2>

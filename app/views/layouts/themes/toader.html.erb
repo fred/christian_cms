@@ -1,7 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es">
 
-<% cache do "site_head" %>
 <head>
 	<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 	<meta name="keywords" content=<%= Settings.content_keywords %>/> 
@@ -18,61 +17,58 @@
 	<%= javascript_include_tag 'json' %>
 	<%= javascript_include_tag 'cookie' %>	
 </head>
-<% end %>
 
 <body>
 
-<div id="header">
-		<div id="masthead">
-			<img src="/images/jesus.jpeg" />
-			<h1> <%= link_to Settings.logo_title, "/", :title => Settings.logo_title %> </h1>
-			<p> <%= link_to Settings.logo_subtitle, "/", :title => Settings.logo_subtitle %>
-			</p>
-			<ul>
-				<li> <%= link_to "Noticias", articles_path %> </li>
-				<li> <%= link_to "Eventos", events_path %> </li>
-				<li> <%= link_to "Boletines", buletins_path %></li>
-				<li> <%= link_to "Cumpleaños", month_birthdays_path %> </li>
-				<li> <%= link_to "Galeria de Fotos", "http://gallery.comunidad-catolica.com" %></li>
-				<% if !logged_in? %>
-					<li> <%= link_to _("Signup"), signup_url %> </li>
-				<% else %>
-					<li><%= link_to "Mi Profile", edit_user_path(current_user) %></li>
-					<li><a href="/logout">Logout</a></li>
-				<% end %>
-			</ul>
-		</div>
-</div>
-
-<div id="main">
-	
-	<div id="content">
-	
-		<!-- Side Column -->
-		<%= render :partial => "/shared/theme/#{Settings.theme}/side_column"%>
-		
-		<!-- Content -->
-		<h2 class="flash_notice">
-			<%= #flash[:notice] 
-			%>
-			<%= render :partial => "/shared/flash_notice" %>
-		</h2>
-		<div class="artic">
-			<%= yield %>
-		</div>
-		
-		<br clear="both"/>
-		<p class="blockquote"> 
-			"Porque donde hay dos o tres reunidos en mi Nombre, yo estoy presente en medio de ellos". (Mt 18, 20)
-		</p>
-		
+	<div id="header">
+			<div id="masthead">
+				<img src="/images/jesus.jpeg" />
+				<h1> <%= link_to Settings.logo_title, "/", :title => Settings.logo_title %> </h1>
+				<p> <%= link_to Settings.logo_subtitle, "/", :title => Settings.logo_subtitle %>
+				</p>
+				<ul>
+					<li> <%= link_to "Noticias", articles_path %> </li>
+					<li> <%= link_to "Eventos", events_path %> </li>
+					<li> <%= link_to "Boletines", buletins_path %></li>
+					<li> <%= link_to "Cumpleaños", month_birthdays_path %> </li>
+					<li> <%= link_to "Galeria de Fotos", "http://gallery.comunidad-catolica.com" %></li>
+					<% if !logged_in? %>
+						<li> <%= link_to _("Signup"), signup_url %> </li>
+					<% else %>
+						<li><%= link_to "Mi Profile", edit_user_path(current_user) %></li>
+						<li><a href="/logout">Logout</a></li>
+					<% end %>
+				</ul>
+			</div>
 	</div>
-	
-	<%= render :partial => "/shared/theme/#{Settings.theme}/footer" %>
-	
-</div>
 
-<%= render :partial => "/shared/google_analytics" %>
+	<div id="main">
+	
+		<div id="content">
+	
+			<!-- Side Column -->
+			<%= render :partial => "/shared/theme/#{Settings.theme}/side_column"%>
+		
+			<!-- Content -->
+			<h2 class="flash_notice">
+				<%= render :partial => "/shared/flash_notice" %>
+			</h2>
+			<div class="artic">
+				<%= yield %>
+			</div>
+		
+			<br clear="both"/>
+			<p class="blockquote"> 
+				"Porque donde hay dos o tres reunidos en mi Nombre, yo estoy presente en medio de ellos". (Mt 18, 20)
+			</p>
+		
+		</div>
+	
+		<%= render :partial => "/shared/theme/#{Settings.theme}/footer" %>
+	
+	</div>
+
+	<%= render :partial => "/shared/google_analytics" %>
 
 </body>
 </html>

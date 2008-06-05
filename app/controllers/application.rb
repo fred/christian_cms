@@ -19,7 +19,8 @@ class ApplicationController < ActionController::Base
   
   def get_rate
     @rate = MoneyRate.get_rate("USD","THB")
-    @time = Time.now+11.hours
+    Time.zone = "Bangkok"
+    @time = Time.current
   end
   
   def set_current_user

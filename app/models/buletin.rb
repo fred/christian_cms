@@ -5,7 +5,7 @@ class Buletin < ActiveRecord::Base
   #after_save :expire_my_cache
   
   has_attachment :storage => :file_system, 
-                 :max_size => 990.kilobytes,
+                 :max_size => 10.megabytes,
 		 :processor => "MiniMagick"
   
   validates_as_attachment

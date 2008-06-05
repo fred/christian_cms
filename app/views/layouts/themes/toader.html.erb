@@ -14,6 +14,9 @@
 	<%= stylesheet_link_tag 'pagination' %>	
 	<%= javascript_include_tag :defaults %>
 	<%= javascript_include_tag 'prototype' %>
+	<%= javascript_include_tag 'flash' %>
+	<%= javascript_include_tag 'json' %>
+	<%= javascript_include_tag 'cookie' %>	
 </head>
 <% end %>
 
@@ -49,7 +52,11 @@
 		<%= render :partial => "/shared/theme/#{Settings.theme}/side_column"%>
 		
 		<!-- Content -->
-		<h2 class="flash_notice"><%= flash[:notice] %></h2>
+		<h2 class="flash_notice">
+			<%= #flash[:notice] 
+			%>
+			<%= render :partial => "/shared/flash_notice" %>
+		</h2>
 		<div class="artic">
 			<%= yield %>
 		</div>

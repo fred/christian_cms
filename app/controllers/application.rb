@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   
   include AuthenticatedSystem
   
+  include CacheableFlash
+  
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery :secret => 'o81e062ae93Pd7e0c63rg4L8hx61jb5'

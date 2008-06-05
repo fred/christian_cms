@@ -37,7 +37,6 @@ class ArticlesController < ApplicationController
       @articles = []
       flash[:notice] = 'No fue encrontrado ningún Articulo.'
     end
-    render :action => "index"
   end
 
 

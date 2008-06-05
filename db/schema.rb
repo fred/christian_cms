@@ -1,5 +1,5 @@
 # This file is auto-generated from the current state of the database. Instead of editing this file, 
-# please use the migrations feature of ActiveRecord to incrementally modify your database, and
+# please use the migrations feature of Active Record to incrementally modify your database, and
 # then regenerate this schema definition.
 #
 # Note that this schema.rb definition is the authoritative source for your database schema. If you need
@@ -9,10 +9,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 12) do
+ActiveRecord::Schema.define(:version => 20080529101446) do
 
   create_table "articles", :force => true do |t|
-    t.integer  "user_id"
+    t.integer  "user_id",      :limit => 11
     t.string   "title",        :limit => 100
     t.string   "permalink",    :limit => 50
     t.text     "body"
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(:version => 12) do
     t.string   "title"
     t.string   "content_type"
     t.string   "filename"
-    t.integer  "size"
+    t.integer  "size",         :limit => 11
     t.datetime "date_time"
     t.boolean  "ninos"
     t.datetime "created_at"
@@ -62,18 +62,18 @@ ActiveRecord::Schema.define(:version => 12) do
     t.string   "convert_from"
     t.string   "convert_to"
     t.string   "convert_result"
-    t.integer  "expire_time"
+    t.integer  "expire_time",    :limit => 11
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "news", :force => true do |t|
-    t.integer  "user_id"
+    t.integer  "user_id",      :limit => 11
     t.string   "title",        :limit => 50
     t.string   "permalink",    :limit => 50
     t.text     "body"
     t.datetime "published_at"
-    t.integer  "category_id"
+    t.integer  "category_id",  :limit => 11
     t.string   "author",       :limit => 50
     t.boolean  "approved",                   :default => true
     t.boolean  "show_front",                 :default => true
@@ -119,6 +119,7 @@ ActiveRecord::Schema.define(:version => 12) do
     t.string   "sacraments"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "approved",                                :default => true
   end
 
   create_table "weathers", :force => true do |t|

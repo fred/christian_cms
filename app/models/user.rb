@@ -28,11 +28,8 @@ class User < ActiveRecord::Base
     :mobile_phone, :home_phone, :office_phone, :address1, :address2, :city, :country,
     :nationality, :birthday, :display_address, :display_name, 
     :family_role, :civil_state, :sacraments
-        
-  #acts_as_ferret :fields => [ 'first_name', 'middle_name', 'last_name', 'family_name', 
-  #  'email', 'nationality', 'login' ]
   
-  apply_simple_captcha
+  #apply_simple_captcha
   has_many :articles
   cattr_accessor :current_user
   

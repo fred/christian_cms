@@ -46,7 +46,7 @@ class UsersController < ApplicationController
   def create
     cookies.delete :auth_token
     @user = User.new(params[:user])
-    if @user.valid_with_captcha?
+    if @user.valid?
       @user.save!
       self.current_user = @user
       redirect_back_or_default('/')

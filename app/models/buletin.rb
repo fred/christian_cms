@@ -6,7 +6,7 @@ class Buletin < ActiveRecord::Base
   
   has_attachment :storage => :file_system, 
                  :max_size => 10.megabytes,
-		 :processor => "MiniMagick"
+		             :processor => "MiniMagick"
   
   validates_as_attachment
   

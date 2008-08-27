@@ -1,0 +1,32 @@
+%h2 Users
+%table
+  %tr
+    %th Login
+    %th First Name
+    %th Last Name
+    %th Date
+    %th
+    %th
+    %th
+  %tr
+    - for user in @users
+      %tr
+        %td 
+          = link_to user.login, edit_admin_user_path(user)
+        %td 
+          = link_to user.first_name, edit_admin_user_path(user)
+        %td 
+          = link_to user.last_name, edit_admin_user_path(user) 
+        %td 
+          = user.created_at.to_s(:short)
+        %td 
+          = link_to 'Show', admin_user_path(user)
+        %td 
+          = link_to 'Edit', edit_admin_user_path(user)
+        %td 
+          = link_to 'Delete', admin_user_path(user), :confirm => 'Are you sure?', :method => :delete
+
+
+= link_to 'New User', new_admin_user_path 
+
+= will_paginate @users

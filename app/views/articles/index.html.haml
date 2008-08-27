@@ -1,0 +1,14 @@
+- @articles.each do |article|
+  
+  - cache("articles/#{article.permalink}") do
+    .article
+      %h2 
+        = link_to(article.title, permalink_url(article.permalink))
+      = article.short_body
+      - if !article.body.empty?
+        %p 
+          = link_to("leer mas...", permalink_url(article.permalink), :class => 'read_more_link')
+      %p.created_at
+        = article.created_at.strftime("%B %d, %Y")
+      
+= will_paginate @articles

@@ -1,0 +1,31 @@
+%h3
+  = @article.title
+
+%p 
+  %br
+  = @article.short_body
+
+%p
+  %br
+  = @article.body
+
+%p 
+  %b Active
+%br{ :style => "clear:both;"}
+  = boolean_to_image_big(@article.approved)
+
+%p
+  %b Permalink:
+  = @article.permalink
+
+%p
+  %b Create Date:
+  = @article.created_at.to_s(:long)
+
+%p
+  %b Last Update:
+  = @article.updated_at.to_s(:long)
+
+= link_to 'Edit', edit_admin_article_path(@article)
+|
+= link_to 'Back', admin_articles_path

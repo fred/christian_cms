@@ -1,0 +1,12 @@
+%h2 
+  Editing article
+  %i 
+    %u
+      = @article.title
+
+- form_for(@article, :url => { :action => "update" } ) do |f| 
+  = f.error_messages
+  = render :partial => 'form', :locals => { :f => f, :article => @article }
+  = f.submit 'Update'
+  
+= link_to 'Back', admin_articles_path

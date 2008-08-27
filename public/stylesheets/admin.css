@@ -1,0 +1,91 @@
+body {
+	background-color: #E8EFFB;
+}
+
+p {
+	margin: 6px 0px;
+}
+
+#site {
+  width: 1000px;
+  margin: 2px auto;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	padding: 10px;
+}
+
+#header {
+	margin: 0;
+	padding: 0;
+}
+
+#main {
+	width: 99%;
+	float: left;
+}
+	.flash_notice {
+		background-color: pink;
+		font-size: 1.4em;
+		font-style: italic;
+		padding: 0 4px;
+	}
+	.article {
+		border: 1px solid #ddd;
+	}
+
+#sidebar {
+	width:180px;
+	float: right;
+	margin: 0;
+}
+
+#sidebar .sidebar_block {
+	width: 98%;
+	float: right;
+	margin: 0 0 10px 0;
+}
+
+#footer {
+	width: 1000px;
+	padding: 10px 0 0 0;
+	border: 1px solid #ddd;
+	text-align: center;
+}
+
+/*
+  #header
+    .span-23
+      %h1 Title
+      
+  .clear
+  
+  #main
+    .flash_notice
+      %p= flash[:notice]
+    .content
+      = yield
+  
+  #sidebard
+    .sidebar_item
+      Sidebard
+      kjldasd poqweq
+      optmvad asdf
+    .sidebar_item  
+      qoqwc asdf
+      pnrgm xyafmawe
+  
+  .clear
+
+  #footer
+    %p Create with Ruby on Rails.
+    %p Released Under MIT License.
+*/
+
+.comment {
+	width: 70%;
+	margin:10px 15px; 
+	padding: 8px;
+	border: 1px solid #ccc;
+	background-color: #FAFAFA; 
+}
+

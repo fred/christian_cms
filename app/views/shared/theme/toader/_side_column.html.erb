@@ -12,21 +12,11 @@
 		<li> <%= link_to "Contactenos", permalink_url("contactenos") %> </li>
 		<li> <%= link_to "Mapa/Como llegar", permalink_url("mapa") %> </li>
 	</ul>
-
-	<!-- 
-	<h2> <%= #link_to "Eventos Del Mes", events_path 
-	%> </h2>
+	
 	<ul>
-		<% #Event.get_this_month.each do |event| 
-		%>
-			<li><%= #link_to event.title, event_path(event) 
-			%> <br />
-			<%= #event.start_date.to_s(:short) 
-			%></li>
-		<% #end 
-		%>
+		<li> <%= link_to "RSS Feed", formatted_articles_url(:rss)%></li>
+	  <li><%= link_to "ATOM Feed", formatted_articles_url(:atom)%></li>
 	</ul>
-  -->
 	
 	<h2> <%= link_to "Ultimas Noticias.", articles_path %> </h2>
 	<ul>
@@ -46,6 +36,7 @@
 		<% end %>
 	</ul>
 	
+	<br />
 	<%= render :partial => "/shared/google_adsense_ver" %>
 	
 	<h2> <%= link_to "Boletines del Mes", buletins_path %> </h2>
@@ -66,17 +57,19 @@
 		<li><a href="http://www.crosswire.org/sword/index.jsp">Biblia Software Sword</a></li>
 	</ul>
 	
-	<%= render :partial => "/shared/google_adsense_ver" %>
-	
+	<!-- 
 	<h2> Time in Bangkok </h2>
 	<ul>
 		<li><%= @time.to_s(:long) %> </li>
 	</ul>
+  -->
 	
+	<!-- 
 	<h2> Exchange Rate </h2>
 	<ul>
 		<li><%= @rate.convert_result %> </li>
 	</ul>
+  -->
 	
 	<%= render :partial => "/shared/google_adsense_ver" %>
 	

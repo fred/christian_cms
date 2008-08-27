@@ -2,6 +2,34 @@
 require 'md5'
 module ApplicationHelper
   
+  
+  # returns a yes/no image small size
+  def boolean_to_image_small(bol)
+    if bol 
+      return image_tag("/images/yes_small.png", :class => "align-center")
+    else
+      return image_tag("/images/no_small.png", :class => "align-center")
+    end
+  end
+  
+  # returns a proper image bigger
+  def boolean_to_image_big(bol)
+    if bol 
+      return image_tag("/images/yes.png", :class => "align-center")
+    else
+      return image_tag("/images/no.png", :class => "align-center")
+    end
+  end
+
+  # returns a proper image 
+  def boolean_to_word(bol)
+    if bol 
+      return "Yes"
+    else
+      return "No"
+    end
+  end
+  
   def years_array
     years = []
     Time.now.year.downto(1970) do |year|

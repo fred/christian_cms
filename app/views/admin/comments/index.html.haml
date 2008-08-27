@@ -1,0 +1,28 @@
+%h3
+  Comments
+- @comments.each do |t|
+  .comment
+    %h4
+      = boolean_to_image_small(t.approved) 
+      = t.article.title 
+    %p
+      name: 
+      = h t.name
+    %p 
+      email:
+      = h t.email
+    %p
+      website:
+      = h t.website
+    %p
+      when:
+      = time_ago_in_words(Time.now, t.created_at)
+      ago.
+    %p
+      = h t.body
+      
+    %p
+      = approve_link(t)
+      = link_to 'Show', admin_comment_path(t)
+      = link_to 'Edit', edit_admin_comment_path(t)
+      = link_to 'Destroy', admin_comment_path(t), :confirm => 'Are you sure?', :method => :delete

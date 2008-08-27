@@ -1,0 +1,52 @@
+!!! strict
+%html
+  %head
+    %title= controller.action_name
+    %meta{ 'http-equiv' => 'Content-Type', :content => 'text/html; charset=UTF-8' }
+    = stylesheet_link_tag "blueprint/src/reset.css"
+    = stylesheet_link_tag "blueprint/src/grid.css"
+    = stylesheet_link_tag "blueprint/src/typography.css"
+    = stylesheet_link_tag "blueprint/src/forms.css"
+    = stylesheet_link_tag "fancy"
+    /= stylesheet_link_tag "blueprint/src/print.css"
+    = stylesheet_link_tag "admin.css"
+    = stylesheet_link_tag "admin_pagination.css"
+    = stylesheet_link_tag "admin_scaffold"
+    = stylesheet_link_tag "table"
+    = stylesheet_link_tag "menu"
+    
+    = javascript_include_tag :defaults, :cache => true
+    
+  %body
+  
+  
+  #site
+  
+    #header
+      #dolphincontainer
+        #dolphinnav
+          %ul
+            %li
+              = link_to "Users", admin_users_path
+            %li
+              = link_to "Articles", admin_articles_path
+            %li
+              = link_to "Settings", admin_settings_path
+            %li
+              = link_to "Buletins", admin_buletins_path
+            %li
+              = link_to "Menu Items", admin_menu_items_path
+            / %li
+            /  = link_to "Events", admin_events_path
+            %li
+              = link_to "Birthdays", admin_birthdays_path
+    .clear
+    
+    #main
+      .flash_notice
+        %p= flash[:notice]
+      .content
+        = yield
+            
+    .clear
+    

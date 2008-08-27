@@ -1,0 +1,32 @@
+%h3
+  Showing Menu Item
+  = @menu_item.title 
+%p
+
+%p
+  %b Title:
+  =h @menu_item.title 
+
+%p
+  %b Url:
+  =h @menu_item.url
+
+%p
+  %b 
+    Display order:
+  =h @menu_item.display_order
+
+%p
+  %b Article:
+  =h @menu_item.article_id 
+
+
+%p
+  %b Menu type:
+  =h @menu_item.menu_type 
+
+
+
+= link_to 'Edit', edit_menu_item_path(@menu_item) 
+|
+= link_to 'Back', menu_items_path 

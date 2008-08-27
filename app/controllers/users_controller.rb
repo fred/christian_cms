@@ -1,7 +1,5 @@
 require 'digest/sha1'
 class UsersController < ApplicationController
-  
-  before_filter :login_required, :except => [ :show, :index, :new, :create, :search ]
 
   def index
     if params[:sort]
@@ -52,7 +50,7 @@ class UsersController < ApplicationController
       redirect_back_or_default('/')
       flash[:notice] = "Gracias por registrarse!"
     else
-      flash[:notice] = "Verifique la imagen abajo corectament!"
+      flash[:notice] = "Verifique los campos abajo corectamente!"
       render :action => 'new'
     end
   rescue ActiveRecord::RecordInvalid
@@ -61,11 +59,7 @@ class UsersController < ApplicationController
   
 
   def show
-    if authorized_admin?
-      conditions = nil
-    else
-      conditions = ["users.approved = ?", true]
-    end
+    conditions = ["users.approved = ?", true]
     @user = User.find(params[:id],
       :conditions => conditions
     )      
@@ -81,21 +75,13 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    if authorized_admin? && params[:id]
-      @user = User.find(params[:id])
-    else
-      @user = User.find(current_user.id)
-    end
+    @user = User.find(current_user.id)
   end
   
   # PUT /users/1
   # PUT /users/1.xml
   def update
-    if authorized_admin? && params[:id]
-      @user = User.find(params[:id])
-    else
-      @user = User.find(current_user.id)
-    end
+    @user = User.find(current_user.id)
     if @user.update_attributes(params[:user])
       flash[:notice] = 'Usuario fue Actualizado.'
       redirect_to user_path(@user)
@@ -105,15 +91,15 @@ class UsersController < ApplicationController
   end
 
 
-  def destroy
-    @user = User.find(params[:id])
-    @user.destroy
-
-    respond_to do |format|
-      format.html { redirect_to "/users" }
-      format.xml  { head :ok }
-    end
-  end
+  # def destroy
+  #   @user = User.find(current_user.id)
+  #   @user.destroy
+  # 
+  #   respond_to do |format|
+  #     format.html { redirect_to "/users" }
+  #     format.xml  { head :ok }
+  #   end
+  # end
   
   protected
   

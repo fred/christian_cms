@@ -1,0 +1,9 @@
+%h2{:style=>"color:blue"}
+  = @article.title
+.article
+  %p
+    = @article.short_body
+  %p
+    = @article.body
+  %p.created_at
+    = @article.created_at.strftime("%B %d, %Y")

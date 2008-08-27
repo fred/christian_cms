@@ -1,0 +1,46 @@
+%h2 Lista de Cumplaños
+
+.article
+  %h3
+    = link_to "Ene", "/admin/birthdays/?month=1"
+    = link_to "Feb", "/admin/birthdays/?month=2"
+    = link_to "Mar", "/admin/birthdays/?month=3"
+    = link_to "Abr", "/admin/birthdays/?month=4"
+    = link_to "May", "/admin/birthdays/?month=5"
+    = link_to "Jun", "/admin/birthdays/?month=6"
+    = link_to "Jul", "/admin/birthdays/?month=7"  
+    = link_to "Ago", "/admin/birthdays/?month=8"
+    = link_to "Sep", "/admin/birthdays/?month=9"
+    = link_to "Oct", "/admin/birthdays/?month=10"
+    = link_to "Nov", "/admin/birthdays/?month=11" 
+    = link_to "Dic", "/admin/birthdays/?month=12"
+    = link_to "TODOS", admin_birthdays_path
+
+  %table.nice_table
+    %thead
+      %tr
+        %td.heading
+          = link_to "Nombre", :sort => "first_name" 
+        %td.heading
+          = link_to "Appellido", :sort => "last_name" 
+        %td.heading
+          = link_to "Fecha", :sort => "birthdate" 
+        %td.heading 
+        %td.heading
+	
+    %tbody
+      - for birthday in @birthdays 
+        %tr
+          %td= birthday.first_name  
+          %td= birthday.last_name  
+          %td= birthday.birthdate.strftime("%b-%d")  
+          %td= link_to 'Edit', edit_admin_birthday_path(birthday) 
+          %td= link_to 'Del', {:action => "destroy"}, :confirm => 'Are you sure?', :method => :delete
+
+%h3 
+  = link_to 'Adicionar Cumpleaños', :action => 'new' 
+
+
+- if !params[:month] 
+  %h4
+    = will_paginate @birthdays

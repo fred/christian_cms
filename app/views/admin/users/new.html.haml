@@ -1,0 +1,6 @@
+%h3 New User
+
+- form_for :user, :url => admin_users_path do |f|
+  = render :partial => "form"
+  %p
+    = submit_tag 'Submit'

@@ -1,0 +1,121 @@
+%p
+  = f.label :title
+  %br
+  = f.text_field :title
+%p
+  = f.label :permalink
+  %br
+  = f.text_field :permalink
+
+%p
+  = f.label :category
+  %br
+  = f.select :category, Category::LIST.collect
+
+%p
+  = f.label :author
+  %br
+  = f.text_field :author, {:size => 20, :value => current_user.login}
+
+%p
+  = f.label :short_text
+  %br
+  = textile_editor :article, :short_body, :rows => 28, :cols => 90
+
+%p
+  = f.label :long_text
+  %br
+  = textile_editor :article, :body, :rows => 28, :cols => 90
+
+%p
+  = f.check_box :approved
+  %label
+    Active
+
+%p 
+  %label
+    Published Date
+  %br
+  = f.date_select :published_at, :start_year => Time.now.year-2, :end_year => Time.now.year+2
+
+
+= textile_editor_initialize
+  
+%br
+#formatting_guide.showhide
+  %h3
+    Formatting guide
+  %table
+    %tr
+      %th
+        To get this effect…
+      %th
+        Type this…
+    %tr
+      %td
+        %h1
+          Header1
+      %td
+        h1. Header1
+    %tr
+      %td
+        %h2
+          Header2
+      %td
+        h2. Header2
+    %tr
+      %td
+        %h3
+          Header3
+      %td
+        h3. Header3
+    %tr
+      %td
+        %b
+          Bold phrase
+      %td
+        *Bold phrase*
+    %tr
+      %td
+        %i
+          Italic phrase
+      %td
+        _Italic phrase_
+      
+    %tr
+      %td
+        %ul
+          %li
+            Bulleted list
+          %li
+            Bulleted list
+      
+      %td
+        * Bulleted list
+        %br
+        * Bulleted list
+    
+    %tr
+      %td
+        %ol
+          %li
+            Numbered list
+          %li
+            Numbered list
+      
+      %td
+        \# Numbered list
+        %br
+        \# Numbered list
+    
+    %tr
+      %td
+        %blockquote
+          Indented block
+      %td
+        &gt; Indented block 
+    %tr
+      %td
+        <a href="http://www.google.com">Google</a>
+      %td
+        "Google":http://www.google.com

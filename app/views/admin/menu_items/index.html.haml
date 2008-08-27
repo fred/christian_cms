@@ -1,0 +1,25 @@
+%h3 Menu Items
+
+%table
+  %tr
+    %th Title
+    %th Url
+    %th Display order
+    %th Article
+    %th Menu type
+    %th
+    %th
+    %th
+
+  - for menu_item in @menu_items 
+    %tr
+      %td=h menu_item.title 
+      %td=h menu_item.url 
+      %td=h menu_item.display_order 
+      %td=h menu_item.article_id 
+      %td=h menu_item.menu_type 
+      %td= link_to 'Show', admin_menu_item_path(menu_item) 
+      %td= link_to 'Edit', edit_admin_menu_item_path(menu_item) 
+      %td= link_to 'Destroy', admin_menu_item_path(menu_item), :confirm => 'Are you sure?', :method => :delete 
+
+= link_to 'New menu_item', new_admin_menu_item_path 

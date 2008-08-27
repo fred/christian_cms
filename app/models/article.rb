@@ -1,19 +1,13 @@
 class Article < ActiveRecord::Base
   
   acts_as_textiled :body, :short_body
-  
-  acts_as_ferret :fields => { 
-      :title      => {:boost => 3},
-      :short_body => {:boost => 2},
-      :body       => {:boost => 1}
-  }
-  
+
   belongs_to :user
     
   validates_presence_of :title
   validates_presence_of :short_body
   validates_uniqueness_of :title
-    
+  
   has_permalink :title
 
   def set_permalink
@@ -67,14 +61,5 @@ class Article < ActiveRecord::Base
      :limit => 5
     )
   end
-  
-  ### Callback to clean the cached pages ###
-  after_save :sweep_partial_cache
-  def sweep_partial_cache
-    cache_dir = RAILS_ROOT+"/tmp/cache"
-    cache_pages = cache_dir+"/*"
-    FileUtils.rm_rf(Dir.glob(cache_pages)) rescue Errno::ENOENT
-    RAILS_DEFAULT_LOGGER.info("Cache '#{cache_pages}' delete.")
-  end
-  
+    
 end

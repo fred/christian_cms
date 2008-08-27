@@ -1,23 +1,18 @@
-<h1>Eventos</h1>
-<br />
+<h2>Eventos</h2>
 
 <div class="article">
 
 	<% for event in @events %>
 		<div class="article_item">
-			<% if authorized_admin? %>
-				<div class="edit_item_menu">
-					<p> <%= link_to 'Edit', edit_event_path(event) %> |
-					<%= link_to 'Del', event, :confirm => 'Are you sure?', :method => :delete %> |
-					<%= link_to 'Crear un Evento', new_event_path %> 
-					</p>
-				</div>
-			<% end %>
-      <% #cache "event_#{event.id}" do 
-    %>
-				<%= render :partial => "event", :locals => {:event => event} %>
-        <% #end 
-      %>
+      <h3><%= link_to event.title, event %></h3>
+
+    	<p> <label>Empieza:</label> <%= event.start_date.to_s(:long) %> </p>
+    	<p> <label>Termina:</label> <%= event.end_date.to_s(:long) %> </p>
+    	<p> <label>Prioridad:</label> <%= event.event_priority %> </p>
+
+    	<div class="boxed"> <%= event.description %> </div>
+
+    	<p class="created_at"><%= event.created_at.to_s(:long) %> </p>
 		</div>
 		<br />
 	<% end %>

@@ -1,0 +1,12 @@
+%h2 
+  Editing menu Item
+  %i 
+    %u
+      = @menu_item.title
+
+- form_for(@menu_item, :url => { :action => "update" } ) do |f| 
+  = f.error_messages
+  = render :partial => 'form', :locals => { :f => f, :menu_item => @menu_item }
+  = f.submit 'Update'
+  
+= link_to 'Back', admin_menu_items_path

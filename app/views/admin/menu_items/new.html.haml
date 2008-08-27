@@ -1,0 +1,9 @@
+
+%h2 New Menu Item
+
+- form_for(@menu_item, :url => admin_menu_items_path ) do |f| 
+  = f.error_messages
+  = render :partial => 'form', :locals => { :f => f, :menu_item => @menu_item }
+  = f.submit 'Create', :name => 'create'
+  
+= link_to 'Back', admin_menu_items_path

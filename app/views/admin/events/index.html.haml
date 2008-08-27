@@ -1,0 +1,27 @@
+%h2 events
+%table
+  %tr
+    %th Tittle
+    %th Publish Date
+    %th Active
+    %th
+    %th
+    %th
+  %tr
+    - for event in @events
+      %tr
+        %td 
+          = link_to event.title, edit_admin_event_path(event)
+        %td 
+          = event.published_at.to_s(:short)
+        %td 
+          = boolean_to_image_small(event.approved)
+        %td 
+          = link_to 'Preview', admin_event_path(event)
+        %td 
+          = link_to 'Edit', edit_admin_event_path(event)
+        %td 
+          = link_to 'Delete', admin_event_path(event), :confirm => 'Are you sure?', :method => :delete
+
+
+= link_to 'New event', new_admin_event_path 

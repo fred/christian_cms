@@ -2,8 +2,6 @@ class Birthday < ActiveRecord::Base
   
   validates_presence_of :first_name
   
-  #acts_as_ferret :fields => [ 'first_name', 'middle_name', 'last_name']
-  
   def self.full_text_search(q, limit, order_by)
      return nil if q.nil? or q==""
      results = self.find_by_contents(q,
@@ -40,14 +38,5 @@ class Birthday < ActiveRecord::Base
     self.find(:all, :order => "month(birthdate) ASC, day(birthdate) ASC")
   end
   
-  
-  ### Callback to clean the cached pages ###
-  after_save :sweep_partial_cache
-  def sweep_partial_cache
-    cache_dir = RAILS_ROOT+"/tmp/cache"
-    cache_pages = cache_dir+"/*"
-    FileUtils.rm_rf(Dir.glob(cache_pages)) rescue Errno::ENOENT
-    RAILS_DEFAULT_LOGGER.info("Cache '#{cache_pages}' delete.")
-  end
     
 end

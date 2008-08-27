@@ -1,0 +1,20 @@
+%p
+  = f.label :menu_type 
+  %br
+  = f.select(:menu_type, MenuItem::MENU_TYPES.collect {|p| p }, { :include_blank => false })
+%p
+  = f.label :title 
+  %br
+  = f.text_field :title 
+%p
+  = f.label :url
+  %br
+  = f.text_field :url 
+%p
+  = f.label :display_order 
+  %br
+  = f.select :display_order, %w{1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20}, {}, {:include_blank => false, :selected => @menu_item.display_order}
+/ %p
+/   = f.label :article_id 
+/   %br
+/   = f.text_field :article_id 

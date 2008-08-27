@@ -1,0 +1,156 @@
+%tr
+  %td
+     
+  %td
+    = error_message_on :user, :email, "Email ", "","inputError" 
+    
+%tr
+  %td
+    Email 
+  %td
+    = text_field :user, :email, :size => 22  
+
+%tr
+  %td
+     
+  %td
+    = error_message_on :user, :first_name, "Nombre ", "","inputError" 
+
+%tr
+  %td
+    Nombre 
+  %td
+    = text_field :user, :first_name, :size => 22  
+
+%tr
+  %td
+    Apellido 
+  %td
+    = text_field :user, :last_name, :size => 22  
+
+%tr
+  %td
+    Apellido Medio 
+  %td
+    = text_field :user, :middle_name, :size => 22  
+
+%tr
+  %td
+    Familia 
+  %td
+    = text_field :user, :family_name, :size => 22  
+
+%tr
+  %td
+    Nacionalidad 
+  %td
+    = text_field :user, :nationality, :size => 22  
+
+%tr
+  %td
+    Parentesco 
+  %td
+    = text_field :user, 'family_role', :size => 22  
+
+%tr
+  %td
+    Cumpleaños 
+  %td
+    = date_select :user, 'birthday', :start_year => 1940, :end_year => Time.now.year 
+
+%tr
+  %td
+    Estado Civil 
+  %td
+    = text_field :user, 'civil_state', :size => 22  
+
+%tr
+  %td
+    Sacramentos 
+  %td
+    = text_field :user, 'sacraments', :size => 22  
+
+%tr
+  %td
+    Address 1 
+  %td
+    = text_field :user, 'address1', :size => 22  
+
+%tr
+  %td
+    Address 2 
+  %td
+    = text_field :user, 'address2', :size => 22  
+
+%tr
+  %td
+     
+  %td
+    <h3>Telefonos </h3>
+
+%tr
+  %td
+    Casa 
+  %td
+    = text_field :user, 'home_phone', :size => 22  
+
+%tr
+  %td
+    Mobile 
+  %td
+    = text_field :user, 'mobile_phone', :size => 22  
+
+%tr
+  %td
+    Trabajo 
+  %td
+    = text_field :user, 'office_phone', :size => 22  
+
+%tr
+  %td
+     
+  %td
+    <h3> Información para hacer Login: </h3> 
+
+%tr
+  %td
+     
+  %td
+    = error_message_on :user, :login, "Login ", "","inputError" 
+
+%tr
+  %td
+    Login 
+  %td
+    = text_field :user, :login, :size => 22  
+
+%tr
+  %td
+     
+  %td
+    = error_message_on :user, :password, "Password ", "","inputError" 
+
+%tr
+  %td
+    Password 
+  %td
+    = password_field :user, :password, :size => 22  
+
+%tr
+  %td
+     
+  %td
+    = error_message_on :user, :password_confirmation, "Confirmacion de Password ", "","inputError" 
+
+%tr
+  %td
+    Confirmación Password 
+  %td
+    = password_field :user, :password_confirmation, :size => 22  
+
+%tr
+  %td
+    Mostrar mi Información Público? 
+  %td
+    = check_box :user, :approved, :checked => true 
+

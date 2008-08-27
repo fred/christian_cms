@@ -1,0 +1,9 @@
+
+%h2 New Article
+
+- form_for(@article, :url => admin_articles_path ) do |f| 
+  = f.error_messages
+  = render :partial => 'form', :locals => { :f => f, :article => @article }
+  = f.submit 'Create', :name => 'create'
+  
+= link_to 'Back', admin_articles_path

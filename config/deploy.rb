@@ -34,7 +34,7 @@ role :scm, domain
 
 task :after_symlink, :roles => :app do
   run "ln -nfs #{shared_path}/config/database.yml #{current_path}/config/database.yml"
-  run "ln -nfs #{shared_path}/shared/assets/buletins #{current_path}/public/"
+  run "ln -nfs #{shared_path}/assets/buletins #{current_path}/public/"
 end
 
 # following line added per latest railsmachine instructions

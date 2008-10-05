@@ -9,10 +9,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080529101446) do
+ActiveRecord::Schema.define(:version => 14) do
 
   create_table "articles", :force => true do |t|
-    t.integer  "user_id",      :limit => 11
+    t.integer  "user_id"
     t.string   "title",        :limit => 100
     t.string   "permalink",    :limit => 50
     t.text     "body"
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(:version => 20080529101446) do
     t.string   "title"
     t.string   "content_type"
     t.string   "filename"
-    t.integer  "size",         :limit => 11
+    t.integer  "size"
     t.datetime "date_time"
     t.boolean  "ninos"
     t.datetime "created_at"
@@ -59,10 +59,10 @@ ActiveRecord::Schema.define(:version => 20080529101446) do
 
   create_table "menu_items", :force => true do |t|
     t.string   "title"
-    t.string   "url",                         :default => "http://"
-    t.integer  "display_order", :limit => 11, :default => 10
-    t.integer  "article_id",    :limit => 11
-    t.string   "menu_type",                   :default => "Link"
+    t.string   "url",           :default => "http://"
+    t.integer  "display_order", :default => 10
+    t.integer  "article_id"
+    t.string   "menu_type",     :default => "Link"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -72,27 +72,23 @@ ActiveRecord::Schema.define(:version => 20080529101446) do
     t.string   "convert_from"
     t.string   "convert_to"
     t.string   "convert_result"
-    t.integer  "expire_time",    :limit => 11
+    t.integer  "expire_time"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "news", :force => true do |t|
-    t.integer  "user_id",      :limit => 11
+    t.integer  "user_id"
     t.string   "title",        :limit => 50
     t.string   "permalink",    :limit => 50
     t.text     "body"
     t.datetime "published_at"
-    t.integer  "category_id",  :limit => 11
+    t.integer  "category_id"
     t.string   "author",       :limit => 50
     t.boolean  "approved",                   :default => true
     t.boolean  "show_front",                 :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "schema_info", :id => false, :force => true do |t|
-    t.integer "version", :limit => 11
   end
 
   create_table "settings", :force => true do |t|
@@ -133,20 +129,8 @@ ActiveRecord::Schema.define(:version => 20080529101446) do
     t.string   "sacraments"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "last_seen_at"
-    t.string   "website"
-    t.string   "login_key"
-    t.datetime "login_key_expires_at"
-    t.boolean  "activated",                               :default => false
-    t.string   "bio"
-    t.text     "bio_html"
-    t.string   "openid_url"
-    t.datetime "last_login_at"
-    t.integer  "posts_count",               :limit => 11, :default => 0
     t.boolean  "approved",                                :default => true
   end
-
-  add_index "users", ["last_seen_at"], :name => "index_users_on_last_seen_at"
 
   create_table "weathers", :force => true do |t|
     t.string   "zipcode"

@@ -12,7 +12,9 @@ class ApplicationController < ActionController::Base
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery :secret => 'o81e062ae93Pd7e0c63rg4L8hx61jb5'
 
-  layout "themes/#{Settings.theme}"
+  # get the layout from settings table, 
+  # rescue in order to work before the migrations
+  layout "themes/#{Settings.theme}" rescue "themes/default"
   
   before_filter :login_from_cookie
   before_filter :get_rate

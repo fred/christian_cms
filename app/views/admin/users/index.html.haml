@@ -1,4 +1,4 @@
-%h2 Users
+%h3 Usuarios
 %table
   %tr
     %th Login
@@ -27,6 +27,6 @@
           = link_to 'Delete', admin_user_path(user), :confirm => 'Are you sure?', :method => :delete
 
 
-= link_to 'New User', new_admin_user_path 
-
 = will_paginate @users
+
+%h3= link_to 'Crear Usuario', new_admin_user_path 

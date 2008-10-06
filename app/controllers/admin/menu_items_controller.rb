@@ -1,8 +1,9 @@
 class Admin::MenuItemsController < Admin::BaseController
+  
   # GET /menu_items
   # GET /menu_items.xml
   def index
-    @menu_items = MenuItem.find(:all)
+    @menu_items = MenuItem.find(:all, :order => "menu_type ASC, display_order ASC")
 
     respond_to do |format|
       format.html # index.html.erb
@@ -82,4 +83,5 @@ class Admin::MenuItemsController < Admin::BaseController
       format.xml  { head :ok }
     end
   end
+  
 end

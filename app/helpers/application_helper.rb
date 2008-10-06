@@ -3,6 +3,16 @@ require 'md5'
 module ApplicationHelper
   
   
+  # returns a link from the menu_items table
+  # and take care of about_blank
+  def menu_item_link(m)
+    options = {}
+    if m.new_page
+      options = {:target => "_blank"}
+    end
+    link_to m.title, m.url, options
+  end
+  
   # returns a yes/no image small size
   def boolean_to_image_small(bol)
     if bol 

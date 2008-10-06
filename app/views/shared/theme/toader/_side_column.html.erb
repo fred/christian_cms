@@ -36,9 +36,6 @@
 		<% end %>
 	</ul>
 	
-	<br />
-	<%= render :partial => "/shared/google_adsense_ver" %>
-	
 	<h2> <%= link_to "Boletines del Mes", buletins_path %> </h2>
 	<ul>
 		<% Buletin.get_latest.each do |buletin| %>
@@ -51,25 +48,10 @@
 	<br />
 	<h2> Links </h2>
 	<ul>
-		<li><a href="http://www.pueblosdeasia.org">Pueblos de Asia</a></li>
-		<li><a href="http://sitio.yarumal.org">Missioneros de Yarumal</a></li>
-		<li><a href="http://www.bibletime.info/">Biblia Software BibleTime</a></li>
-		<li><a href="http://www.crosswire.org/sword/index.jsp">Biblia Software Sword</a></li>
+	  <% MenuItem.links.each do |t| %>
+	    <li> <%= menu_item_link(t) %> </li>
+	  <% end %>
 	</ul>
-	
-	<!-- 
-	<h2> Time in Bangkok </h2>
-	<ul>
-		<li><%= @time.to_s(:long) %> </li>
-	</ul>
-  -->
-	
-	<!-- 
-	<h2> Exchange Rate </h2>
-	<ul>
-		<li><%= @rate.convert_result %> </li>
-	</ul>
-  -->
 	
 	<%= render :partial => "/shared/google_adsense_ver" %>
 	

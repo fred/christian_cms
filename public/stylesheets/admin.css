@@ -1,17 +1,21 @@
 body {
 	background-color: #E8EFFB;
+	background-image: url("/images/jesus_heart.png");
 }
 
 p {
-	margin: 6px 0px;
+	margin: 2px 0px;
 }
 
 #site {
-  width: 1000px;
-  margin: 2px auto;
+	background: url("/images/bg2_light.jpg") top left;
+	background-repeat: repeat-y;
+	
+  width: 920px;
+  margin: 1px auto;
 	background-color: #fff;
 	border: 1px solid #ddd;
-	padding: 10px;
+	padding: 0px;
 }
 
 #header {
@@ -20,7 +24,8 @@ p {
 }
 
 #main {
-	width: 99%;
+	margin: 10px;
+	width: 900px;
 	float: left;
 }
 	.flash_notice {

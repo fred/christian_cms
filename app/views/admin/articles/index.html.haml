@@ -1,9 +1,9 @@
-%h2 Articles
+%h3= link_to "Crear Articulo", new_admin_article_path 
 %table
   %tr
-    %th Tittle
-    %th Publish Date
-    %th Active
+    %th Titulo
+    %th Fecha
+    %th Activo
     %th
     %th
     %th
@@ -19,11 +19,11 @@
         %td 
           = link_to 'Preview', admin_article_path(article)
         %td 
-          = link_to 'Edit', edit_admin_article_path(article)
+          = link_to 'Editar', edit_admin_article_path(article)
         %td 
-          = link_to 'Delete', admin_article_path(article), :confirm => 'Are you sure?', :method => :delete
+          = link_to 'Deletar', admin_article_path(article), :confirm => 'Are you sure?', :method => :delete
 
 
 = will_paginate @articles
 
-= link_to 'New article', new_admin_article_path 
+%h3= link_to 'Crear Articulo', new_admin_article_path 

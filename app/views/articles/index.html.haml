@@ -9,6 +9,6 @@
         %p 
           = link_to("leer mas...", permalink_url(article.permalink), :class => 'read_more_link')
       %p.created_at
-        = article.created_at.strftime("%B %d, %Y")
+        = article.published_at.strftime("%B %d, %Y")
       
 = will_paginate @articles

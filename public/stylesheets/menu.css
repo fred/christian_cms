@@ -1,7 +1,10 @@
 #dolphincontainer {
 	position:relative;
 	height:50px;
-	color:#E0E0E0;background:#143D55;width:100%;font-family:Helvetica,Arial,Verdana,sans-serif;
+	color:#E0E0E0;
+	background:#143D55;
+	width:100%;
+	font-family:Helvetica,Arial,Verdana,sans-serif;
 }
 #dolphinnav {
 	position:relative;

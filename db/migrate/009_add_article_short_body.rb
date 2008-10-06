@@ -13,6 +13,6 @@ class AddArticleShortBody < ActiveRecord::Migration
 
   def self.down
     remove_column :articles, :short_body
-    add_column :articles, :expires_on
+    remove_column :articles, :expires_on
   end
 end

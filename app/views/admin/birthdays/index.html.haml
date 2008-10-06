@@ -1,4 +1,4 @@
-%h2 Lista de Cumplaños
+%h3 Cumpleaños
 
 .article
   %h3
@@ -37,10 +37,8 @@
           %td= link_to 'Edit', edit_admin_birthday_path(birthday) 
           %td= link_to 'Del', {:action => "destroy"}, :confirm => 'Are you sure?', :method => :delete
 
-%h3 
-  = link_to 'Adicionar Cumpleaños', :action => 'new' 
+%h3= link_to 'Adicionar Cumpleaño', :action => 'new' 
 
 
-- if !params[:month] 
-  %h4
-    = will_paginate @birthdays
+- if !params[:month]
+  = will_paginate @birthdays

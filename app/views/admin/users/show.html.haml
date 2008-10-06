@@ -1,77 +1,64 @@
-%p
-  name :
-  = @user.name
-%p  
-  login :
-  = @user.login
-  
-%tr
-	%td 
-	  E-mail: 
-	%td 
-	  = h @user.email 
+.article
 
-%tr
-	%td 
-	  Phone Home: 
-	%td 
-	  = h @user.home_phone 
+  %table
+    %tr
+      %td.label Full Name :
+      %td.value
+        = @user.first_name
+        = @user.middle_name
+        = @user.last_name
+    %tr
+      %td.label login:
+      %td.value= @user.login
 
-%tr
-	%td
-	  Mobile: 
-	%td 
-	  = h @user.mobile_phone 
+    %tr
+      %td.label E-mail: 
+      %td.value= h @user.email
 
-%tr
-	%td
-	  Office Number: 
-	%td
-	  = h @user.office_phone 
+    %tr
+      %td.label Phone Home: 
+      %td.value= h @user.home_phone 
 
-%tr
-	%td 
-	  Address1: 
-	%td 
-	  = h @user.address1 
+    %tr
+      %td.label Mobile: 
+      %td.value= h @user.mobile_phone 
 
-%tr
-	%td 
-	  Address2: 
-	%td 
-	  = h @user.address2 
+    %tr
+      %td.label Office Number: 
+      %td.value= h @user.office_phone 
 
-%tr
-	%td 
-	  Nacionalidad: 
-	%td 
-	  = h @user.nationality 
+    %tr
+      %td.label Address1: 
+      %td.value= h @user.address1 
 
-%tr
-	%td 
-	  Parentestco: 
-	%td 
-	  = h @user.family_role 
+    %tr
+      %td.label Address2: 
+      %td.value= h @user.address2 
 
-%tr
-	%td
-	  Estado Civil: 
-	%td 
-	  = h @user.civil_state 
+    %tr
+      %td.label Nacionalidad: 
+      %td.value= h @user.nationality 
 
-%tr
-	%td 
-	  Cumpleanos: 
-	%td 
-	  = h @user.birthday.strftime("%b-%d") 
+    %tr
+      %td.label Parentestco: 
+      %td.value= h @user.family_role 
 
-%tr
-	%td 
-	  Sacramentos: 
-	%td 
-	  = h @user.sacraments 
+    %tr
+      %td.label Estado Civil: 
+      %td.value= h @user.civil_state 
+
+    %tr
+      %td.label Cumpleanos: 
+      %td.value= h @user.birthday.strftime("%b-%d") 
+
+    %tr
+      %td.label Sacramentos: 
+      %td.value= h @user.sacraments 
 
 
-= link_to 'New', new_admin_user_path
-= link_to 'Edit', edit_admin_user_path(@user)
-= link_to 'Back', admin_users_path
+  %h4
+    = link_to 'New User', new_admin_user_path
+    |
+    = link_to 'Edit this User', edit_admin_user_path(@user)
+    |
+    = link_to 'Go Back', admin_users_path

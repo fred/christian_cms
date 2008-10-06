@@ -14,11 +14,9 @@
 				<p> <%= link_to Settings.logo_subtitle, "/", :title => Settings.logo_subtitle %>
 				</p>
 				<ul>
-					<li> <%= link_to "Noticias", articles_path %> </li>
-					<li> <%= link_to "Eventos", events_path %> </li>
-					<li> <%= link_to "Boletines", buletins_path %></li>
-					<li> <%= link_to "Cumpleaños", month_birthdays_path %> </li>
-					<li> <%= link_to "Galeria de Fotos", "http://gallery.comunidad-catolica.com" %></li>
+				  <% MenuItem.menus.each do |t| %>
+				    <li> <%= menu_item_link(t) %> </li>
+				  <% end %>
 					<% if !logged_in? %>
 						<li> <%= link_to _("Signup"), signup_url %> </li>
 						<li> <%= link_to _("Login"), "/login" %> </li>

@@ -3,14 +3,8 @@ class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.xml
   def index
-    if params[:sort]
-      order = case params[:sort]
-        when "title" then "title ASC"
-        when "date"  then "created_at DESC"
-      end
-    else
-      order = "created_at DESC"
-    end
+
+    order = "published_at DESC"
     per_page = 6
     current_page = (params[:page] ||= 1).to_i
 
@@ -28,7 +22,7 @@ class ArticlesController < ApplicationController
   
   
   def search
-    render :action => "index"
+    redirect_to :action => "index"
   end
 
 

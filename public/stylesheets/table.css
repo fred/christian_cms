@@ -156,7 +156,7 @@ versiculo {
 }
 .created_at {
 	color: #aaa;
-	border-bottom: 1px dotted #bbb;
+	border-bottom: 2px dotted #fff;
 }
 td.label {
 	padding:4px;

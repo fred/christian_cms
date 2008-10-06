@@ -9,10 +9,10 @@
 
 	<div id="header">
 			<div id="masthead">
-				<img src="/images/jesus.jpeg" />
-				<h1> <%= link_to Settings.logo_title, "/", :title => Settings.logo_title %> </h1>
-				<p> <%= link_to Settings.logo_subtitle, "/", :title => Settings.logo_subtitle %>
-				</p>
+			  <%= image_tag "/images/jesus.jpeg", :class => "logo_image"%>
+			  <%= image_tag "/images/logo1.png", :class => "logo_header"%>
+			  <%= image_tag "/images/logo2.png", :class => "logo_header2"%>
+
 				<ul>
 				  <% MenuItem.menus.each do |t| %>
 				    <li> <%= menu_item_link(t) %> </li>

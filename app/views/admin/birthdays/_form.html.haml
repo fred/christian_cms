@@ -1,0 +1,20 @@
+%table
+  %tr
+    %td 
+    %td= error_message_on :birthday, :first_name, "First Name ", "","inputError" 
+
+  %tr
+    %td.label Name
+    %td= f.text_field 'first_name', :size => 12  
+
+  %tr
+    %td.label Middle Name
+    %td= f.text_field 'middle_name', :size => 12  
+
+  %tr
+    %td.label Last Name
+    %td= f.text_field 'last_name', :size => 12  
+
+  %tr
+    %td.label Fecha Cumpleaños
+    %td= f.date_select 'birthdate', :start_year => 1940, :end_year => Time.now.year

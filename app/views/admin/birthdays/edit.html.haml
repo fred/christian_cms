@@ -1,32 +1,7 @@
-%h2 Editar Cumpleaño
+%h3 Editar Cumpleaño
 
 .article
 
   - form_for(:birthday, :url => admin_birthday_path(@birthday), :html => {:method => :put}) do |f|
-
-    %table
-      %tr
-        %td 
-        %td= error_message_on :birthday, :first_name, "First Name ", "","inputError" 
-
-      %tr
-        %td
-          %label Name
-        %td= f.text_field 'first_name', :size => 12  
-
-      %tr
-        %td 
-          %label Middle Name
-        %td= f.text_field 'middle_name', :size => 12  
-
-      %tr
-        %td 
-          %label Last Name
-        %td= f.text_field 'last_name', :size => 12  
-
-      %tr
-        %td 
-          %label Fecha Cumpleaños
-        %td= f.date_select 'birthdate', :start_year => 1940, :end_year => Time.now.year 
-
+    = render :partial => "form", :locals => { :f => f, :birthday => @birthday }
     = f.submit "Salvar" 

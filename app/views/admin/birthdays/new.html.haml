@@ -1,0 +1,8 @@
+%h3 Adicionar Cumpleaño
+
+.article
+
+  - form_for(:birthday, :url => admin_birthdays_path) do |f|
+    = render :partial => "form", :locals => { :f => f, :birthday => @birthday }
+    = f.submit "Crear"
+

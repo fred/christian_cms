@@ -1,121 +1,34 @@
-%p
-  = f.label :title
-  %br
-  = f.text_field :title
-%p
-  = f.label :permalink
-  %br
-  = f.text_field :permalink
-
-%p
-  = f.label :category
-  %br
-  = f.select :category, Category::LIST.collect
-
-%p
-  = f.label :author
-  %br
-  = f.text_field :author, {:size => 20, :value => current_user.login}
-
-%p
-  = f.label :short_text
-  %br
-  = textile_editor :article, :short_body, :rows => 28, :cols => 90
-
-%p
-  = f.label :long_text
-  %br
-  = textile_editor :article, :body, :rows => 28, :cols => 90
-
-%p
-  = f.check_box :approved
-  %label
-    Active
-
-%p 
-  %label
-    Published Date
-  %br
-  = f.date_select :published_at, :start_year => Time.now.year-2, :end_year => Time.now.year+2
-
-
-= textile_editor_initialize
-  
-%br
-#formatting_guide.showhide
-  %h3
-    Formatting guide
-  %table
-    %tr
-      %th
-        To get this effect…
-      %th
-        Type this…
-    %tr
-      %td
-        %h1
-          Header1
-      %td
-        h1. Header1
-    %tr
-      %td
-        %h2
-          Header2
-      %td
-        h2. Header2
-    %tr
-      %td
-        %h3
-          Header3
-      %td
-        h3. Header3
-    %tr
-      %td
-        %b
-          Bold phrase
-      %td
-        *Bold phrase*
-    %tr
-      %td
-        %i
-          Italic phrase
-      %td
-        _Italic phrase_
-      
-    %tr
-      %td
-        %ul
-          %li
-            Bulleted list
-          %li
-            Bulleted list
-      
-      %td
-        * Bulleted list
-        %br
-        * Bulleted list
-    
-    %tr
-      %td
-        %ol
-          %li
-            Numbered list
-          %li
-            Numbered list
-      
-      %td
-        \# Numbered list
-        %br
-        \# Numbered list
-    
-    %tr
-      %td
-        %blockquote
-          Indented block
-      %td
-        &gt; Indented block 
-    %tr
-      %td
-        <a href="http://www.google.com">Google</a>
-      %td
-        "Google":http://www.google.com
+<table>
+	<tr>
+		<td> </td>
+		<td> <%= error_message_on :event, :title, "Nombre ", "","inputError" %> </td>
+	</tr>
+	<tr>
+		<td class="bold"> Titulo del Evento: </td>
+		<td> <%= text_field :event, :title, :size => "26" %> </td>
+	</tr>
+	<tr>
+	    <td> </td>
+	    <td> <%= error_message_on :event, :description, "Descripcion ", "","inputError" %> </td>
+	</tr>
+	<tr>
+	    <td class="bold"> Descripcion: </td>
+	    <td> <%= text_area :event, :description, :rows => 4, :cols => 24 %> </td>
+	</tr>
+	<tr>
+	    <td class="bold"> Status: </td>
+		<td><%= select :event, :event_status, @event_status %> </td>
+	</tr>
+	<tr>
+	    <td class="bold"> Prioridad </td>
+		<td><%= select :event, :event_priority, @priorities %> </td>
+	</tr>
+	<tr>
+	    <td class="bold"> Fecha que Empieza </td>
+		<td><%= datetime_select :event, :start_date %> </td>
+	</tr>
+	<tr>
+	    <td class="bold"> Fecha que Termina </td>
+		<td><%= datetime_select :event, :end_date %> </td>
+	</tr>
+</table>

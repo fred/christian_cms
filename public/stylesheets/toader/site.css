@@ -96,6 +96,11 @@ body {
 	top:9em;
 }
 
+#masthead img.logo_header,
+#masthead img.logo_header2 {
+	outline:none;
+	border:none;
+}
 
 #main {
 	background:#FFF url(/images/toader/main.gif) repeat-x;

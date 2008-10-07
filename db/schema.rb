@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 16) do
+ActiveRecord::Schema.define(:version => 17) do
 
   create_table "articles", :force => true do |t|
     t.integer  "user_id"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(:version => 16) do
     t.boolean  "protected_record",                :default => false
   end
 
+  add_index "articles", ["permalink"], :name => "index_articles_on_permalink", :unique => true
+
   create_table "birthdays", :force => true do |t|
     t.string   "first_name"
     t.string   "middle_name"
@@ -35,6 +37,8 @@ ActiveRecord::Schema.define(:version => 16) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "birthdays", ["first_name", "last_name", "birthdate"], :name => "index_birthdays_on_first_name_and_last_name_and_birthdate"
 
   create_table "buletins", :force => true do |t|
     t.string   "title"

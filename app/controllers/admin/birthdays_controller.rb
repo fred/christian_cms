@@ -10,7 +10,7 @@ class Admin::BirthdaysController < Admin::BaseController
     else
       order = "month(birthdate) ASC, day(birthdate) ASC"
     end
-    per_page = 36
+    per_page = 60
     current_page = (params[:page] ||= 1).to_i
     
     if params[:month]

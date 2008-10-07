@@ -14,6 +14,15 @@ module ApplicationHelper
   end
   
   # returns a yes/no image small size
+  def boolean_to_image_lock(bol)
+    if bol 
+      return image_tag("/images/lock22.png", :class => "align-center")
+    else
+      return ""
+    end
+  end
+  
+  # returns a yes/no image small size
   def boolean_to_image_small(bol)
     if bol 
       return image_tag("/images/yes_small.png", :class => "align-center")

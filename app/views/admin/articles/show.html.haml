@@ -10,22 +10,25 @@
   = @article.body
 
 %p 
-  %b Active
-%br{ :style => "clear:both;"}
-  = boolean_to_image_big(@article.approved)
-
+  %b Activo: 
+  = boolean_to_word(@article.approved)
+  
+%p
+  %b Protegido: 
+  = boolean_to_word(@article.protected_record) 
+  
 %p
   %b Permalink:
   = @article.permalink
 
 %p
-  %b Create Date:
+  %b Fecha de Creacion:
   = @article.created_at.to_s(:long)
 
 %p
-  %b Last Update:
+  %b Ultimo Update:
   = @article.updated_at.to_s(:long)
 
-= link_to 'Edit', edit_admin_article_path(@article)
+= link_to 'Editar', edit_admin_article_path(@article)
 |
-= link_to 'Back', admin_articles_path
+= link_to 'Volver', admin_articles_path

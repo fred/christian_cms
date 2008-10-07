@@ -34,8 +34,8 @@
           %td= birthday.first_name  
           %td= birthday.last_name  
           %td= birthday.birthdate.strftime("%b-%d")  
-          %td= link_to 'Edit', edit_admin_birthday_path(birthday) 
-          %td= link_to 'Del', {:action => "destroy"}, :confirm => 'Are you sure?', :method => :delete
+          %td= link_to 'Editar', edit_admin_birthday_path(birthday) 
+          %td= link_to 'Deletar', admin_birthday_path(birthday), :confirm => 'Are you sure?', :method => :delete
 
 %h3= link_to 'Adicionar Cumpleaño', :action => 'new' 
 

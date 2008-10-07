@@ -1,45 +1,48 @@
 %p
-  = f.label :title
+  = f.label "Titulo"
   %br
-  = f.text_field :title
+  = f.text_field :title, :size => 50
 %p
-  = f.label :permalink
+  = f.label "Permalink (automatico)"
   %br
-  = f.text_field :permalink
-
+  = f.text_field :permalink, :size => 50
 %p
-  = f.label :category
+  = f.label "Categoria"
   %br
   = f.select :category, Category::LIST.collect
 
 %p
-  = f.label :author
+  = f.label "Autor"
   %br
-  = f.text_field :author, {:size => 20, :value => current_user.login}
+  = f.text_field :author, {:size => 22, :value => current_user.login}
 
-%p
-  = f.label :short_text
-  %br
-  = textile_editor :article, :short_body, :rows => 28, :cols => 90
-
-%p
-  = f.label :long_text
-  %br
-  = textile_editor :article, :body, :rows => 28, :cols => 90
-
+%br
 %p
   = f.check_box :approved
-  %label
-    Active
+  %label Activo (mostrar en pagina principal)
+
+%p
+  = f.check_box :protected_record
+  %label Protegido? (Articulos protegidos no podran ser Deletados)
+
+%br
+%p
+  = f.label "Texto Principal"
+  %br
+  = textile_editor :article, :short_body, :rows => 25, :cols => 100
+
+%p
+  = f.label "Text Longo (secundario)"
+  %br
+  = textile_editor :article, :body, :rows => 25, :cols => 100
 
 %p 
   %label
-    Published Date
+    Fecha de Publicacion
   %br
   = f.date_select :published_at, :start_year => Time.now.year-2, :end_year => Time.now.year+2
 
 
-= textile_editor_initialize
   
 %br
 #formatting_guide.showhide

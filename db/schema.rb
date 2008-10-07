@@ -9,21 +9,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 15) do
+ActiveRecord::Schema.define(:version => 16) do
 
   create_table "articles", :force => true do |t|
     t.integer  "user_id"
-    t.string   "title",        :limit => 100
-    t.string   "permalink",    :limit => 50
+    t.string   "title",            :limit => 100
+    t.string   "permalink",        :limit => 50
     t.text     "body"
     t.datetime "published_at"
-    t.string   "category",     :limit => 30
-    t.string   "author",       :limit => 30
-    t.boolean  "approved",                    :default => false
+    t.string   "category",         :limit => 30
+    t.string   "author",           :limit => 30
+    t.boolean  "approved",                        :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "short_body"
     t.datetime "expires_on"
+    t.boolean  "protected_record",                :default => false
   end
 
   create_table "birthdays", :force => true do |t|

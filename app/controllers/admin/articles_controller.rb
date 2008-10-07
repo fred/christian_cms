@@ -7,7 +7,7 @@ class Admin::ArticlesController < Admin::BaseController
   def index
     @articles = Article.paginate(:all, 
       :page => params[:page],
-      :per_page => 20, 
+      :per_page => 30, 
       :order => "published_at DESC"
     )
 

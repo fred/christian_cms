@@ -62,9 +62,19 @@ class Article < ActiveRecord::Base
     )
   end
   
+  before_destroy :is_protected?
   after_save :sweep_partial_cache
   
   private
+  
+  def is_protected?
+    if self.protected_article
+      raise "Article is protected, You cannot delete it"
+    else
+      true
+    end
+  end
+  
   def sweep_partial_cache
     cache_dir = RAILS_ROOT+"/tmp/cache/views/*"
     FileUtils.rm_r(Dir.glob(cache_dir)) rescue Errno::ENOENT

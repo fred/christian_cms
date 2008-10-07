@@ -4,6 +4,7 @@
     %th Titulo
     %th Fecha
     %th Activo
+    %th Protegido
     %th
     %th
     %th
@@ -16,6 +17,8 @@
           = article.published_at.to_s(:short)
         %td 
           = boolean_to_image_small(article.approved)
+        %td 
+          = boolean_to_image_lock(article.protected_record)
         %td 
           = link_to 'Preview', admin_article_path(article)
         %td 

@@ -79,12 +79,10 @@ class Admin::ArticlesController < Admin::BaseController
   # DELETE /admin/articles/1.xml
   def destroy
     @article = Article.find(params[:id])
-    @article.destroy
+    if @article.destroy
+      redirect_to(admin_articles_url)
+    end
     rescue
       flash[:notice] = "NO puedes Deletar este Articulo, articulo Protegido."
-    respond_to do |format|
-      format.html { redirect_to(admin_articles_url) }
-      format.xml  { head :ok }
-    end
   end
 end

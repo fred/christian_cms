@@ -27,7 +27,7 @@ class Admin::BirthdaysController < Admin::BaseController
   def create
     @birthday = Birthday.new(params[:birthday])
     if @birthday.save
-      flash[:notice] = 'Cumpleanos Creado con Suceso'
+      flash[:notice] = 'Cumpleanos Creado con Successo.'
       redirect_to :action => "index"
     else
       render :action => 'new'
@@ -53,7 +53,7 @@ class Admin::BirthdaysController < Admin::BaseController
     @birthday = Birthday.find(params[:id])
     month = @birthday.birthdate.month
     @birthday.destroy
-    flash[:notice] = "Cumpleaño Deletado"
+    flash[:notice] = "Cumpleaño Deletado con successo"
     redirect_to :action => "index"
   end
   

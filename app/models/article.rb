@@ -68,7 +68,7 @@ class Article < ActiveRecord::Base
   private
   
   def is_protected?
-    if self.protected_article
+    if self.protected_record
       raise "Article is protected, You cannot delete it"
     else
       true

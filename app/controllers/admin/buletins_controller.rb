@@ -40,18 +40,23 @@ class Admin::BuletinsController < Admin::BaseController
   def update
     @buletin = Buletin.find(params[:id])
     if @buletin.update_attributes(params[:buletin])
-      flash[:notice] = 'Buletin was successfully updated.'
+      flash[:notice] = 'Buletin fue Actualizado con successo.'
       redirect_to admin_buletins_path
     else
       render :action => 'edit'
     end
   end
   
+  
+  # DELETE /admin/buletins/1
+  # DELETE /admin/buletins/1.xml
   def destroy
     if @buletin = Buletin.find(params[:id]).destroy
+      flash[:notice] = "Boletin apagado con successo."
       redirect_to buletins_path
     end
   rescue
+    flash[:notice] = "Boletin no pudo ser apagado."
     redirect_to :action => "index"
   end
   

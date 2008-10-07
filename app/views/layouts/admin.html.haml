@@ -41,9 +41,9 @@
     .clear
     
     #main
-      .flash_notice
-        %p= flash[:notice]
       .content
+        .flash_notice
+          %p= flash[:notice]
         = yield
             
     .clear

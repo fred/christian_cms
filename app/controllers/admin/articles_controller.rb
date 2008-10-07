@@ -50,7 +50,7 @@ class Admin::ArticlesController < Admin::BaseController
     
     respond_to do |format|
       if @article.save
-        flash[:notice] = 'Article was successfully created.'
+        flash[:notice] = 'Articulo fue Creado con successo.'
         format.html { redirect_to :action => "edit", :id => @article}
       else
         format.html { render :action => "new" }
@@ -65,7 +65,7 @@ class Admin::ArticlesController < Admin::BaseController
     
     respond_to do |format|
       if @article.update_attributes(params[:article])
-        flash[:notice] = 'Article was successfully updated.'
+        flash[:notice] = 'Articulo fue Actualizado con successo.'
         format.html { redirect_to(:action => "edit", :id => @article) }
         format.xml  { head :ok }
       else
@@ -80,7 +80,8 @@ class Admin::ArticlesController < Admin::BaseController
   def destroy
     @article = Article.find(params[:id])
     @article.destroy
-
+    rescue
+      flash[:notice] = "NO puedes Deletar este Articulo, articulo Protegido."
     respond_to do |format|
       format.html { redirect_to(admin_articles_url) }
       format.xml  { head :ok }

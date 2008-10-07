@@ -80,9 +80,10 @@ class Admin::ArticlesController < Admin::BaseController
   def destroy
     @article = Article.find(params[:id])
     if @article.destroy
+      flash[:notice] = 'Articulo fue Removido con successo.'
       redirect_to(admin_articles_url)
     end
     rescue
-      flash[:notice] = "NO puedes Deletar este Articulo, articulo Protegido."
+      flash[:notice] = "No puedes deletar este articulo, articulo protegido."
   end
 end

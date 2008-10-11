@@ -13,7 +13,7 @@ class Admin::BuletinsController < Admin::BaseController
     else
       order = "created_at DESC"
     end
-    per_page = 40
+    per_page = 20
     current_page = (params[:page] ||= 1).to_i
     @buletins = Buletin.paginate :page => current_page, :per_page => per_page, :order => order
   end

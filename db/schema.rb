@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(:version => 17) do
     t.datetime "updated_at"
   end
 
-  add_index "birthdays", ["first_name", "last_name", "birthdate"], :name => "index_birthdays_on_first_name_and_last_name_and_birthdate"
+  add_index "birthdays", ["birthdate", "first_name", "last_name"], :name => "index_birthdays_on_first_name_and_last_name_and_birthdate"
 
   create_table "buletins", :force => true do |t|
     t.string   "title"
@@ -135,20 +135,8 @@ ActiveRecord::Schema.define(:version => 17) do
     t.string   "sacraments"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "last_seen_at"
-    t.boolean  "approved",                                :default => false
-    t.string   "website"
-    t.string   "login_key"
-    t.datetime "login_key_expires_at"
-    t.boolean  "activated",                               :default => false
-    t.string   "bio"
-    t.text     "bio_html"
-    t.string   "openid_url"
-    t.datetime "last_login_at"
-    t.integer  "posts_count",                             :default => 0
+    t.boolean  "approved",                                :default => true
   end
-
-  add_index "users", ["last_seen_at"], :name => "index_users_on_last_seen_at"
 
   create_table "weathers", :force => true do |t|
     t.string   "zipcode"

@@ -8,18 +8,18 @@
     = stylesheet_link_tag "blueprint/src/typography.css"
     = stylesheet_link_tag "blueprint/src/forms.css"
     = stylesheet_link_tag "fancy"
-    /= stylesheet_link_tag "blueprint/src/print.css"
     = stylesheet_link_tag "admin.css"
     = stylesheet_link_tag "admin_pagination.css"
     = stylesheet_link_tag "admin_scaffold"
-    = stylesheet_link_tag "table"
+    /= stylesheet_link_tag "table"
     = stylesheet_link_tag "menu"
     
   %body
   
   
   #site
-  
+    = image_tag("/images/logo1.png", :class => "logo_header")
+    = image_tag("/images/control_panel.png", :class => "logo_header")
     #header
       #dolphincontainer
         #dolphinnav
@@ -35,9 +35,13 @@
             %li
               = link_to "Menu", admin_menu_items_path
             %li
+              = link_to "Cumpleaños", admin_birthdays_path
+            %li
               = link_to "Eventos", admin_events_path
             %li
-              = link_to "Cumpleaños", admin_birthdays_path
+              = link_to "Website", "/"
+            %li
+              = link_to "Logout", "/logout"
     .clear
     
     #main

@@ -9,7 +9,7 @@ development:
 test:
   adapter: mysql
   encoding: utf8
-  database: iglesia_archivo_test
+  database: iglesia_test
   username: root
   password:
   socket:  /opt/local/var/run/mysql5/mysqld.sock

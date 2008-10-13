@@ -14,8 +14,6 @@ CREATE TABLE `people` (
   `birthday` datetime NOT NULL,
   `team_id` int(11) NULL,
   `team_type` varchar(50) NULL,
-  `type` varchar(50) NULL,
-  `parent_id` varchar(50) NULL,
   `delta` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -55,22 +53,5 @@ CREATE TABLE `contacts` (
   `id` int(11) NOT NULL auto_increment,
   `phone_number` varchar(50) NOT NULL,
   `person_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `alphas`;
-
-CREATE TABLE `alphas` (
-  `id` int(11) NOT NULL auto_increment,
-  `name` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `betas`;
-
-CREATE TABLE `betas` (
-  `id` int(11) NOT NULL auto_increment,
-  `name` varchar(50) NOT NULL,
-  `delta` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

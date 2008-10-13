@@ -6,12 +6,6 @@ namespace :thinking_sphinx do
     Rake::Task[:merb_env].invoke    if defined?(Merb)
   end
   
-  desc "Stop if running, then start a Sphinx searchd daemon using Thinking Sphinx's settings"
-  task :running_start => :app_env do
-   Rake::Task["thinking_sphinx:stop"].invoke if sphinx_running?
-   Rake::Task["thinking_sphinx:start"].invoke
-  end
-  
   desc "Start a Sphinx searchd daemon using Thinking Sphinx's settings"
   task :start => :app_env do
     config = ThinkingSphinx::Configuration.new
@@ -20,8 +14,8 @@ namespace :thinking_sphinx do
     raise RuntimeError, "searchd is already running." if sphinx_running?
     
     Dir["#{config.searchd_file_path}/*.spl"].each { |file| File.delete(file) }
-
-    cmd = "#{config.bin_path}searchd --config #{config.config_file}"
+    
+    cmd = "searchd --config #{config.config_file}"
     puts cmd
     system cmd
     
@@ -47,21 +41,15 @@ namespace :thinking_sphinx do
   
   desc "Generate the Sphinx configuration file using Thinking Sphinx's settings"
   task :configure => :app_env do
-    config = ThinkingSphinx::Configuration.new
-    puts "Generating Configuration to #{config.config_file}"
-    config.build
+    ThinkingSphinx::Configuration.new.build
   end
   
   desc "Index data for Sphinx using Thinking Sphinx's settings"
-  task :index => :app_env do
+  task :index => [:app_env, :configure] do
     config = ThinkingSphinx::Configuration.new
-    unless ENV["INDEX_ONLY"] == "true"
-      puts "Generating Configuration to #{config.config_file}"
-      config.build
-    end
-        
+    
     FileUtils.mkdir_p config.searchd_file_path
-    cmd = "#{config.bin_path}indexer --config #{config.config_file} --all"
+    cmd = "indexer --config #{config.config_file} --all"
     cmd << " --rotate" if sphinx_running?
     puts cmd
     system cmd
@@ -69,8 +57,6 @@ namespace :thinking_sphinx do
 end
 
 namespace :ts do
-  desc "Stop if running, then start a Sphinx searchd daemon using Thinking Sphinx's settings"
-  task :run     => "thinking_sphinx:running_start"
   desc "Start a Sphinx searchd daemon using Thinking Sphinx's settings"
   task :start   => "thinking_sphinx:start"
   desc "Stop Sphinx using Thinking Sphinx's settings"
@@ -96,5 +82,5 @@ def sphinx_pid
 end
 
 def sphinx_running?
-  sphinx_pid && `ps -p #{sphinx_pid} | wc -l`.to_i > 1
+  sphinx_pid && `ps #{sphinx_pid} | wc -l`.to_i > 1
 end

@@ -493,6 +493,17 @@ pre {
 	margin-left:20px;
 }
 
+.search {
+	margin-top:10px;
+	margin-left:10px;
+}
+.search input {
+	font-size: 1.0em;
+	color: #555;
+	padding:2px;
+	background-color:#eee;
+}
+
 /*-------------------------------------------------
 FORMATTING GUIDE
 -------------------------------------------------*/

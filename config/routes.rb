@@ -10,7 +10,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :menu_items
   map.resources :news
-  map.resources :articles  
+  map.resources :articles, :collection => { :search => :get }
   map.resources :buletins
   map.resources :events
   map.resources :birthdays

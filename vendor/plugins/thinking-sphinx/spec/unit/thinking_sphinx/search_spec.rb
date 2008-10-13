@@ -1,194 +1,121 @@
 require 'spec/spec_helper'
-require 'will_paginate/collection'
 
 describe ThinkingSphinx::Search do
-  describe "search_for_id method" do
-    before :each do
-      @client = Riddle::Client.stub_instance(
-        :filters    => [],
-        :filters=   => true,
-        :id_range=  => true,
-        :query      => {
-          :matches  => []
-        }
-      )
-      
-      ThinkingSphinx::Search.stub_methods(
-        :client_from_options => @client,
-        :search_conditions   => ["", []]
-      )
-    end
-    
-    it "should set the client id range to focus on the given id" do
-      ThinkingSphinx::Search.search_for_id 42, "an_index"
-      
-      @client.should have_received(:id_range=).with(42..42)
-    end
-    
-    it "should query on the given index" do
-      ThinkingSphinx::Search.search_for_id 42, "an_index"
-      
-      @client.should have_received(:query).with("", "an_index")
-    end
-    
-    it "should return true if a record is returned" do
-      @client.stub_method(:query => {
-        :matches => [24]
-      })
-      
-      ThinkingSphinx::Search.search_for_id(42, "an_index").should be_true
-    end
-    
-    it "should return false if no records are returned" do
-      ThinkingSphinx::Search.search_for_id(42, "an_index").should be_false
-    end
-  end
-  
   describe "instance_from_result method" do
     before :each do
-      Person.track_methods(:find)
+      Person.stub_method(:find => true)
+      ThinkingSphinx::Search.stub_method(:class_from_crc => Person)
+    end
+    
+    after :each do
+      Person.unstub_method(:find)
+      ThinkingSphinx::Search.unstub_method(:class_from_crc)
     end
 
     it "should honour the :include option" do
-      ellie = ThinkingSphinx::Search.search("Ellie Ford", :include => :contacts).first
-      pending
-      Person.should have_received(:find).with(ellie.id, :include => :contacts, :select => nil)
+      ThinkingSphinx::Search.send(
+        :instance_from_result,
+        {:doc => 1, :attributes => {"class_crc" => 123}},
+        {:include => :assoc}
+      )
+
+      Person.should have_received(:find).with(1, :include => :assoc, :select => nil)
     end
 
     it "should honour the :select option" do
-      ellie = ThinkingSphinx::Search.search("Ellie Ford", :select => "*").first
-      pending
-      Person.should have_received(:find).with(ellie.id, :include => nil, :select => "*")
+      ThinkingSphinx::Search.send(
+        :instance_from_result,
+        {:doc => 1, :attributes => {"class_crc" => 123}},
+        {:select => :columns}
+      )
+
+      Person.should have_received(:find).with(1, :include => nil, :select => :columns)
     end
 
   end
 
   describe "instances_from_results method" do
     before :each do
-      Person.track_methods(:find)
+      @person_a = Person.stub_instance
+      @person_b = Person.stub_instance
+      @person_c = Person.stub_instance
+
+      @results = [
+        {:doc => @person_a.id},
+        {:doc => @person_b.id},
+        {:doc => @person_c.id}
+      ]
       
-      @ellie_ids = Person.search_for_ids "Ellie"
+      Person.stub_method(
+        :find => [@person_c, @person_a, @person_b]
+      )
+      ThinkingSphinx::Search.stub_method(:instance_from_result => true)
     end
-    
+
+    after :each do
+      Person.unstub_method(:find)
+      ThinkingSphinx::Search.unstub_method(:instance_from_result)
+    end
+
+    it "should pass calls to instance_from_result if no class given" do
+      ThinkingSphinx::Search.send(
+        :instances_from_results, @results
+      )
+
+      ThinkingSphinx::Search.should have_received(:instance_from_result).with(
+        {:doc => @person_a.id}, {}
+      )
+      ThinkingSphinx::Search.should have_received(:instance_from_result).with(
+        {:doc => @person_b.id}, {}
+      )
+      ThinkingSphinx::Search.should have_received(:instance_from_result).with(
+        {:doc => @person_c.id}, {}
+      )
+    end
+
     it "should call a find on all ids for the class" do
-      Person.search "Ellie"
+      ThinkingSphinx::Search.send(
+        :instances_from_results, @results, {}, Person
+      )
       
       Person.should have_received(:find).with(
         :all,
-        :conditions => {:id => @ellie_ids},
+        :conditions => {:id => [@person_a.id, @person_b.id, @person_c.id]},
         :include    => nil,
         :select     => nil
       )
     end
 
     it "should honour the :include option" do
-      Person.search "Ellie", :include => :contacts
+      ThinkingSphinx::Search.send(
+        :instances_from_results, @results, {:include => :something}, Person
+      )
       
       Person.should have_received(:find).with(
         :all,
-        :conditions => {:id => @ellie_ids},
-        :include    => :contacts,
+        :conditions => {:id => [@person_a.id, @person_b.id, @person_c.id]},
+        :include    => :something,
         :select     => nil
       )
     end
 
     it "should honour the :select option" do
-      Person.search "Ellie", :select => "*"
+      ThinkingSphinx::Search.send(
+        :instances_from_results, @results, {:select => :fields}, Person
+      )
       
       Person.should have_received(:find).with(
         :all,
-        :conditions => {:id => @ellie_ids},
+        :conditions => {:id => [@person_a.id, @person_b.id, @person_c.id]},
         :include    => nil,
-        :select     => "*"
-      )
-    end
-  end
-  
-  describe "count method" do
-    before :each do
-      @client = Riddle::Client.stub_instance(
-        :filters    => [],
-        :filters=   => true,
-        :id_range=  => true,
-        :sort_mode  => :asc,
-        :limit      => 5,
-        :offset=    => 0,
-        :sort_mode= => true,
-        :query      => {
-          :matches  => [],
-          :total    => 50
-        }
-      )
-
-      ThinkingSphinx::Search.stub_methods(
-        :client_from_options => @client,
-        :search_conditions   => ["", []]
+        :select     => :fields
       )
     end
 
-    it "should return query total" do
-      ThinkingSphinx::Search.count(42, "an_index").should == 50
+    it "should sort the objects the same as the result set" do
+      ThinkingSphinx::Search.send(
+        :instances_from_results, @results, {:select => :fields}, Person
+      ).should == [@person_a, @person_b, @person_c]
     end
-  end
-  
-  describe "search result" do
-    before :each do
-      @results = ThinkingSphinx::Search.search "nothing will match this"
-    end
-    
-    it "should respond to previous_page" do
-      @results.should respond_to(:previous_page)
-    end
-    
-    it "should respond to next_page" do
-      @results.should respond_to(:next_page)
-    end
-    
-    it "should respond to current_page" do
-      @results.should respond_to(:current_page)
-    end
-    
-    it "should respond to total_pages" do
-      @results.should respond_to(:total_pages)
-    end
-    
-    it "should respond to total_entries" do
-      @results.should respond_to(:total_entries)
-    end
-    
-    it "should respond to offset" do
-      @results.should respond_to(:offset)
-    end
-        
-    it "should be a subclass of Array" do
-      @results.should be_kind_of(Array)
-    end
-  end
-  
-  it "should not return results that have been deleted" do
-    Alpha.search("one").should_not be_empty
-    
-    alpha = Alpha.find(:first, :conditions => {:name => "one"})
-    alpha.destroy
-    
-    Alpha.search("one").should be_empty
-  end
-  
-  it "should still return edited results using old data if there's no delta" do
-    Alpha.search("two").should_not be_empty
-    
-    alpha = Alpha.find(:first, :conditions => {:name => "two"})
-    alpha.update_attributes(:name => "twelve")
-    
-    Alpha.search("two").should_not be_empty
-  end
-  
-  it "should not return edited results using old data if there's a delta" do
-    Beta.search("two").should_not be_empty
-    
-    beta = Beta.find(:first, :conditions => {:name => "two"})
-    beta.update_attributes(:name => "twelve")
-    
-    Beta.search("two").should be_empty
   end
 end

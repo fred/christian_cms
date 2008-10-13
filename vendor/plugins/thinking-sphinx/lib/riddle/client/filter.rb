@@ -18,7 +18,7 @@ module Riddle
       def query_message
         message = Message.new
         
-        message.append_string self.attribute.to_s
+        message.append_string self.attribute
         case self.values
         when Range
           if self.values.first.is_a?(Float) && self.values.last.is_a?(Float)

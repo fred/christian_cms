@@ -9,6 +9,15 @@ class Article < ActiveRecord::Base
   validates_uniqueness_of :title
   
   has_permalink :title
+  
+  define_index do
+    indexes title
+    indexes short_body
+    indexes body
+    indexes approved
+    has published_at
+  end
+  
 
   def set_permalink
     if self.permalink.to_s.empty?
@@ -18,19 +27,6 @@ class Article < ActiveRecord::Base
   
   def permalink_for(str)
     PermalinkFu.escape(str)
-  end
-
-  def self.find_with_ferret_paginated(q,options = {})
-     return nil if q.nil? or q==""
-     results = self.find_ids_with_ferret(q)
-     page ||= options[:page]
-     per_page ||= options[:per_page]
-     id_array = []
-     # just get the ids.
-     results[1].each do |t|
-       id_array << t[:id]
-     end
-     self.paginate id_array, :page => page, :per_page => per_page, :order => "articles.id DESC"
   end
   
   def self.full_text_search(q, limit, order_by)

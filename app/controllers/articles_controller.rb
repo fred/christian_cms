@@ -3,14 +3,12 @@ class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.xml
   def index
-
-    order = "published_at DESC"
     per_page = 6
     current_page = (params[:page] ||= 1).to_i
 
     @articles = Article.paginate :page => current_page, 
       :per_page => per_page, 
-      :order => order, 
+      :order => "published_at DESC", 
       :conditions => ["articles.approved = ?", true]
     respond_to do |format|
       format.html # index.html.erb
@@ -22,7 +20,17 @@ class ArticlesController < ApplicationController
   
   
   def search
-    redirect_to :action => "index"
+    if params[:query]
+      @articles = Article.search(params[:query], 
+        :page => params[:page], 
+        :per_page => 5,
+        :order => "published_at DESC",
+        :conditions => {:approved => 1}
+      )
+      render :action => "index"
+    else
+      redirect_to :action => "index"
+    end
   end
 
 

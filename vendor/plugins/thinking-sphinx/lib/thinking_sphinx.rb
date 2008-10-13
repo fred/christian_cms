@@ -4,7 +4,6 @@ require 'riddle'
 require 'thinking_sphinx/active_record'
 require 'thinking_sphinx/association'
 require 'thinking_sphinx/attribute'
-require 'thinking_sphinx/collection'
 require 'thinking_sphinx/configuration'
 require 'thinking_sphinx/field'
 require 'thinking_sphinx/index'
@@ -21,7 +20,7 @@ module ThinkingSphinx
   module Version #:nodoc:
     Major = 0
     Minor = 9
-    Tiny  = 9
+    Tiny  = 2
     
     String = [Major, Minor, Tiny].join('.')
   end
@@ -53,13 +52,11 @@ module ThinkingSphinx
     @@define_indexes = value
   end
   
-  @@deltas_enabled = nil
-
   # Check if delta indexing is enabled.
   # 
   def self.deltas_enabled?
-    @@deltas_enabled  = (ThinkingSphinx::Configuration.environment != 'test') if @@deltas_enabled.nil?
-    @@deltas_enabled
+    @@deltas_enabled =  true unless defined?(@@deltas_enabled)
+    @@deltas_enabled == true
   end
   
   # Enable/disable all delta indexing.
@@ -70,27 +67,6 @@ module ThinkingSphinx
     @@deltas_enabled = value
   end
   
-  @@updates_enabled = nil
-  
-  # Check if updates are enabled. True by default, unless within the test
-  # environment.
-  # 
-  def self.updates_enabled?
-    @@updates_enabled  = (ThinkingSphinx::Configuration.environment != 'test') if @@updates_enabled.nil?
-    @@updates_enabled
-  end
-  
-  # Enable/disable updates to Sphinx
-  # 
-  #   ThinkingSphinx.updates_enabled = false
-  #
-  def self.updates_enabled=(value)
-    @@updates_enabled = value
-  end
-  
-  # Checks to see if MySQL will allow simplistic GROUP BY statements. If not,
-  # or if not using MySQL, this will return false.
-  # 
   def self.use_group_by_shortcut?
     ::ActiveRecord::ConnectionAdapters.constants.include?("MysqlAdapter") &&
     ::ActiveRecord::Base.connection.is_a?(

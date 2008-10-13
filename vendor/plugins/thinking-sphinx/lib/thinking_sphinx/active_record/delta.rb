@@ -11,24 +11,17 @@ module ThinkingSphinx
       #
       def self.included(base)
         base.class_eval do
-          # The define_callbacks method was added post Rails 2.0.2 - if it
-          # doesn't exist, we define the callback manually
-          #
-          if respond_to?(:define_callbacks)
-            define_callbacks :after_commit
-          else
-            class << self
-              # Handle after_commit callbacks - call all the registered callbacks.
-              #
-              def after_commit(*callbacks, &block)
-                callbacks << block if block_given?
-                write_inheritable_array(:after_commit, callbacks)
-              end
-            end
-          end
+          # This is something added since Rails 2.0.2 - we need to register the
+          # callback with ActiveRecord explicitly.
+          define_callbacks "after_commit" if respond_to?(:define_callbacks)
           
-          def after_commit
-            # Deliberately blank.
+          class << self
+            # Handle after_commit callbacks - call all the registered callbacks.
+            # 
+            def after_commit(*callbacks, &block)
+              callbacks << block if block_given?
+              write_inheritable_array(:after_commit, callbacks)
+            end
           end
           
           # Normal boolean save wrapped in a handler for the after_commit
@@ -73,19 +66,13 @@ module ThinkingSphinx
           # if running in the test environment.
           # 
           def index_delta
-            return true unless ThinkingSphinx.updates_enabled? &&
-              ThinkingSphinx.deltas_enabled?
+            if ThinkingSphinx::Configuration.environment == "test" ||
+              !ThinkingSphinx.deltas_enabled?
+              return true
+            end
             
-            config = ThinkingSphinx::Configuration.new
-            client = Riddle::Client.new config.address, config.port
-            
-            client.update(
-              "#{self.class.sphinx_indexes.first.name}_core",
-              ['sphinx_deleted'],
-              {self.sphinx_document_id => 1}
-            ) if self.in_core_index?
-            
-            system "#{config.bin_path}indexer --config #{config.config_file} --rotate #{self.class.sphinx_indexes.first.name}_delta"
+            configuration = ThinkingSphinx::Configuration.new
+            system "indexer --config #{configuration.config_file} --rotate #{self.class.name.downcase}_delta"
             
             true
           end

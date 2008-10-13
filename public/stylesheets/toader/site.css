@@ -460,28 +460,49 @@ pre {
 .blockquote_small,
 .blockquote_medium,
 .blockquote_large,
-.blockquote_huge {
+.blockquote_huge,
+.left_blockquote,
+.left_blockquote_tiny,
+.left_blockquote_small,
+.left_blockquote_medium,
+.left_blockquote_large,
+.left_blockquote_huge {
 	text-align:center;
 	margin-left:1em;
 	margin-bottom: 4px;
 	color:#666;
 	font-style: italic;
 }
+.left_blockquote,
+.left_blockquote_tiny,
+.left_blockquote_small,
+.left_blockquote_medium,
+.left_blockquote_large,
+.left_blockquote_huge {
+	text-align:left;
+}
+
+.left_blockquote_tiny,
 .blockquote_tiny {
 	font-size: 0.9em;
 }
+.left_blockquote_small, 
 .blockquote_small {
+	font-size: 1.0em;
+}
+.left_blockquote_medium,
+.blockquote_medium {
 	font-size: 1.1em;
 }
-.blockquote_medium {
+.left_blockquote_large, 
+.blockquote_large {
 	font-size: 1.2em;
 }
-.blockquote_large {
+.left_blockquote_huge,
+.blockquote_huge {
 	font-size: 1.3em;
 }
-.blockquote_huge {
-	font-size: 1.4em;
-}
+
 .read_more_link {
 	font-weight: bold;
 	color: blue;

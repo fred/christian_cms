@@ -48,14 +48,36 @@ role :app, domain
 role :db,  domain, :primary => true
 role :scm, domain
 
-task :after_symlink, :roles => :app do
-  run "ln -nfs #{shared_path}/config/database.yml #{current_path}/config/database.yml"
-  run "ln -nfs #{shared_path}/assets/buletins #{current_path}/public/"
-  run "mkdir -p #{current_path}/tmp/cache"
-end
+
 
 # following line added per latest railsmachine instructions
 #set :runner, 'deploy'
+
+namespace :sphinx do
+  desc "Generate the ThinkingSphinx configuration file"
+  task :configure do
+    run "cd #{release_path} && rake thinking_sphinx:configure"
+  end
+  task :index do
+    run "cd #{release_path} && rake thinking_sphinx:index"
+  end
+  task :stop do
+    run "cd #{release_path} && rake thinking_sphinx:stop"
+  end
+  task :start do
+    run "cd #{release_path} && rake thinking_sphinx:start"
+  end
+  task :restart do
+    run "cd #{release_path} && rake thinking_sphinx:restart"
+  end
+  task :reload do
+    stop
+    configure
+    index
+    start
+  end
+end
+
 
 namespace :passenger do 
   %w(start stop restart).each do |action| 
@@ -73,4 +95,14 @@ namespace :deploy do
       find_and_execute_task("passenger:#{action}")
     end
   end
+end
+
+
+#before "deploy", "sphinx:stop"
+after "deploy", "sphinx:reload"
+
+task :after_symlink, :roles => :app do
+  run "ln -nfs #{shared_path}/config/database.yml #{current_path}/config/database.yml"
+  run "ln -nfs #{shared_path}/assets/buletins #{current_path}/public/"
+  run "mkdir -p #{current_path}/tmp/cache"
 end

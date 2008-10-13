@@ -16,3 +16,8 @@ public/images/simple_captcha
 .svn
 all.js
 tmp/
+config/development.sphinx.conf
+db/*.lzma
+db/*.sql 
+db/sphinx/
+log/

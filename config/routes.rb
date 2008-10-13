@@ -17,6 +17,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :settings
   map.resources :users
   map.resource :session
+  map.resources :messages, :collection => {:thank_you => :any, :moved_permanently => :any}
 
   # allow neat permalinked urls
   map.connect 'articles/page/:page',

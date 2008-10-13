@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 17) do
+ActiveRecord::Schema.define(:version => 18) do
 
   create_table "articles", :force => true do |t|
     t.integer  "user_id"
@@ -74,6 +74,17 @@ ActiveRecord::Schema.define(:version => 17) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "new_page",      :default => false
+  end
+
+  create_table "messages", :force => true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "phone_number"
+    t.text     "body"
+    t.boolean  "subscribed",     :default => false
+    t.boolean  "urgent_contact", :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "money_rates", :force => true do |t|

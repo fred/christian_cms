@@ -1,0 +1,28 @@
+
+%h2 Listing messages
+
+%table
+  %tr
+    %th Name
+    %th Email
+    %th Phone number
+    %th Body
+    %th Urgent
+    %th 
+    %th 
+    %th 
+
+  - for message in @messages
+    %tr
+      %td=h message.name
+      %td=h message.email
+      %td=h message.phone_number
+      %td=h truncate(message.body, 46, "...")
+      %td= boolean_to_word(message.urgent_contact)
+      %td= link_to 'Leer', {:controller => "admin/messages", :action => "show", :id => message}
+      %td= link_to 'Editar', {:controller => "admin/messages", :action => "edit", :id => message}
+      %td= link_to 'Deletar', {:controller => "admin/messages", :action => "destroy", :id => message}, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New message', new_message_path

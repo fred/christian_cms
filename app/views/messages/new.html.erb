@@ -1,0 +1,34 @@
+<h2> Por favor deje su mensage</h2>
+<% form_for(@message) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    Nombre 
+    <br />
+    <%= f.text_field :name, :size => 30  %>
+  </p>
+  <p>
+    Email
+    <br />
+    <%= f.text_field :email, :size => 30  %>
+  </p>
+  <p>
+    Numero de Telefono <br />
+    <%= f.text_field :phone_number, :size => 30 %>
+  </p>
+  <p>
+    Mensage <br />
+    <%= f.text_area :body, :rows => 10, :cols => 46 %>
+  </p>
+  <p>
+		Contacteme urgente
+    <%= f.check_box :urgent_contact %>
+  </p>
+  <p>
+    <%= f.submit "Mandar Message" %>
+  </p>
+<% end %>
+
+<p> Luego le contactaremos. </p>
+
+<p><i> * Su Informacion Personal no sera compartida o divulgada a otros medios.</i></p>

@@ -1,0 +1,19 @@
+<h2> Hay una mensage nueva en comunidad-catolica.com </h2>
+
+<% if @message.urgent_contact %>
+  <h3 style="color:red;">Urgente</h3>
+<% end %>
+
+<p> <u>Nombre:</u> <%=h @message.name.to_s %> </p>
+
+<p> <u>Email:</u> <%=h @message.email.to_s %> </p>
+
+<p> <u>Telefono:</u> <%=h @message.phone_number.to_s %> </p>
+
+<p> <u>Message:</u> <%=h @message.body.to_s %> </p>
+
+<p> 
+	<a href="http://comunidad-catolica.com/admin/messages/<%= @message.id %>"> 
+	  Para ver clique aqui.
+	</a>
+</p>

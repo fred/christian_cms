@@ -56,22 +56,26 @@ role :scm, domain
 namespace :sphinx do
   desc "Generate the ThinkingSphinx configuration file"
   task :configure do
-    run "cd #{release_path} && rake thinking_sphinx:configure"
+    run "cd #{current_path} && rake thinking_sphinx:configure"
   end
+  desc "Generate Sphinx Index"
   task :index do
-    run "cd #{release_path} && rake thinking_sphinx:index"
+    run "cd #{current_path} && rake thinking_sphinx:index"
   end
+  desc "Stop Sphinx"
   task :stop do
-    run "cd #{release_path} && rake thinking_sphinx:stop"
+    run "cd #{current_path} && rake thinking_sphinx:stop"
   end
+  desc "Start Sphinx"
   task :start do
-    run "cd #{release_path} && rake thinking_sphinx:start"
+    run "cd #{current_path} && rake thinking_sphinx:start"
   end
+  desc "Restart Sphinx"
   task :restart do
-    run "cd #{release_path} && rake thinking_sphinx:restart"
+    run "cd #{current_path} && rake thinking_sphinx:restart"
   end
+  desc "Configure, index and start sphinx"
   task :reload do
-    stop
     configure
     index
     start
@@ -97,8 +101,7 @@ namespace :deploy do
   end
 end
 
-
-#before "deploy", "sphinx:stop"
+before "deploy", "sphinx:stop"
 after "deploy", "sphinx:reload"
 
 task :after_symlink, :roles => :app do
@@ -106,3 +109,4 @@ task :after_symlink, :roles => :app do
   run "ln -nfs #{shared_path}/assets/buletins #{current_path}/public/"
   run "mkdir -p #{current_path}/tmp/cache"
 end
+

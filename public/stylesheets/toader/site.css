@@ -31,7 +31,7 @@ body {
 	position:relative;
 }
 #masthead	{
-	width:700px;
+	width:732px;
 	margin:0 auto;
 	padding:40px 0 70px 152px;
 	height:70px;
@@ -110,13 +110,14 @@ body {
 #content {
 	font-size:1.1em;
 	background:#FFF;
-	width: 806px;
+	width: 860px;
+	width: 82%;
 	margin:0 auto;
 	padding: 20px 10px 20px 20px;
 	border-left: 1px solid #bbb;
 	border-right: 1px solid #bbb;
-	background: url("/images/bg2_lighter.jpg") top left;
-	background-repeat: repeat-y;
+	background: url("/images/bg2_light.jpg") top left;
+	background-repeat: repeat-y repeat-x;
 }
 #content h1 {
 	font-size: 2.4em;
@@ -124,7 +125,7 @@ body {
 }
 
 .subContent {
-	width:220px;	
+	width:26%;	
 	padding: 0 0 20px 10px;
 	border-left: 3px dotted #fff;
 	border-bottom: 3px dotted #fff;
@@ -133,20 +134,11 @@ body {
 }
 
 .article {
-	width: 65%;
-	padding-bottom: 1em;
-	padding-right: 2em;
-	margin-bottom: 1em;
+	width: 68%;
+	padding: 10px 0px 20px 10px;
 	position:relative;
 }
 
-.articles {
-	width: 67%;
-	padding-bottom: 1em;
-	padding-right: 2em;
-	margin-bottom: 1em;
-	position:relative;
-}
 
 .articles a, .article a {
 	font-size: 1.0em;

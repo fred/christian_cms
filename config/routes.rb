@@ -64,6 +64,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :buletins
     admin.resources :news
     admin.resources :events
+    admin.resources :messages
   end
 
   map.connect "/admin", :controller => "admin/articles"

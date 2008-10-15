@@ -17,13 +17,7 @@
 				  <% MenuItem.menus.each do |t| %>
 				    <li> <%= menu_item_link(t) %> </li>
 				  <% end %>
-					<% if !logged_in? %>
-						<li> <%= link_to _("Signup"), signup_url %> </li>
-						<li> <%= link_to _("Login"), "/login" %> </li>
-					<% else %>
-						<li><%= link_to "Mi Profile", edit_user_path(current_user) %></li>
-						<li><a href="/logout">Logout</a></li>
-					<% end %>
+					<li> <%= link_to _("Signup"), signup_url %> </li>
 				</ul>
 			</div>
 	</div>
@@ -41,9 +35,8 @@
 			<h2 class="flash_notice">
 				<%= flash[:notice] %>
 			</h2>
-			<div class="artic">
-				<%= yield %>
-			</div>
+
+			<%= yield %>
 		
 			<br clear="both"/>
 			<p class="blockquote"> 

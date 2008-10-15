@@ -31,9 +31,9 @@ body {
 	position:relative;
 }
 #masthead	{
-	width:732px;
-	margin:0 auto;
-	padding:40px 0 70px 152px;
+	width:740px;
+	margin:0 auto auto auto;
+	padding:40px 0 70px 150px;
 	height:70px;
 	position:relative;
 }

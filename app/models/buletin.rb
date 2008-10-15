@@ -14,7 +14,8 @@ class Buletin < ActiveRecord::Base
   end
 
   def self.get_latest
-    Buletin.find(:all, :conditions => ["month(created_at) = ?", Time.now.month])
+    time = Time.now
+    Buletin.find(:all, :conditions => ["month(created_at) = ? AND year(created_at) = ?", time.month, time.year])
   end
    
    

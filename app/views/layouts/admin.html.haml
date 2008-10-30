@@ -18,8 +18,8 @@
   
   
   #site
-    = image_tag("/images/logo1.png", :class => "logo_header")
-    = image_tag("/images/control_panel.png", :class => "logo_header")
+    = link_to(image_tag("/images/logo1.png", :class => "logo_header"), admin_home)
+    = link_to(image_tag("/images/control_panel.png", :class => "logo_header"), admin_home)
     #header
       #dolphincontainer
         #dolphinnav

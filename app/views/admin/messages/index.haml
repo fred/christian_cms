@@ -1,5 +1,5 @@
 
-%h2 Listing messages
+%h3 Mensages Dejadas en el Sitio
 
 %table
   %tr
@@ -8,21 +8,19 @@
     %th Phone number
     %th Body
     %th Urgent
+    %th Fecha
     %th 
     %th 
     %th 
 
   - for message in @messages
-    %tr
+    %tr{:class => display_bold(!message.message_read)}
       %td=h message.name
       %td=h message.email
       %td=h message.phone_number
       %td=h truncate(message.body, 46, "...")
       %td= boolean_to_word(message.urgent_contact)
-      %td= link_to 'Leer', {:controller => "admin/messages", :action => "show", :id => message}
-      %td= link_to 'Editar', {:controller => "admin/messages", :action => "edit", :id => message}
-      %td= link_to 'Deletar', {:controller => "admin/messages", :action => "destroy", :id => message}, :confirm => 'Are you sure?', :method => :delete
-
-%br
-
-= link_to 'New message', new_message_path
+      %td= message.created_at.strftime("%d %b, %Y - %H:%M:%S")
+      %td= link_to 'Leer', admin_message_path(message)
+      %td= link_to 'Editar', edit_admin_message_path(message)
+      %td= link_to 'Deletar', admin_message_path(message), :confirm => 'Estas Seguro que quieres deletar este mensage?', :method => :delete

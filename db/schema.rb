@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 18) do
+ActiveRecord::Schema.define(:version => 19) do
 
   create_table "articles", :force => true do |t|
     t.integer  "user_id"
@@ -85,6 +85,7 @@ ActiveRecord::Schema.define(:version => 18) do
     t.boolean  "urgent_contact", :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "message_read",   :default => false
   end
 
   create_table "money_rates", :force => true do |t|

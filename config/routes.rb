@@ -67,7 +67,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :messages
   end
 
-  map.connect "/admin", :controller => "admin/articles"
+  map.connect "/admin", :controller => "admin/dashboard"
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
   map.root :controller => "articles"
   map.connect ':controller/:action/:id'

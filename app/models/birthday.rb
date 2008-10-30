@@ -38,6 +38,14 @@ class Birthday < ActiveRecord::Base
     self.find(:all, :order => "month(birthdate) ASC, day(birthdate) ASC")
   end
   
+  def self.birthdays_today
+    time = Time.now
+    find(:all, 
+      :conditions => ["day(birthdate) = ? AND month(birthdate) = ?", time.day, time.month],
+      :order => "day(birthdate) ASC"
+    )
+  end
+  
   
   
   after_save :sweep_partial_cache

@@ -94,3 +94,9 @@ p {
 	background-color: #FAFAFA; 
 }
 
+
+.bold * {
+	font-weight:bold;
+	color: black;
+	background:pink;
+}

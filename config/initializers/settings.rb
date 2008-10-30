@@ -7,7 +7,8 @@ begin
   Settings.defaults[:meta_title] = "Bienvenido a Comunidad Catolica Latina en Bangkok, Thailand"
   Settings.defaults[:meta_description] = "Donde los Catolicos Latinos se reúnen en Bangkok"
   Settings.defaults[:site_copyrights] = 'Copyrights 2008'
-  Settings.defaults[:email] = "admin@ComunidadCatolica.com"
+  Settings.defaults[:email] = "admin@comunidad-catolica.com"
+  Settings.defaults[:notifications_email] = "admin@comunidad-catolica.com"
   Settings.defaults[:content_keywords] = "Catholic Church, Bangkok, Iglesia Catolica, Latina, Hispano, Tailandia, Thailand, Spanish, Espanol, Misa, Mass"
   Settings.defaults[:content_author] = "Comunidad Catolica Latina en Bangkok, Tailandia"
   Settings.defaults[:google_analytics_key] = "UA-737604-12"

@@ -1,0 +1,40 @@
+%h3 Edit Message
+
+- form_for(@message, :url => { :action => "update" } ) do |f| 
+
+  %p= f.error_messages
+
+  %p
+    = f.label :name 
+    %br
+    = f.text_field :name 
+  
+  %p
+    = f.label :email 
+    %br
+    = f.text_field :email 
+  
+  %p
+    = f.label :phone_number 
+    %br
+    = f.text_field :phone_number 
+  
+  %p
+    = f.label :body 
+    %br
+    = f.text_area :body 
+  
+  %p
+    = f.label :subscribed 
+    %br
+    = f.check_box :subscribed 
+  
+  %p
+    = f.label :urgent_contact 
+    %br
+    = f.check_box :urgent_contact 
+  
+  %p
+    = f.submit "Update" 
+
+

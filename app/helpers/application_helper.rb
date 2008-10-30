@@ -3,6 +3,18 @@ require 'md5'
 module ApplicationHelper
   
   
+  def display_bold(bol)
+    if bol
+      "bold"
+    else
+      ""
+    end
+  end
+  
+  def admin_home
+    url_for :controller => "admin/dashboard"
+  end
+  
   # returns a link from the menu_items table
   # and take care of about_blank
   def menu_item_link(m)

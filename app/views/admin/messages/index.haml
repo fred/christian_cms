@@ -15,12 +15,12 @@
 
   - for message in @messages
     %tr{:class => display_bold(!message.message_read)}
-      %td=h message.name
+      %td= link_to((h message.name),admin_message_path(message))
       %td=h message.email
       %td=h message.phone_number
       %td=h truncate(message.body, 46, "...")
       %td= boolean_to_word(message.urgent_contact)
-      %td= message.created_at.strftime("%d %b, %Y - %H:%M:%S")
+      %td= link_to(message.created_at.strftime("%d %b, %Y - %H:%M:%S"),admin_message_path(message))
       %td= link_to 'Leer', admin_message_path(message)
       %td= link_to 'Editar', edit_admin_message_path(message)
       %td= link_to 'Deletar', admin_message_path(message), :confirm => 'Estas Seguro que quieres deletar este mensage?', :method => :delete

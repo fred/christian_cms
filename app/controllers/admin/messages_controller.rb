@@ -10,7 +10,10 @@ class Admin::MessagesController < Admin::BaseController
   # GET /messages/1.xml
   def show
     @message = Message.find(params[:id])
-    @message.update_attributes(:message_read => true)
+    # udpate unread message to read
+    if !@message.message_read
+      @message.update_attributes(:message_read => true)
+    end
   end
 
   # GET /messages/new

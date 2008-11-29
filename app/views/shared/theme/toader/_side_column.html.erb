@@ -4,8 +4,8 @@
 	
 	<div class="search">
   	<% form_tag({ :controller => "articles", :action => "search" }, :method => 'get') do %>
-      <%= text_field_tag "query", nil, :size => 16 %>
-      <%= submit_tag "Search" %>
+      <%= text_field_tag "query", nil, :size => 17 %>
+      <%= submit_tag "Buscar en el Sitio" %>
     <% end %>
   </div>
 	
@@ -14,6 +14,7 @@
 		<li> <%= link_to "Quienes Somos", permalink_url("quienes-somos") %> </li>
 		<li> <%= link_to "Miembros", users_path %></li>
 		<li> <%= link_to "Contactenos", permalink_url("contactenos") %> </li>
+		<li> <%= link_to "Dejar Mensage", "/messages/new" %> </li>
 		<li> <%= link_to "Mapa/Como llegar", permalink_url("mapa") %> </li>
 	</ul>
 	

@@ -307,8 +307,8 @@ h4 {
 	text-decoration: underline;
 	font-size:1.6em;
 	color: #333;
-	margin-top: 1em;
-	margin-bottom: 0.2em;
+	margin-top: 8px;
+	margin-bottom: 2px;
 }
 .subContent h2 a {
 	color: #333;
@@ -507,14 +507,12 @@ pre {
 }
 
 .search {
-	margin-top:10px;
-	margin-left:10px;
+	margin: 10px 0 0 0;
 }
 .search input {
 	font-size: 1.0em;
-	color: #555;
 	padding:2px;
-	background-color:#eee;
+	background-color: #eeeffe;
 }
 
 /*-------------------------------------------------

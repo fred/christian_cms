@@ -1,14 +1,24 @@
+Dir[File.join(File.dirname(__FILE__), '../vendor/*/lib')].each do |path|
+  $LOAD_PATH.unshift path
+end
+
 require 'active_record'
 require 'riddle'
+require 'after_commit'
 
 require 'thinking_sphinx/active_record'
 require 'thinking_sphinx/association'
 require 'thinking_sphinx/attribute'
+require 'thinking_sphinx/collection'
 require 'thinking_sphinx/configuration'
 require 'thinking_sphinx/field'
 require 'thinking_sphinx/index'
 require 'thinking_sphinx/rails_additions'
 require 'thinking_sphinx/search'
+
+require 'thinking_sphinx/adapters/abstract_adapter'
+require 'thinking_sphinx/adapters/mysql_adapter'
+require 'thinking_sphinx/adapters/postgresql_adapter'
 
 ActiveRecord::Base.send(:include, ThinkingSphinx::ActiveRecord)
 
@@ -20,7 +30,7 @@ module ThinkingSphinx
   module Version #:nodoc:
     Major = 0
     Minor = 9
-    Tiny  = 2
+    Tiny  = 12
     
     String = [Major, Minor, Tiny].join('.')
   end
@@ -28,6 +38,15 @@ module ThinkingSphinx
   # A ConnectionError will get thrown when a connection to Sphinx can't be
   # made.
   class ConnectionError < StandardError
+  end
+  
+  # A StaleIdsException is thrown by Collection.instances_from_matches if there
+  # are records in Sphinx but not in the database, so the search can be retried.
+  class StaleIdsException < StandardError
+    attr_accessor :ids
+    def initialize(ids)
+      self.ids = ids
+    end
   end
   
   # The collection of indexed models. Keep in mind that Rails lazily loads
@@ -52,11 +71,13 @@ module ThinkingSphinx
     @@define_indexes = value
   end
   
+  @@deltas_enabled = nil
+
   # Check if delta indexing is enabled.
   # 
   def self.deltas_enabled?
-    @@deltas_enabled =  true unless defined?(@@deltas_enabled)
-    @@deltas_enabled == true
+    @@deltas_enabled  = (ThinkingSphinx::Configuration.environment != 'test') if @@deltas_enabled.nil?
+    @@deltas_enabled
   end
   
   # Enable/disable all delta indexing.
@@ -67,6 +88,27 @@ module ThinkingSphinx
     @@deltas_enabled = value
   end
   
+  @@updates_enabled = nil
+  
+  # Check if updates are enabled. True by default, unless within the test
+  # environment.
+  # 
+  def self.updates_enabled?
+    @@updates_enabled  = (ThinkingSphinx::Configuration.environment != 'test') if @@updates_enabled.nil?
+    @@updates_enabled
+  end
+  
+  # Enable/disable updates to Sphinx
+  # 
+  #   ThinkingSphinx.updates_enabled = false
+  #
+  def self.updates_enabled=(value)
+    @@updates_enabled = value
+  end
+  
+  # Checks to see if MySQL will allow simplistic GROUP BY statements. If not,
+  # or if not using MySQL, this will return false.
+  # 
   def self.use_group_by_shortcut?
     ::ActiveRecord::ConnectionAdapters.constants.include?("MysqlAdapter") &&
     ::ActiveRecord::Base.connection.is_a?(
@@ -75,5 +117,16 @@ module ThinkingSphinx
     ::ActiveRecord::Base.connection.select_all(
       "SELECT @@global.sql_mode, @@session.sql_mode;"
     ).all? { |key,value| value.nil? || value[/ONLY_FULL_GROUP_BY/].nil? }
+  end
+  
+  def self.sphinx_running?
+    pid_file = ThinkingSphinx::Configuration.instance.pid_file
+    
+    if File.exists?(pid_file)
+      pid = `cat #{pid_file}`[/\d+/]
+      `ps -p #{pid} | wc -l`.to_i > 1
+    else
+      false
+    end
   end
 end

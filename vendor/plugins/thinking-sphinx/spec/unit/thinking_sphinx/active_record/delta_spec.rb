@@ -1,135 +1,59 @@
 require 'spec/spec_helper'
 
 describe "ThinkingSphinx::ActiveRecord::Delta" do
-  describe "after_commit callback" do
-    before :each do
-      Person.stub_method(:write_inheritable_array => true)
-    end
+  it "should call the toggle_delta method after a save" do
+    @beta = Beta.new(:name => 'beta')
+    @beta.stub_method(:toggle_delta => true)
     
-    after :each do
-      Person.unstub_method(:write_inheritable_array)
-    end
+    @beta.save
     
-    it "should add callbacks" do
-      Person.after_commit :toggle_delta
-      
-      Person.should have_received(:write_inheritable_array).with(
-        :after_commit, [:toggle_delta]
-      )
-    end
+    @beta.should have_received(:toggle_delta)
   end
   
-  describe "save_with_after_commit_callback method" do
-    before :each do
-      @person = Person.new
-      @person.stub_methods(
-        :save_without_after_commit_callback => true,
-        :callback                           => true
-      )
-    end
+  it "should call the toggle_delta method after a save!" do
+    @beta = Beta.new(:name => 'beta')
+    @beta.stub_method(:toggle_delta => true)
     
-    it "should call the normal save method" do
-      @person.save
-      
-      @person.should have_received(:save_without_after_commit_callback)
-    end
+    @beta.save!
     
-    it "should call the callbacks if the save was successful" do
-      @person.save
-      
-      @person.should have_received(:callback).with(:after_commit)
-    end
-    
-    it "shouldn't call the callbacks if the save failed" do
-      @person.stub_method(:save_without_after_commit_callback => false)
-      
-      @person.save
-      
-      @person.should_not have_received(:callback)
-    end
-    
-    it "should return the normal save's result" do
-      @person.save.should be_true
-      
-      @person.stub_method(:save_without_after_commit_callback => false)
-      
-      @person.save.should be_false
-    end
+    @beta.should have_received(:toggle_delta)
   end
-  
-  describe "save_with_after_commit_callback! method" do
+
+  describe "suspended_delta method" do
     before :each do
-      @person = Person.new
-      @person.stub_methods(
-        :save_without_after_commit_callback! => true,
-        :callback                            => true
+      ThinkingSphinx.stub_method(:deltas_enabled? => true)
+    end
+
+    it "should execute the argument block with deltas disabled" do
+      ThinkingSphinx.should_receive(:deltas_enabled=).once.with(false)
+      ThinkingSphinx.should_receive(:deltas_enabled=).once.with(true)
+      lambda { Person.suspended_delta { raise 'i was called' } }.should(
+        raise_error(Exception)
       )
     end
-    
-    it "should call the normal save! method" do
-      @person.save!
-      
-      @person.should have_received(:save_without_after_commit_callback!)
+
+    it "should restore deltas_enabled to its original setting" do
+      ThinkingSphinx.stub_method(:deltas_enabled? => false)
+      ThinkingSphinx.should_receive(:deltas_enabled=).twice.with(false)
+      Person.suspended_delta { 'no-op' }
     end
-    
-    it "should call the callbacks if the save! was successful" do
-      @person.save!
-      
-      @person.should have_received(:callback).with(:after_commit)
-    end
-    
-    it "shouldn't call the callbacks if the save! failed" do
-      @person.stub_method(:save_without_after_commit_callback! => false)
-      
-      @person.save!
-      
-      @person.should_not have_received(:callback)
-    end
-    
-    it "should return the normal save's result" do
-      @person.save!.should be_true
-      
-      @person.stub_method(:save_without_after_commit_callback! => false)
-      
-      @person.save!.should be_false
-    end
-  end
-  
-  describe "destroy_with_after_commit_callback method" do
-    before :each do
-      @person = Person.new
-      @person.stub_methods(
-        :destroy_without_after_commit_callback  => true,
-        :callback                               => true
+
+    it "should restore deltas_enabled to its original setting even if there was an exception" do
+      ThinkingSphinx.stub_method(:deltas_enabled? => false)
+      ThinkingSphinx.should_receive(:deltas_enabled=).twice.with(false)
+      lambda { Person.suspended_delta { raise 'bad error' } }.should(
+        raise_error(Exception)
       )
     end
-    
-    it "should call the normal destroy method" do
-      @person.destroy
-      
-      @person.should have_received(:destroy_without_after_commit_callback)
+
+    it "should reindex by default after the code block is run" do
+      Person.should_receive(:index_delta)
+      Person.suspended_delta { 'no-op' }
     end
     
-    it "should call the callbacks if the destroy was successful" do
-      @person.destroy
-      
-      @person.should have_received(:callback).with(:after_commit)
-    end
-    
-    it "shouldn't call the callbacks if the destroy failed" do
-      @person.stub_method(:destroy_without_after_commit_callback => false)
-      
-      @person.destroy
-      
-      @person.should_not have_received(:callback)
-    end
-    
-    it "should return the normal save's result" do
-      @person.destroy.should be_true
-      
-      @person.stub_method(:destroy_without_after_commit_callback => false)
-      
-      @person.destroy.should be_false
+    it "should not reindex after the code block if false is passed in" do
+      Person.should_not_receive(:index_delta)
+      Person.suspended_delta(false) { 'no-op' }
     end
   end
   
@@ -148,13 +72,12 @@ describe "ThinkingSphinx::ActiveRecord::Delta" do
       ThinkingSphinx::Configuration.stub_method(:environment => "spec")
       ThinkingSphinx.stub_method(:deltas_enabled? => true)
       
-      @person = Person.new
-      @person.stub_method(:system => true)
-    end
-    
-    after :each do
-      ThinkingSphinx::Configuration.unstub_method(:environment)
-      ThinkingSphinx.unstub_method(:deltas_enabled?)
+      @person = Person.find(:first)
+      Person.stub_method(:system => true)
+      @person.stub_method(:in_core_index? => false)
+      
+      @client = Riddle::Client.stub_instance(:update => true)
+      Riddle::Client.stub_method(:new => @client)
     end
     
     it "shouldn't index if delta indexing is disabled" do
@@ -162,23 +85,48 @@ describe "ThinkingSphinx::ActiveRecord::Delta" do
       
       @person.send(:index_delta)
       
-      @person.should_not have_received(:system)
+      Person.should_not have_received(:system)
+      @client.should_not have_received(:update)
+    end
+    
+    it "shouldn't index if index updating is disabled" do
+      ThinkingSphinx.stub_method(:updates_enabled? => false)
+      
+      @person.send(:index_delta)
+      
+      Person.should_not have_received(:system)
     end
     
     it "shouldn't index if the environment is 'test'" do
+      ThinkingSphinx.unstub_method(:deltas_enabled?)
+      ThinkingSphinx.deltas_enabled = nil
       ThinkingSphinx::Configuration.stub_method(:environment => "test")
       
       @person.send(:index_delta)
       
-      @person.should_not have_received(:system)
+      Person.should_not have_received(:system)
     end
     
     it "should call indexer for the delta index" do
       @person.send(:index_delta)
       
-      @person.should have_received(:system).with(
-        "indexer --config #{ThinkingSphinx::Configuration.new.config_file} --rotate person_delta"
+      Person.should have_received(:system).with(
+        "#{ThinkingSphinx::Configuration.instance.bin_path}indexer --config #{ThinkingSphinx::Configuration.instance.config_file} --rotate person_delta"
       )
+    end
+    
+    it "shouldn't update the deleted attribute if not in the index" do
+      @person.send(:index_delta)
+      
+      @client.should_not have_received(:update)
+    end
+    
+    it "should update the deleted attribute if in the core index" do
+      @person.stub_method(:in_core_index? => true)
+      
+      @person.send(:index_delta)
+      
+      @client.should have_received(:update)
     end
   end
 end

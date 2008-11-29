@@ -30,7 +30,7 @@ ssh_options[:paranoid] = false
 # This will cause your deployment to fail by default. To fix either upgrade git or do: set :scm_verbose, true 
 # You may also wish to use one of the following options if your git repo is very large – 
 #  otherwise each deploy will do a full repository clone every time. 
-#set :deploy_via, :remote_cache
+set :deploy_via, :remote_cache
 
 # Rails environment. Used by application setup tasks and migrate tasks.
 set :rails_env, "production"

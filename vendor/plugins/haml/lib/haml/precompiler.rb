@@ -90,6 +90,7 @@ module Haml
 extend Haml::Helpers
 _hamlout = @haml_buffer = Haml::Buffer.new(@haml_buffer, #{options_for_buffer.inspect})
 _erbout = _hamlout.buffer
+__in_erb_template = true
 END
       postamble = <<END.gsub("\n", ";")
 @haml_buffer = @haml_buffer.upper
@@ -102,7 +103,10 @@ END
       names = names.keys if Hash == names
 
       names.map do |name|
-        "#{name} = _haml_locals[#{name.to_sym.inspect}] || _haml_locals[#{name.to_s.inspect}]"
+        # Can't use || because someone might explicitly pass in false with a symbol
+        sym_local = "_haml_locals[#{name.to_sym.inspect}]" 
+        str_local = "_haml_locals[#{name.to_s.inspect}]" 
+        "#{name} = #{sym_local}.nil? ? #{str_local} : #{sym_local}"
       end.join(';') + ';'
     end
 
@@ -136,6 +140,8 @@ END
     end
 
     def precompile
+      @haml_comment = @dont_indent_next_line = @dont_tab_up_next_text = false
+      @indentation = nil
       @line = next_line
       resolve_newlines
       newline
@@ -209,9 +215,11 @@ END
 
         push_silent(text[1..-1], true)
         newline_now
-        if (block_opened? && !mid_block_keyword?(text)) || text[1..-1].split(' ', 2)[0] == "case"
-          push_and_tabulate([:script])
-        end
+
+        case_stmt = text[1..-1].split(' ', 2)[0] == "case"
+        block = block_opened? && !mid_block_keyword?(text)
+        push_and_tabulate([:script]) if block || case_stmt
+        push_and_tabulate(nil)       if block && case_stmt
       when FILTER; start_filtered(text[1..-1].downcase)
       when DOCTYPE
         return render_doctype(text) if text[0...3] == '!!!'
@@ -336,6 +344,7 @@ END
       when :loud; close_loud value
       when :filtered; close_filtered value
       when :haml_comment; close_haml_comment
+      when nil; close_nil
       end
     end
 
@@ -383,6 +392,10 @@ END
 
     def close_haml_comment
       @haml_comment = false
+      @template_tabs -= 1
+    end
+
+    def close_nil
       @template_tabs -= 1
     end
 
@@ -525,7 +538,7 @@ END
       preserve_tag &&= !options[:ugly]
 
       case action
-      when '/'; self_closing = xhtml?
+      when '/'; self_closing = true
       when '~'; parse = preserve_script = true
       when '='
         parse = true
@@ -682,13 +695,7 @@ END
     # Starts a filtered block.
     def start_filtered(name)
       raise Error.new("Invalid filter name \":#{name}\".") unless name =~ /^\w+$/
-
-      unless filter = Filters.defined[name]
-        if filter == 'redcloth' || filter == 'markdown' || filter == 'textile'
-          raise Error.new("You must have the RedCloth gem installed to use \"#{name}\" filter")
-        end
-        raise Error.new("Filter \"#{name}\" is not defined.")
-      end
+      raise Error.new("Filter \"#{name}\" is not defined.") unless filter = Filters.defined[name]
 
       push_and_tabulate([:filtered, filter])
       @flat = true
@@ -714,7 +721,9 @@ END
 
       line = Line.new text.strip, text.lstrip.chomp, text, index, self
 
-      unless flat?
+      # `flat?' here is a little outdated,
+      # so we have to manually check if the previous line closes the flat block.
+      unless flat? && (@line.text.empty? || @line.tabs >= @template_tabs)
         if line.text.empty?
           newline
           return next_line
@@ -733,7 +742,7 @@ END
 
     def handle_multiline(line)
       if is_multiline?(line.text)
-        line.text.slice! -1
+        line.text.slice!(-1)
         while new_line = raw_next_line.first
           newline and next if new_line.strip.empty?
           break unless is_multiline?(new_line.strip)
@@ -772,7 +781,7 @@ END
     end
 
     def balance(*args)
-      res = Haml::Shared.balance *args
+      res = Haml::Shared.balance(*args)
       return res if res
       raise SyntaxError.new("Unbalanced brackets.")
     end

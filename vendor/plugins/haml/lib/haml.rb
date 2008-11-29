@@ -1,5 +1,5 @@
 dir = File.dirname(__FILE__)
-$LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
+$LOAD_PATH.unshift dir unless $LOAD_PATH.include?(dir)
 
 # = Haml (XHTML Abstraction Markup Language)
 #
@@ -23,13 +23,10 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 #
 # == Using Haml
 #
-# Haml can be used in two ways:
+# Haml can be used in three ways:
 # as a plugin for Ruby on Rails,
-# and as a standalone Ruby module.
-#
-# Sass can be used in several ways:
-# As a template engine for Ruby on Rails or Merb,
-# or as a standalone engine.
+# as a standalone Ruby module,
+# and as a command-line tool.
 # The first step for all of these is to install the Haml gem:
 #
 #   gem install haml
@@ -39,12 +36,14 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 #
 #   haml --rails path/to/rails/app
 #
-# Haml is enabled in Merb by default,
-# so Merb users don't have to do anything more.
-#
-# Once it's installed, all view files with the ".haml" extension
-# (or ".html.haml" for Merb or edge Rails)
+# Once it's installed, all view files with the ".html.haml" extension
 # will be compiled using Haml.
+#
+# To run Haml from the command line, just use
+#
+#   haml input.haml output.html
+#
+# Use <tt>haml --help</tt> for full documentation.
 #
 # You can access instance variables in Haml templates
 # the same way you do in ERb templates.
@@ -137,7 +136,7 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 #
 # is compiled to:
 #
-#   <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"></html>
+#   <html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'></html>
 #
 # Attribute hashes can also be stretched out over multiple lines
 # to accomidate many attributes.
@@ -167,7 +166,7 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 #
 # This is compiled to:
 #
-#   <html lang='fr-fr' xml:lang='fr=fr' xmlns='http://www.w3.org/1999/xhtml'>
+#   <html lang='fr-fr' xml:lang='fr-fr' xmlns='http://www.w3.org/1999/xhtml'>
 #   </html>
 #
 # You can use as many such attribute methods as you want
@@ -192,6 +191,9 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 #
 #   <sandwich bread='whole wheat' delicious='true' filling='peanut butter and jelly' />
 #
+# Note that the Haml attributes list has the same syntax as a Ruby method call.
+# This means that any attribute methods must come before the hash literal.
+#
 # ===== Boolean Attributes
 #
 # Some attributes, such as "checked" for <tt>input</tt> tags or "selected" for <tt>option</tt> tags,
@@ -208,7 +210,7 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 # In XHTML, the only valid value for these attributes is the name of the attribute.
 # Thus this will render in XHTML as
 #
-#   <input selected="selected">
+#   <input selected='selected'>
 #
 # To set these attributes to false, simply assign them to a Ruby false value.
 # In both XHTML and HTML
@@ -246,8 +248,8 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 #
 # is compiled to:
 #
-#   <div class="greeting_crazy_user" id="greeting_crazy_user_15">
-#     <bar class="fixnum" id="fixnum_581" />
+#   <div class='greeting_crazy_user' id='greeting_crazy_user_15'>
+#     <bar class='fixnum' id='fixnum_581' />
 #     Hello!
 #   </div>
 #
@@ -314,11 +316,11 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 #
 # is compiled to:
 #
-#   <div id="content">
-#     <div class="articles">
-#       <div class="article title">Doogie Howser Comes Out</div>
-#       <div class="article date">2006-11-05</div>
-#       <div class="article entry">
+#   <div id='content'>
+#     <div class='articles'>
+#       <div class='article title'>Doogie Howser Comes Out</div>
+#       <div class='article date'>2006-11-05</div>
+#       <div class='article entry'>
 #         Neil Patrick Harris would like to dispel any rumors that he is straight
 #       </div>
 #     </div>
@@ -482,7 +484,7 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 #
 # is compiled to:
 #
-#   <?xml version="1.0" encoding="utf-8" ?>
+#   <?xml version='1.0' encoding='utf-8' ?>
 #   <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 #   <html>
 #     <head>
@@ -522,7 +524,7 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 #
 # is compiled to:
 #
-#   <?xml version="1.0" encoding="iso-8859-1" ?>
+#   <?xml version='1.0' encoding='iso-8859-1' ?>
 #
 # ==== /
 #
@@ -574,7 +576,7 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 #     </a>
 #   <![endif]-->
 #
-# ==== \
+# ==== \ 
 #
 # The backslash character escapes the first character of a line,
 # allowing use of otherwise interpreted characters as plain text.
@@ -613,6 +615,7 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 #     <hoo>
 #       I think this might get pretty long so I should probably make it multiline so it doesn't look awful.
 #     </hoo>
+#     <p>This is short</p>
 #   </whoo>
 #
 # ==== :
@@ -683,17 +686,13 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 #
 # [sass]       Parses the filtered text with Sass to produce CSS output.
 #
-# [redcloth]   Parses the filtered text with RedCloth (http://whytheluckystiff.net/ruby/redcloth),
-#              which uses both Textile and Markdown syntax.
-#              Only works if RedCloth is installed.
-#
 # [textile]    Parses the filtered text with Textile (http://www.textism.com/tools/textile).
 #              Only works if RedCloth is installed.
 #
 # [markdown]   Parses the filtered text with Markdown (http://daringfireball.net/projects/markdown).
-#              Only works if RedCloth or BlueCloth (http://www.deveiate.org/projects/BlueCloth)
-#              is installed
-#              (BlueCloth takes precedence if both are installed).
+#              Only works if RDiscount, RPeg-Markdown, Maruku, or BlueCloth are installed.
+#
+# [maruku]     Parses the filtered text with Maruku, which has some non-standard extensions to Markdown.
 #
 # You can also define your own filters (see Haml::Filters).
 #
@@ -926,9 +925,9 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 #
 #   Haml::Template.options[:format] = :html5
 #
-# ...or by setting the <tt>Merb::Config[:haml]</tt> hash in <tt>init.rb</tt> in Merb...
+# ...or by setting the <tt>Merb::Plugin.config[:haml]</tt> hash in <tt>init.rb</tt> in Merb...
 #
-#   Merb::Config[:haml][:format] = :html5
+#   Merb::Plugin.config[:haml][:format] = :html5
 # 
 # ...or by passing an options hash to Haml::Engine.new.
 # Available options are:
@@ -1004,7 +1003,7 @@ module Haml
 
     if File.exists?(scope('REVISION'))
       rev = File.read(scope('REVISION')).strip
-      rev = nil if rev !~ /[a-f0-9]+/
+      rev = nil if rev !~ /^([a-f0-9]+|\(.*\))$/
     end
 
     if rev.nil? && File.exists?(scope('.git/HEAD'))
@@ -1016,8 +1015,10 @@ module Haml
 
     if rev
       @@version[:rev] = rev
-      @@version[:string] << "."
-      @@version[:string] << rev[0...7] unless rev[0] == ?(
+      unless rev[0] == ?(
+        @@version[:string] << "."
+        @@version[:string] << rev[0...7]
+      end
     end
 
     @@version
@@ -1043,4 +1044,5 @@ module Haml
   end
 end
 
+require 'haml/util'
 require 'haml/engine'

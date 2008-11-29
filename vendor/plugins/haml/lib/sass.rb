@@ -1,5 +1,5 @@
 dir = File.dirname(__FILE__)
-$LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
+$LOAD_PATH.unshift dir unless $LOAD_PATH.include?(dir)
 
 # = Sass (Syntactically Awesome StyleSheets)
 #
@@ -20,9 +20,10 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 #
 # == Using Sass
 #
-# Sass can be used in several ways:
-# As a plugin for Ruby on Rails or Merb,
-# or as a standalone parser.
+# Sass can be used in three ways:
+# as a plugin for Ruby on Rails,
+# as a standalone Ruby module,
+# and as a command-line tool.
 # Sass is bundled with Haml,
 # so if the Haml plugin or RubyGem is installed,
 # Sass will already be installed as a plugin or gem, respectively.
@@ -42,7 +43,7 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 #
 # to config/dependencies.rb.
 #
-# Sass templates in Rails and Merb don't quite function in the same way as views,
+# Sass templates in Rails don't quite function in the same way as views,
 # because they don't contain dynamic content,
 # and so only need to be compiled when the template file has been updated.
 # By default (see options, below),
@@ -50,6 +51,12 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 # Then, whenever necessary, they're compiled into corresponding CSS files in public/stylesheets.
 # For instance, public/stylesheets/sass/main.sass would be compiled to public/stylesheets/main.css.
 #
+# To run Sass from the command line, just use
+#
+#   sass input.sass output.css
+#
+# Use <tt>sass --help</tt> for full documentation.
+# 
 # Using Sass in Ruby code is very simple.
 # After installing the Haml gem,
 # you can use it by running <tt>require "sass"</tt>
@@ -269,192 +276,6 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 #  #main +div {
 #    clear: both; }
 #
-# == Constants
-#
-# Sass has support for setting document-wide constants.
-# They're set using an exclamation mark followed by the name,
-# an equals sign, and the value.
-# An attribute can then be set to the value of a constant
-# by following it with another equals sign.
-# For example:
-#
-#   !main_color = #00ff00
-#
-#   #main
-#     :color = !main_color
-#     :p
-#       :background-color = !main_color
-#       :color #000000
-#
-# is compiled to:
-#
-#   #main {
-#     color: #00ff00; }
-#     #main p {
-#       background-color: #00ff00;
-#       color: #000000; }
-#
-# === Arithmetic
-#
-# You can even do basic arithmetic with constants.
-# Sass recognizes numbers, colors,
-# lengths (numbers with units),
-# and strings (everything that's not one of the above),
-# and various operators that work on various values.
-# All the normal arithmetic operators
-# (+, -, *, /, %, and parentheses for grouping)
-# are defined as usual
-# for numbers, colors, and lengths.
-# The "+" operator is also defined for Strings
-# as the concatenation operator.
-# For example:
-#
-#   !main_width = 10
-#   !unit1 = em
-#   !unit2 = px
-#   !bg_color = #a5f39e
-#
-#   #main
-#     :background-color = !bg_color
-#     p
-#       :background-color = !bg_color + #202020
-#       :width = !main_width + !unit1
-#     img.thumb
-#       :width = (!main_width + 15) + !unit2
-#
-# is compiled to:
-#
-#   #main {
-#     background-color: #a5f39e; }
-#     #main p {
-#       background-color: #c5ffbe;
-#       width: 10em; }
-#     #main img.thumb {
-#       width: 25em; }
-#
-# === Colors
-#
-# Colors may be written as three- or six-digit hex numbers prefixed
-# by a pound sign (#), or as HTML4 color names. For example,
-# "#ff0", "#ffff00" and "yellow" all refer to the same color.
-#
-# Not only can arithmetic be done between colors and other colors,
-# but it can be done between colors and normal numbers.
-# In this case, the operation is done piecewise one each of the
-# Red, Green, and Blue components of the color.
-# For example:
-#
-#   !main_color = #a5f39e
-#
-#   #main
-#     :background-color = !main_color
-#     p
-#       :background-color = !main_color + 32
-#
-# is compiled to:
-#
-#   #main {
-#     background-color: #a5f39e; }
-#     #main p {
-#       background-color: #c5ffbe; }
-#
-# === Strings
-#
-# Strings are the type that's used by default
-# when an element in a bit of constant arithmetic isn't recognized
-# as another type of constant.
-# However, they can also be created explicitly be wrapping a section of code with quotation marks.
-# Inside the quotation marks,
-# a backslash can be used to
-# escape quotation marks that you want to appear in the CSS.
-# For example:
-#
-#   !content = "Hello, \"Hubert\" Bean."
-#
-#   #main
-#     :content = "string(" + !content + ")"
-#
-# is compiled to:
-#
-#   #main {
-#     content: string(Hello, "Hubert" Bean.) }
-#
-# === Optional Assignment
-#
-# You can assign Sass constants if they aren't already assigned
-# using the ||= assignment operator.
-# This means that if the constant has already been assigned to,
-# it won't be re-assigned,
-# but if it doesn't have a value yet,
-# it will be given one.
-# For example:
-#
-#   !content = "First content"
-#   !content ||= "Second content?"
-#
-#   #main
-#     content = content
-#
-# is compiled to:
-#
-#   #main {
-#     content: First content; }
-#
-# However,
-#
-#   !content ||= "Second content?"
-#
-#   #main
-#     content = content
-#
-# is compiled to:
-#
-#   #main {
-#     content: Second content?; }
-#
-# === Default Concatenation
-#
-# All those plusses and quotes for concatenating strings
-# can get pretty messy, though.
-# Most of the time, if you want to concatenate stuff,
-# you just want individual values with spaces in between them.
-# Thus, in Sass, when two values are next to each other without an operator,
-# they're simply joined with a space.
-# For example:
-#
-#   !font_family = "sans-serif"
-#   !main_font_size = 1em
-#
-#   #main
-#     :font
-#       :family = !font_family
-#       :size = !main_font_size
-#     h6
-#       :font = italic "small-caps" bold (!main_font_size + 0.1em) !font_family
-#
-# is compiled to:
-#
-#   #main {
-#     font-family: sans-serif;
-#     font-size: 1em; }
-#     #main h6 {
-#       font: italic small-caps bold 1.1em sans-serif; }
-#
-# === Functions
-#
-# Functions can be performed on Sass constants using the familiar CSS function syntax.
-# For example:
-#
-#   #main
-#     :color = hsl(0, 100%, 50%)
-#
-# is compiled to:
-#
-#   #main {
-#     color: #ff0000; }
-#
-# Available functions are defined in Sass::Constant::Functions.
-#
 # == Directives
 #
 # Directives allow the author to directly issue instructions to the Sass compiler.
@@ -466,16 +287,15 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 #
 #   @import red.sass
 #
-# === Import
+# === import
 #
-# Currently, the only directive is the "import" directive.
-# It works in a very similar way to the CSS import directive,
+# The "@import" directive works in a very similar way to the CSS import directive,
 # and sometimes compiles to a literal CSS "@import".
 #
 # Sass can import either other Sass files or plain CSS files.
 # If it imports a Sass file,
 # not only are the rules from that file included,
-# but all constants in that file are made available in the current file.
+# but all variables in that file are made available in the current file.
 #
 # Sass looks for other Sass files in the working directory,
 # and the Sass file directory under Rails or Merb.
@@ -551,80 +371,245 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 #       background-color: white; }
 #   }
 #
-# == Comments
+# == SassScript
 #
-# === Silent Comments
+# In addition to the declarative templating system,
+# Sass supports a simple language known as SassScript
+# for dynamically computing CSS values.
 #
-# It's simple to add "silent" comments,
-# which don't output anything to the CSS document,
-# to a Sass document.
-# Simply use the familiar C-style notation for a one-line comment, "//",
-# at the normal indentation level and all text following it won't be output.
+# === Variables
+#
+# The most straightforward way to use SassScript
+# is to set and reference variables.
+# Variables begin with exclamation marks,
+# and are set like so:
+#
+#   !width = 5em
+#
+# You can then refer to them by putting an equals sign
+# after your attributes:
+#
+#   #main
+#     :width = !width
+#
+# === Data Types
+#
+# SassScript supports four data types:
+# * numbers (e.g. <tt>1.2</tt>, <tt>13</tt>, <tt>10px</tt>)
+# * strings of text (e.g. <tt>"foo"</tt>, <tt>"bar"</tt>)
+# * colors (e.g. +blue+, <tt>##04a3f9</tt>)
+# * booleans (e.g. +true+, +false+)
+#
+# Any text that doesn't fit into one of those types
+# automatically becomes a string,
+# so that your SassScript can look like your normal CSS values:
+#
+#   p
+#     :border = !width solid blue
+#
+# is compiled to:
+#
+#   p {
+#     border: 5em 1px #0000ff; }
+#
+# === Operations
+#
+# SassScript supports the standard arithmetic operations on numbers
+# (<tt>+</tt>, <tt>-</tt>, <tt>*</tt>, <tt>/</tt>, <tt>%</tt>),
+# and will automatically convert between units if it can:
+#
+#   p
+#     :width = 1in + 8pt
+#
+# is compiled to:
+#
+#   p {
+#     width: 1.111in; }
+#
+# Relational operators
+# (<tt><</tt>, <tt>></tt>, <tt><=</tt>, <tt>>=</tt>)
+# are also supported for numbers,
+# and equality operators
+# (<tt>==</tt>, <tt>!=</tt>)
+# are supported for all types.
+#
+# Most arithmetic operations are supported for color values,
+# where they work piecewise:
+#
+#   p
+#     :color = #010203 + #040506
+#
+# is compiled to:
+#
+#   p {
+#     color: #050709; }
+#
+# Some arithmetic operations even work between numbers and colors:
+#
+#   p
+#     :color = #010203 * 2
+#
+# is compiled to:
+#
+#   p {
+#     color: #020406; }
+#
+# The <tt>+</tt> operation can be used to concatenate strings:
+#
+#   p
+#     :cursor = "e" + "-resize"
+#
+# is compiled to:
+#
+#   p {
+#     cursor: e-resize; }
+#
+# Finally, SassScript supports @and@, @or@, and @not@ operators
+# for boolean values.
+#
+# === Parentheses
+#
+# Parentheses can be used to affect the order of operations:
+#
+#   p
+#     :width = 1em + (2em * 3)
+#
+# is compiled to:
+#
+#   p {
+#     width: 7em; }
+#
+# === Functions
+#
+# SassScript defines some useful functions (see Sass::Script::Functions)
+# that are called using the normal CSS function syntax:
+#
+#   p
+#     :color = hsl(0, 100%, 50%)
+#
+# is compiled to:
+#
+#   #main {
+#     color: #ff0000; }
+#
+# === Interpolation
+#
+# You can also use SassScript variables in selectors
+# and attribute names using #{} interpolation syntax:
+#
+#   !name = foo
+#   !attr = border
+#   p.#{!name}
+#     #{attr}-color: blue
+#
+# is compiled to:
+#
+#   p.foo {
+#     border-color: blue; }
+#
+# === Optional Assignment
+#
+# You can assign to variables if they aren't already assigned
+# using the ||= assignment operator.
+# This means that if the variable has already been assigned to,
+# it won't be re-assigned,
+# but if it doesn't have a value yet,
+# it will be given one.
 # For example:
 #
-#   // A very awesome rule.
-#   #awesome.rule
-#     // An equally awesome attribute.
-#     :awesomeness very
+#   !content = "First content"
+#   !content ||= "Second content?"
 #
-# becomes
+#   #main
+#     content = content
 #
-#   #awesome.rule {
-#     awesomeness: very; }
+# is compiled to:
 #
-# You can also nest text beneath a comment to comment out a whole block.
+#   #main {
+#     content: First content; }
+#
+# However,
+#
+#   !content ||= "Second content?"
+#
+#   #main
+#     content = content
+#
+# is compiled to:
+#
+#   #main {
+#     content: Second content?; }
+#
+# == Control Structures
+#
+# SassScript supports basic control structures for looping and conditionals
+# using the same syntax as directives.
+#
+# === if
+#
+# The "@if" statement takes a SassScript expression
+# and prints the code nested beneath it if the expression returns
+# anything other than +false+:
+#
+#   p
+#     @if 1 + 1 == 2
+#       :border 1px solid
+#     @if 5 < 3
+#       :border 2px dotted
+#
+# is compiled to:
+#
+#   p {
+#     border: 1px solid; }
+#
+# The "@if" statement can be followed by several "@else if" statements
+# and one "@else" statement.
+# If the "@if" statement fails,
+# the "@else if" statements are tried in order
+# until one succeeds or the "@else" is reached.
 # For example:
 #
-#   // A very awesome rule
-#   #awesome.rule
-#     // Don't use these attributes
-#       color: green
-#       font-size: 10em
-#     color: red
+#   p
+#     @if !blue
+#       :color blue
+#     @else if !red
+#       :color red
+#     @else if !green
+#       :color green
+#     @else
+#       :color black
 #
-# becomes
+# might be compiled to:
 #
-#   #awesome.rule {
-#     color: red; }
+#   p {
+#     color: green; }
 #
-# === Loud Comments
+# === for
 #
-# "Loud" comments are just as easy as silent ones.
-# These comments output to the document as CSS comments,
-# and thus use the same opening sequence: "/*".
+# The "@for" statement has two forms:
+# "@for <var> from <start> to <end>" or
+# "@for <var> from <start> through <end>".
+# <var> is a variable name, like <tt>!i</tt>,
+# and <start> and <end> are SassScript expressions
+# that should return integers.
+#
+# The "@for" statement sets <var> to each number
+# from <start> to <end>,
+# including <end> if "through" is used.
 # For example:
 #
-#   /* A very awesome rule.
-#   #awesome.rule
-#     /* An equally awesome attribute.
-#     :awesomeness very
+#   @for !i from 1 through 3
+#     .item-#{!i}
+#       :width = 2em * !i
 #
-# becomes
+# is compiled to:
 #
-#   /* A very awesome rule. */
-#   #awesome.rule {
-#     /* An equally awesome attribute. */
-#     awesomeness: very; }
-#
-# You can also nest content beneath loud comments. For example:
-#
-#   #pbj
-#     /* This rule describes
-#       the styling of the element
-#       that represents
-#       a peanut butter and jelly sandwich.
-#     :background-image url(/images/pbj.png)
-#     :color red
-#
-# becomes
-#
-#   #pbj {
-#     /* This rule describes
-#      * the styling of the element
-#      * that represents
-#      * a peanut butter and jelly sandwich. */
-#     background-image: url(/images/pbj.png);
-#     color: red; }
+#   .item-1 {
+#     width: 2em; }
+#   .item-2 {
+#     width: 4em; }
+#   .item-3 {
+#     width: 6em; }
 #
 # == Mixins
 #
@@ -703,6 +688,116 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 #     +highlighted-background
 #     +header-text
 #
+# === Arguments
+#
+# Mixins can take arguments which can be used with SassScript:
+#
+#   =sexy-border(!color)
+#     :border
+#       :color = !color
+#       :width 1in
+#       :style dashed
+#   p
+#     +sexy-border(blue)
+#
+# is compiled to:
+#
+#   p {
+#     border-color: #0000ff;
+#     border-width: 1in;
+#     border-style: dashed; }
+#
+# Mixins can also specify default values for their arguments:
+#
+#   =sexy-border(!color, !width = 1in)
+#     :border
+#       :color = !color
+#       :width = !width
+#       :style dashed
+#   p
+#     +sexy-border(blue)
+#
+# is compiled to:
+#
+#   p {
+#     border-color: #0000ff;
+#     border-width: 1in;
+#     border-style: dashed; }
+#
+# == Comments
+#
+# === Silent Comments
+#
+# It's simple to add "silent" comments,
+# which don't output anything to the CSS document,
+# to a Sass document.
+# Simply use the familiar C-style notation for a one-line comment, "//",
+# at the normal indentation level and all text following it won't be output.
+# For example:
+#
+#   // A very awesome rule.
+#   #awesome.rule
+#     // An equally awesome attribute.
+#     :awesomeness very
+#
+# becomes
+#
+#   #awesome.rule {
+#     awesomeness: very; }
+#
+# You can also nest text beneath a comment to comment out a whole block.
+# For example:
+#
+#   // A very awesome rule
+#   #awesome.rule
+#     // Don't use these attributes
+#       color: green
+#       font-size: 10em
+#     color: red
+#
+# becomes
+#
+#   #awesome.rule {
+#     color: red; }
+#
+# === Loud Comments
+#
+# "Loud" comments are just as easy as silent ones.
+# These comments output to the document as CSS comments,
+# and thus use the same opening sequence: "/*".
+# For example:
+#
+#   /* A very awesome rule.
+#   #awesome.rule
+#     /* An equally awesome attribute.
+#     :awesomeness very
+#
+# becomes
+#
+#   /* A very awesome rule. */
+#   #awesome.rule {
+#     /* An equally awesome attribute. */
+#     awesomeness: very; }
+#
+# You can also nest content beneath loud comments. For example:
+#
+#   #pbj
+#     /* This rule describes
+#       the styling of the element
+#       that represents
+#       a peanut butter and jelly sandwich.
+#     :background-image url(/images/pbj.png)
+#     :color red
+#
+# becomes
+#
+#   #pbj {
+#     /* This rule describes
+#      * the styling of the element
+#      * that represents
+#      * a peanut butter and jelly sandwich. */
+#     background-image: url(/images/pbj.png);
+#     color: red; }
 #
 # == Output Style
 #
@@ -796,9 +891,9 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 #
 #   Sass::Plugin.options[:style] = :compact
 #
-# ...or by setting the <tt>Merb::Config[:sass]</tt> hash in <tt>init.rb</tt> in Merb...
+# ...or by setting the <tt>Merb::Plugin.config[:sass]</tt> hash in <tt>init.rb</tt> in Merb...
 #
-#   Merb::Config[:sass][:style] = :compact
+#   Merb::Plugin.config[:sass][:style] = :compact
 # 
 # ...or by passing an options hash to Sass::Engine.new.
 # Available options are:
@@ -873,5 +968,6 @@ $LOAD_PATH << dir unless $LOAD_PATH.include?(dir)
 #
 module Sass; end
 
+require 'haml/util'
 require 'sass/engine'
 require 'sass/plugin' if defined?(Merb::Plugins)

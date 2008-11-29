@@ -1,16 +1,27 @@
 require 'enumerator'
 require 'strscan'
 require 'sass/tree/node'
-require 'sass/tree/value_node'
 require 'sass/tree/rule_node'
 require 'sass/tree/comment_node'
 require 'sass/tree/attr_node'
 require 'sass/tree/directive_node'
-require 'sass/constant'
+require 'sass/tree/variable_node'
+require 'sass/tree/mixin_def_node'
+require 'sass/tree/mixin_node'
+require 'sass/tree/if_node'
+require 'sass/tree/while_node'
+require 'sass/tree/for_node'
+require 'sass/tree/file_node'
+require 'sass/environment'
+require 'sass/script'
 require 'sass/error'
 require 'haml/shared'
 
 module Sass
+  # :stopdoc:
+  Mixin = Struct.new(:name, :args, :environment, :tree)
+  # :startdoc:
+
   # This is the class where all the parsing and processing of the Sass
   # template is done. It can be directly used by the user by creating a
   # new instance and calling <tt>render</tt> to render the template. For example:
@@ -21,13 +32,12 @@ module Sass
   #   puts output
   class Engine
     Line = Struct.new(:text, :tabs, :index, :filename, :children)
-    Mixin = Struct.new(:args, :tree)
 
     # The character that begins a CSS attribute.
     ATTRIBUTE_CHAR  = ?:
 
     # The character that designates that
-    # an attribute should be assigned to the result of constant arithmetic.
+    # an attribute should be assigned to a SassScript expression.
     SCRIPT_CHAR     = ?=
 
     # The character that designates the beginning of a comment,
@@ -83,14 +93,14 @@ module Sass
         :load_paths => ['.']
       }.merge! options
       @template = template
-      @constants = {"important" => "!important"}
-      @mixins = {}
+      @environment = Environment.new
+      @environment.set_var("important", Script::String.new("!important"))
     end
 
     # Processes the template and returns the result as a string.
     def render
       begin
-        render_to_tree.to_s
+        render_to_tree.perform(@environment).to_s
       rescue SyntaxError => err
         err.sass_line = @line unless err.sass_line
         unless err.sass_filename
@@ -104,12 +114,8 @@ module Sass
 
     protected
 
-    def constants
-      @constants
-    end
-
-    def mixins
-      @mixins
+    def environment
+      @environment
     end
 
     def render_to_tree
@@ -150,6 +156,8 @@ END
     end
 
     def tree(arr, i = 0)
+      return [], i if arr[i].nil?
+
       base = arr[i].tabs
       nodes = []
       while (line = arr[i]) && line.tabs >= base
@@ -167,11 +175,11 @@ END
       return nodes, i
     end
 
-    def build_tree(line, root = false)
+    def build_tree(parent, line, root = false)
       @line = line.index
-      node = parse_line(line, root)
+      node = parse_line(parent, line, root)
 
-      # Node is a symbol if it's non-outputting, like a constant assignment,
+      # Node is a symbol if it's non-outputting, like a variable assignment,
       # or an array if it's a group of nodes to add
       return node unless node.is_a? Tree::Node
 
@@ -189,7 +197,7 @@ END
     def append_children(parent, children, root)
       continued_rule = nil
       children.each do |line|
-        child = build_tree(line, root)
+        child = build_tree(parent, line, root)
 
         if child.is_a?(Tree::RuleNode) && child.continued?
           raise SyntaxError.new("Rules can't end in commas.", child.line) unless child.children.empty?
@@ -219,9 +227,7 @@ END
     def validate_and_append_child(parent, child, line, root)
       unless root
         case child
-        when :constant
-          raise SyntaxError.new("Constants may only be declared at the root of a document.", line.index)
-        when :mixin
+        when Tree::MixinDefNode
           raise SyntaxError.new("Mixins may only be defined at the root of a document.", line.index)
         when Tree::DirectiveNode
           raise SyntaxError.new("Import directives may only be used at the root of a document.", line.index)
@@ -236,22 +242,28 @@ END
       end
     end
 
-    def parse_line(line, root)
+    def parse_line(parent, line, root)
       case line.text[0]
       when ATTRIBUTE_CHAR
-        parse_attribute(line.text, ATTRIBUTE)
-      when Constant::CONSTANT_CHAR
-        parse_constant(line)
+        if line.text[1] != ATTRIBUTE_CHAR
+          parse_attribute(line.text, ATTRIBUTE)
+        else
+          # Support CSS3-style pseudo-elements,
+          # which begin with ::
+          Tree::RuleNode.new(line.text, @options)
+        end
+      when Script::VARIABLE_CHAR
+        parse_variable(line)
       when COMMENT_CHAR
         parse_comment(line.text)
       when DIRECTIVE_CHAR
-        parse_directive(line, root)
+        parse_directive(parent, line, root)
       when ESCAPE_CHAR
         Tree::RuleNode.new(line.text[1..-1], @options)
       when MIXIN_DEFINITION_CHAR
         parse_mixin_definition(line)
       when MIXIN_INCLUDE_CHAR
-        if line.text[1].nil? || line.text[1] == ?\s
+        if line.text[1].nil?
           Tree::RuleNode.new(line.text, @options)
         else
           parse_mixin_include(line, root)
@@ -260,7 +272,7 @@ END
         if line.text =~ ATTRIBUTE_ALTERNATE_MATCHER
           parse_attribute(line.text, ATTRIBUTE_ALTERNATE)
         else
-          Tree::RuleNode.new(interpolate(line.text), @options)
+          Tree::RuleNode.new(line.text, @options)
         end
       end
     end
@@ -280,26 +292,16 @@ END
         raise SyntaxError.new("Invalid attribute: \"#{line}\".", @line)
       end
 
-      if eq.strip[0] == SCRIPT_CHAR
-        value = Sass::Constant.resolve(value, @constants, @line)
-      end
-
-      Tree::AttrNode.new(interpolate(name), interpolate(value), @options)
+      expr = (eq.strip[0] == SCRIPT_CHAR) ? Script.parse(value, @line) : value
+      Tree::AttrNode.new(name, expr, @options)
     end
 
-    def parse_constant(line)
-      name, op, value = line.text.scan(Sass::Constant::MATCH)[0]
-      raise SyntaxError.new("Illegal nesting: Nothing may be nested beneath constants.", @line + 1) unless line.children.empty?
-      raise SyntaxError.new("Invalid constant: \"#{line.text}\".", @line) unless name && value
+    def parse_variable(line)
+      name, op, value = line.text.scan(Script::MATCH)[0]
+      raise SyntaxError.new("Illegal nesting: Nothing may be nested beneath variable declarations.", @line + 1) unless line.children.empty?
+      raise SyntaxError.new("Invalid variable: \"#{line.text}\".", @line) unless name && value
 
-      constant = Sass::Constant.resolve(value, @constants, @line)
-      if op == '||='
-        @constants[name] ||= constant
-      else
-        @constants[name] = constant
-      end
-
-      :constant
+      Tree::VariableNode.new(name, Script.parse(value, @line), op == '||=', @options)
     end
 
     def parse_comment(line)
@@ -312,7 +314,7 @@ END
       end
     end
 
-    def parse_directive(line, root)
+    def parse_directive(parent, line, root)
       directive, value = line.text[1..-1].split(/\s+/, 2)
 
       # If value begins with url( or ",
@@ -320,22 +322,16 @@ END
       if directive == "import" && value !~ /^(url\(|")/
         raise SyntaxError.new("Illegal nesting: Nothing may be nested beneath import directives.", @line + 1) unless line.children.empty?
         import(value)
-      elsif directive == "if"
-        parse_if(line, root, value)
       elsif directive == "for"
         parse_for(line, root, value)
+      elsif directive == "else"
+        parse_else(parent, line, value)
       elsif directive == "while"
-        parse_while(line, root, value)
+        Tree::WhileNode.new(Script.parse(value, line.index), @options)
+      elsif directive == "if"
+        Tree::IfNode.new(Script.parse(value, line.index), @options)
       else
         Tree::DirectiveNode.new(line.text, @options)
-      end
-    end
-
-    def parse_if(line, root, text)
-      if Sass::Constant.parse(text, @constants, line.index).to_bool
-        append_children([], line.children, root)
-      else
-        []
       end
     end
 
@@ -344,7 +340,7 @@ END
 
       if var.nil? # scan failed, try to figure out why for error message
         if text !~ /^[^\s]+/
-          expected = "constant name"
+          expected = "variable name"
         elsif text !~ /^[^\s]+\s+from\s+.+/
           expected = "'from <expr>'"
         else
@@ -352,102 +348,69 @@ END
         end
         raise SyntaxError.new("Invalid for directive '@for #{text}': expected #{expected}.", @line)
       end
-      raise SyntaxError.new("Invalid constant \"#{var}\".", @line) unless var =~ Constant::VALIDATE
+      raise SyntaxError.new("Invalid variable \"#{var}\".", @line) unless var =~ Script::VALIDATE
 
-      from = Sass::Constant.parse(from_expr, @constants, @line).to_i
-      to = Sass::Constant.parse(to_expr, @constants, @line).to_i
-      range = Range.new(from, to, to_name == 'to')
-
-      tree = []
-      old_constants = @constants.dup
-      for i in range
-        @constants[var[1..-1]] = i.to_s
-        append_children(tree, line.children, root)
-      end
-      @constants = old_constants
-      tree
+      Tree::ForNode.new(var[1..-1], Script.parse(from_expr, @line), Script.parse(to_expr, @line),
+        to_name == 'to', @options)
     end
 
-    def parse_while(line, root, text)
-      tree = []
-      while Sass::Constant.parse(text, @constants, line.index).to_bool
-        append_children(tree, line.children, root)
+    def parse_else(parent, line, text)
+      previous = parent.last
+      raise SyntaxError.new("@else must come after @if.") unless previous.is_a?(Tree::IfNode)
+
+      if text
+        if text !~ /^if\s+(.+)/
+          raise SyntaxError.new("Invalid @else directive '@else #{text}': expected 'if <expr>'.", @line)
+        end
+        expr = Script.parse($1, @line)
       end
-      tree
+
+      node = Tree::IfNode.new(expr, @options)
+      append_children(node, line.children, false)
+      previous.add_else node
+      nil
+    end
+
+    # parses out the arguments between the commas and cleans up the mixin arguments
+    # returns nil if it fails to parse, otherwise an array.
+    def parse_mixin_arguments(arg_string)
+      arg_string = arg_string.strip
+      return [] if arg_string.empty?
+      return nil unless (arg_string[0] == ?( && arg_string[-1] == ?))
+      arg_string = arg_string[1...-1]
+      arg_string.split(",", -1).map {|a| a.strip}
     end
 
     def parse_mixin_definition(line)
-      name, args = line.text.scan(/^=\s*([^(]+)(\([^)]*\))?$/).first
-      raise SyntaxError.new("Invalid mixin \"#{line.text[1..-1]}\".", @line) if name.nil?
+      name, arg_string = line.text.scan(/^=\s*([^(]+)(.*)$/).first
+      args = parse_mixin_arguments(arg_string)
+      raise SyntaxError.new("Invalid mixin \"#{line.text[1..-1]}\".", @line) if name.nil? || args.nil?
       default_arg_found = false
       required_arg_count = 0
-      args = (args || "()")[1...-1].split(",", -1).map {|a| a.strip}.map do |arg|
+      args.map! do |arg|
         raise SyntaxError.new("Mixin arguments can't be empty.", @line) if arg.empty? || arg == "!"
-        unless arg[0] == Constant::CONSTANT_CHAR
+        unless arg[0] == Script::VARIABLE_CHAR
           raise SyntaxError.new("Mixin argument \"#{arg}\" must begin with an exclamation point (!).", @line)
         end
         arg, default = arg.split(/\s*=\s*/, 2)
         required_arg_count += 1 unless default
         default_arg_found ||= default
-        raise SyntaxError.new("Invalid constant \"#{arg}\".", @line) unless arg =~ Constant::VALIDATE
+        raise SyntaxError.new("Invalid variable \"#{arg}\".", @line) unless arg =~ Script::VALIDATE
         raise SyntaxError.new("Required arguments must not follow optional arguments \"#{arg}\".", @line) if default_arg_found && !default
-        default = Sass::Constant.resolve(default, @constants, @line) if default
+        default = Script.parse(default, @line) if default
         { :name => arg[1..-1], :default_value => default }
       end
-      mixin = @mixins[name] = Mixin.new(args, line.children)
-      :mixin
+      Tree::MixinDefNode.new(name, args, @options)
     end
 
     def parse_mixin_include(line, root)
-      name, args = line.text.scan(/^\+\s*([^(]+)(\([^)]*\))?$/).first
+      name, arg_string = line.text.scan(/^\+\s*([^(]+)(.*)$/).first
+      args = parse_mixin_arguments(arg_string)
       raise SyntaxError.new("Illegal nesting: Nothing may be nested beneath mixin directives.", @line + 1) unless line.children.empty?
-      raise SyntaxError.new("Invalid mixin include \"#{line.text}\".", @line) if name.nil?
-      raise SyntaxError.new("Undefined mixin '#{name}'.", @line) unless mixin = @mixins[name]
-
-      args = (args || "()")[1...-1].split(",", -1).map {|a| a.strip}
+      raise SyntaxError.new("Invalid mixin include \"#{line.text}\".", @line) if name.nil? || args.nil?
       args.each {|a| raise SyntaxError.new("Mixin arguments can't be empty.", @line) if a.empty?}
-      raise SyntaxError.new(<<END.gsub("\n", "")) if mixin.args.size < args.size
-Mixin #{name} takes #{mixin.args.size} argument#{'s' if mixin.args.size != 1}
- but #{args.size} #{args.size == 1 ? 'was' : 'were'} passed.
-END
 
-      old_constants = @constants.dup
-      mixin.args.zip(args).inject(@constants) do |constants, (arg, value)|
-        constants[arg[:name]] = if value
-          Sass::Constant.resolve(value, old_constants, @line)
-        else
-          arg[:default_value]
-        end
-        raise SyntaxError.new("Mixin #{name} is missing parameter ##{mixin.args.index(arg)+1} (#{arg[:name]}).") unless constants[arg[:name]]
-        constants
-      end
-
-      tree = append_children([], mixin.tree, root)
-      @constants = old_constants
-      tree
-    end
-
-    def interpolate(text)
-      scan = StringScanner.new(text)
-      str = ''
-
-      while scan.scan(/(.*?)(\\*)\#\{/)
-        escapes = scan[2].size
-        str << scan.matched[0...-2 - escapes]
-        if escapes % 2 == 1
-          str << '#{'
-        else
-          str << Sass::Constant.resolve(balance(scan, ?{, ?}, 1)[0][0...-1], @constants, @line)
-        end
-      end
-
-      str + scan.rest
-    end
-
-    def balance(*args)
-      res = Haml::Shared.balance *args
-      return res if res
-      raise SyntaxError.new("Unbalanced brackets.", @line)
+      Tree::MixinNode.new(name, args.map {|s| Script.parse(s, @line)}, @options)
     end
 
     def import_paths
@@ -457,9 +420,7 @@ END
     end
 
     def import(files)
-      nodes = []
-
-      files.split(/,\s*/).each do |filename|
+      files.split(/,\s*/).map do |filename|
         engine = nil
 
         begin
@@ -468,31 +429,22 @@ END
           raise SyntaxError.new(e.message, @line)
         end
 
-        if filename =~ /\.css$/
-          nodes << Tree::DirectiveNode.new("@import url(#{filename})", @options)
-        else
-          File.open(filename) do |file|
-            new_options = @options.dup
-            new_options[:filename] = filename
-            engine = Sass::Engine.new(file.read, new_options)
-          end
+        next Tree::DirectiveNode.new("@import url(#{filename})", @options) if filename =~ /\.css$/
 
-          engine.constants.merge! @constants
-          engine.mixins.merge! @mixins
-
-          begin
-            root = engine.render_to_tree
-          rescue Sass::SyntaxError => err
-            err.add_backtrace_entry(filename)
-            raise err
-          end
-          nodes += root.children
-          @constants = engine.constants
-          @mixins = engine.mixins
+        File.open(filename) do |file|
+          new_options = @options.dup
+          new_options[:filename] = filename
+          engine = Sass::Engine.new(file.read, new_options)
         end
-      end
 
-      nodes
+        begin
+          root = engine.render_to_tree
+        rescue Sass::SyntaxError => err
+          err.add_backtrace_entry(filename)
+          raise err
+        end
+        Tree::FileNode.new(filename, root.children, @options)
+      end.flatten
     end
 
     def self.find_file_to_import(filename, load_paths)
@@ -508,22 +460,17 @@ END
 
       new_filename = find_full_path("#{filename}.sass", load_paths)
 
-      if new_filename.nil?
-        if was_sass
-          raise Exception.new("File to import not found or unreadable: #{original_filename}.")
-        else
-          return filename + '.css'
-        end
-      else
-        new_filename
-      end
+      return new_filename if new_filename
+      return filename + '.css' unless was_sass
+      raise SyntaxError.new("File to import not found or unreadable: #{original_filename}.", @line)
     end
 
     def self.find_full_path(filename, load_paths)
+      segments = filename.split(File::SEPARATOR)
+      segments.push "_#{segments.pop}"
+      partial_name = segments.join(File::SEPARATOR)
       load_paths.each do |path|
-        segments = filename.split(File::SEPARATOR)
-        segments.push "_#{segments.pop}"
-        [segments.join(File::SEPARATOR), filename].each do |name|
+        [partial_name, filename].each do |name|
           full_path = File.join(path, name)
           if File.readable?(full_path)
             return full_path

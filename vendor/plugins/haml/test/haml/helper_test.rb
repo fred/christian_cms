@@ -95,7 +95,19 @@ class HelperTest < Test::Unit::TestCase
   def test_capture_haml
     assert_equal("\"<p>13</p>\\n\"\n", render("- foo = capture_haml(13) do |a|\n  %p= a\n= foo.dump"))
   end
-  
+
+  def test_content_tag_block
+    assert_equal(<<HTML.strip, render(<<HAML, :action_view))
+<div><p>bar</p>
+<strong>bar</strong>
+</div>
+HTML
+- content_tag :div do
+  %p bar
+  %strong bar
+HAML
+  end
+
   def test_haml_tag_attribute_html_escaping
     assert_equal("<p id='foo&amp;bar'>baz</p>\n", render("%p{:id => 'foo&bar'} baz", :escape_html => true))
   end
@@ -148,7 +160,7 @@ class HelperTest < Test::Unit::TestCase
     Haml::Helpers.module_eval do 
       def trc(collection, &block)
         collection.each do |record|
-          puts capture_haml(record, &block)
+          haml_concat capture_haml(record, &block)
         end
       end
     end
@@ -175,7 +187,7 @@ class HelperTest < Test::Unit::TestCase
 
     result = context.capture_haml do
       context.haml_tag :p, :attr => "val" do
-        context.puts "Blah"
+        context.haml_concat "Blah"
       end
     end
 

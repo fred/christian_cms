@@ -1,18 +1,21 @@
-# This file contains various useful bits of code
-# that are shared between Haml and Sass.
+module Haml
+  module Util
+    class << self; include Haml::Util; end
 
-class Hash # :nodoc:
-  # Same as Hash#merge!,
-  # but recursively merges sub-hashes
-  def rec_merge!(other)
-    other.each do |key, value|
-      myval = self[key]
-      if value.is_a?(Hash) && myval.is_a?(Hash)
-        myval.rec_merge!(value)
-      else
-        self[key] = value
-      end
+    def to_hash(arr)
+      arr.compact.inject({}) {|h, (k, v)| h[k] = v; h}
     end
-    self
+
+    def map_keys(hash)
+      to_hash(hash.map {|k, v| [yield(k), v]})
+    end
+
+    def map_vals(hash)
+      to_hash(hash.map {|k, v| [k, yield(v)]})
+    end
+
+    def map_hash(hash, &block)
+      to_hash(hash.map(&block))
+    end
   end
 end

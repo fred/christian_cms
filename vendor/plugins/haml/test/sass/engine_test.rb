@@ -8,9 +8,10 @@ class SassEngineTest < Test::Unit::TestCase
   # if so, the second element should be the line number that should be reported for the error.
   # If this isn't provided, the tests will assume the line number should be the last line of the document.
   EXCEPTION_MAP = {
-    "!a = 1 + " => 'Constant arithmetic error: "1 +".',
-    "!a = 1 + 2 +" => 'Constant arithmetic error: "1 + 2 +".',
-    "!a = \"b" => 'Unterminated string: "\\"b".',
+    "!a = 1 + " => 'Expected expression, was end of text.',
+    "!a = 1 + 2 +" => 'Expected expression, was end of text.',
+    "!a = 1 + 2 + %" => 'Expected expression, was mod token.',
+    "!a = foo(bar" => 'Expected rparen token, was end of text.',
     "!a = #aaa - a" => 'Undefined operation: "#aaaaaa minus a".',
     "!a = #aaa / a" => 'Undefined operation: "#aaaaaa div a".',
     "!a = #aaa * a" => 'Undefined operation: "#aaaaaa times a".',
@@ -30,22 +31,25 @@ class SassEngineTest < Test::Unit::TestCase
     "a\n  b : c" => 'Invalid attribute: "b : c".',
     "a\n  b=c: d" => 'Invalid attribute: "b=c: d".',
     ":a" => 'Attributes aren\'t allowed at the root of a document.',
-    "!" => 'Invalid constant: "!".',
-    "!a" => 'Invalid constant: "!a".',
-    "! a" => 'Invalid constant: "! a".',
-    "!a b" => 'Invalid constant: "!a b".',
-    "a\n  :b c\n  !d = 3" => "Constants may only be declared at the root of a document.",
-    "!a = 1b + 2c" => "Incompatible units: b and c.",
+    "!" => 'Invalid variable: "!".',
+    "!a" => 'Invalid variable: "!a".',
+    "! a" => 'Invalid variable: "! a".',
+    "!a b" => 'Invalid variable: "!a b".',
+    "!a = 1b + 2c" => "Incompatible units: 'c' and 'b'.",
+    "a\n  :b= 1b * 2c" => "2b*c isn't a valid CSS value.",
+    "a\n  :b= 1b % 2c" => "Cannot modulo by a number with units: 2c.",
+    "!a = 2px + #ccc" => "Cannot add a number with units (2px) to a color (#cccccc).",
+    "!a = #ccc + 2px" => "Cannot add a number with units (2px) to a color (#cccccc).",
     "& a\n  :b c" => ["Base-level rules cannot contain the parent-selector-referencing character '&'.", 1],
     "a\n  :b\n    c" => "Illegal nesting: Only attributes may be nested beneath attributes.",
     "a,\n  :b c" => ["Rules can\'t end in commas.", 1],
     "a," => "Rules can\'t end in commas.",
     "a,\n!b = c" => ["Rules can\'t end in commas.", 1],
-    "!a = b\n  :c d\n" => "Illegal nesting: Nothing may be nested beneath constants.",
+    "!a = b\n  :c d\n" => "Illegal nesting: Nothing may be nested beneath variable declarations.",
     "@import foo.sass" => "File to import not found or unreadable: foo.sass.",
     "@import templates/basic\n  foo" => "Illegal nesting: Nothing may be nested beneath import directives.",
     "foo\n  @import templates/basic" => "Import directives may only be used at the root of a document.",
-    "!foo = bar baz !" => "Unterminated constant.",
+    "!foo = bar baz !" => "Syntax error in 'bar baz !' at '!'.",
     "=foo\n  :color red\n.bar\n  +bang" => "Undefined mixin 'bang'.",
     ".bar\n  =foo\n    :color red\n" => ["Mixins may only be defined at the root of a document.", 2],
     "=foo\n  :color red\n.bar\n  +foo\n    :color red" => "Illegal nesting: Nothing may be nested beneath mixin directives.",
@@ -63,14 +67,17 @@ class SassEngineTest < Test::Unit::TestCase
     "=a(b)" => 'Mixin argument "b" must begin with an exclamation point (!).',
     "=a(,)" => "Mixin arguments can't be empty.",
     "=a(!)" => "Mixin arguments can't be empty.",
-    "=a(!foo bar)" => "Invalid constant \"!foo bar\".",
+    "=a(!foo bar)" => "Invalid variable \"!foo bar\".",
     "=foo\n  bar: baz\n+foo" => ["Attributes aren't allowed at the root of a document.", 2],
     "a-\#{!b\n  c: d" => ["Unbalanced brackets.", 1],
-    "!a = 1 & 2" => "SassScript doesn't support a single-& operator.",
-    "!a = 1 | 2" => "SassScript doesn't support a single-| operator.",
     "=a(!b = 1, !c)" => "Required arguments must not follow optional arguments \"!c\".",
     "=a(!b = 1)\n  :a= !b\ndiv\n  +a(1,2)" => "Mixin a takes 1 argument but 2 were passed.",
-    "=a(!b)\n  :a= !b\ndiv\n  +a" => "Mixin a is missing parameter #1 (b).",
+    "=a(!b)\n  :a= !b\ndiv\n  +a" => "Mixin a is missing parameter !b.",
+    "@else\n  a\n    b: c" => ["@else must come after @if.", 1],
+    "@if false\n@else foo" => "Invalid @else directive '@else foo': expected 'if <expr>'.",
+    "@if false\n@else if " => "Invalid @else directive '@else if': expected 'if <expr>'.",
+    "a\n  !b = 12\nc\n  d = !b" => 'Undefined variable: "!b".',
+    "=foo\n  !b = 12\nc\n  +foo\n  d = !b" => 'Undefined variable: "!b".',
 
     # Regression tests
     "a\n  b:\n    c\n    d" => ["Illegal nesting: Only attributes may be nested beneath attributes.", 3],
@@ -80,6 +87,10 @@ class SassEngineTest < Test::Unit::TestCase
   
   def test_basic_render
     renders_correctly "basic", { :style => :compact }
+  end
+
+  def test_empty_render
+    assert_equal "", render("")
   end
 
   def test_multiple_calls_to_render
@@ -129,8 +140,7 @@ class SassEngineTest < Test::Unit::TestCase
   end
 
   def test_imported_exception
-    [1, 2].each do |i|
-      i = nil if i == 1
+    [nil, 2].each do |i|
       begin
         Sass::Engine.new("@import bork#{i}", :load_paths => [File.dirname(__FILE__) + '/templates/']).render
       rescue Sass::SyntaxError => err
@@ -149,6 +159,10 @@ class SassEngineTest < Test::Unit::TestCase
 
   def test_sass_import
     renders_correctly "import", { :style => :compact, :load_paths => [File.dirname(__FILE__) + "/templates"] }
+  end
+
+  def test_units
+    renders_correctly "units"
   end
 
   def test_default_function
@@ -202,6 +216,16 @@ class SassEngineTest < Test::Unit::TestCase
     else
       assert(false, "SyntaxError not raised for :attribute_syntax => :alternate")
     end
+  end
+
+  def test_pseudo_elements
+    assert_equal(<<CSS, render(<<SASS))
+::first-line {
+  size: 10em; }
+CSS
+::first-line
+  size: 10em
+SASS
   end
 
   def test_directive
@@ -336,7 +360,6 @@ SASS
   end
 
   def test_mixins_dont_interfere_with_sibling_combinator
-    assert_equal("foo + bar {\n  a: b; }\n", render("foo\n  + bar\n    a: b"))
     assert_equal("foo + bar {\n  a: b; }\nfoo + baz {\n  c: d; }\n",
                  render("foo\n  +\n    bar\n      a: b\n    baz\n      c: d"))
   end
@@ -354,18 +377,20 @@ SASS
 blat
   +foo(1, 2)
 SASS
-    assert_equal("blat {\n  baz: 4;\n  bang: 3; }\n", render(<<SASS))
-=foo(!c)
+    assert_equal("blat {\n  baz: 4;\n  baz: 3;\n  baz: 5;\n  bang: 3; }\n", render(<<SASS))
+=foo(!c = (6 + 4) / 2)
   baz = !c
 !c = 3
 blat
   +foo(!c + 1)
+  +foo((!c + 3)/2)
+  +foo
   bang = !c
 SASS
   end
 
   def test_default_values_for_mixin_arguments
-    assert_equal("white {\n  color: #ffffff; }\n\nblack {\n  color: #000000; }\n", render(<<SASS))
+    assert_equal("white {\n  color: white; }\n\nblack {\n  color: black; }\n", render(<<SASS))
 =foo(!a = #FFF)
   :color= !a
 white
@@ -375,22 +400,22 @@ black
 SASS
     assert_equal(<<CSS, render(<<SASS))
 one {
-  color: #ffffff;
+  color: white;
   padding: 1px;
-  margin: 8px; }
+  margin: 4px; }
 
 two {
-  color: #ffffff;
+  color: white;
   padding: 2px;
-  margin: 8px; }
+  margin: 5px; }
 
 three {
-  color: #ffffff;
+  color: white;
   padding: 2px;
   margin: 3px; }
 CSS
 !a = 5px
-=foo(!a, !b = 1px, !c = 3px + !a)
+=foo(!a, !b = 1px, !c = 3px + !b)
   :color= !a
   :padding= !b
   :margin= !c
@@ -429,14 +454,14 @@ CSS
 a
   b = true
   c = false
-  t1 = true && true
-  t2 = false || true
-  t3 = true || false
-  t4 = true || true
-  f1 = false || false
-  f2 = false && true
-  f3 = true && false
-  f4 = false && false
+  t1 = true and true
+  t2 = false or true
+  t3 = true or false
+  t4 = true or true
+  f1 = false or false
+  f2 = false and true
+  f3 = true and false
+  f4 = false and false
 SASS
     assert_equal(<<CSS, render(<<SASS))
 a {
@@ -445,17 +470,49 @@ a {
 CSS
 !var = true
 a
-  b = !!!var
-  c = !!var
+  b = not not !var
+  c = not !var
 SASS
   end
 
   def test_boolean_ops
     assert_equal("a {\n  b: 1;\n  c: 2;\n  d: 3; }\n", render(<<SASS))
 a
-  b = false || 1
-  c = 2 || 3
-  d = 2 && 3
+  b = false or 1
+  c = 2 or 3
+  d = 2 and 3
+SASS
+  end
+
+  def test_relational_ops
+    assert_equal(<<CSS, render(<<SASS))
+a {
+  gt1: false;
+  gt2: false;
+  gt3: true;
+  gte1: false;
+  gte2: true;
+  gte3: true;
+  lt1: true;
+  lt2: false;
+  lt3: false;
+  lte1: true;
+  lte2: true;
+  lte3: false; }
+CSS
+a
+  gt1 = 1 > 2
+  gt2 = 2 > 2
+  gt3 = 3 > 2
+  gte1 = 1 >= 2
+  gte2 = 2 >= 2
+  gte3 = 3 >= 2
+  lt1 = 1 < 2
+  lt2 = 2 < 2
+  lt3 = 3 < 2
+  lte1 = 1 <= 2
+  lte2 = 2 <= 2
+  lte3 = 3 <= 2
 SASS
   end
 
@@ -470,7 +527,7 @@ SASS
 a
   @if !var
     b: 1
-  @if !!var
+  @if not !var
     b: 2
 SASS
   end
@@ -554,6 +611,105 @@ CSS
   a-\#{!a}
     blooble: gloop
   !a = !a - 1
+SASS
+  end
+
+  def test_else
+    assert_equal(<<CSS, render(<<SASS))
+a {
+  t1: t;
+  t2: t;
+  t3: t;
+  t4: t; }
+CSS
+a
+  @if true
+    t1: t
+  @else
+    f1: f
+
+  @if false
+    f2: f
+  @else
+    t2: t
+
+  @if false
+    f3: f1
+  @else if 1 + 1 == 3
+    f3: f2
+  @else
+    t3: t
+
+  @if false
+    f4: f1
+  @else if 1 + 1 == 2
+    t4: t
+  @else
+    f4: f2
+
+  @if false
+    f5: f1
+  @else if false
+    f5: f2
+SASS
+  end
+
+  def test_operation_precedence
+    assert_equal(<<CSS, render(<<SASS))
+a {
+  p1: false true;
+  p2: true;
+  p3: true;
+  p4: true;
+  p5: true;
+  p6: 11; }
+CSS
+a
+  p1 = true and false false or true
+  p2 = false and true or true and true
+  p3 = 1 == 2 or 3 == 3
+  p4 = 1 < 2 == 3 >= 3
+  p5 = 1 + 3 > 4 - 2
+  p6 = 1 + 2 * 3 + 4
+SASS
+  end
+
+  def test_variable_reassignment
+    assert_equal(<<CSS, render(<<SASS))
+a {
+  b: 1;
+  c: 2; }
+CSS
+!a = 1
+a
+  b = !a
+  !a = 2
+  c = !a
+SASS
+  end
+
+  def test_variable_scope
+    assert_equal(<<CSS, render(<<SASS))
+a {
+  b-1: c;
+  b-2: c;
+  d: 12; }
+
+b {
+  d: 17; }
+CSS
+!i = 12
+a
+  @for !i from 1 through 2
+    b-\#{!i}: c
+  d = !i
+
+=foo
+  !i = 17
+
+b
+  +foo
+  d = !i
 SASS
   end
 

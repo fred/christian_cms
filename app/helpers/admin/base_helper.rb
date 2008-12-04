@@ -11,4 +11,11 @@ module Admin::BaseHelper
       )
     end
   end
+  
+  def is_current_menu(item)
+    if controller.controller_name == item
+      return "current"
+    end
+  end
+  
 end

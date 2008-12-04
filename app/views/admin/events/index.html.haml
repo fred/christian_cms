@@ -1,23 +1,33 @@
-/ %h2 events
-/ %table
-/   %tr
-/     %th Tittle
-/     %th Fecha
-/     %th Active
-/     %th
-/     %th
-/     %th
-/   %tr
-/     - for event in @events
-/       %tr
-/         %td 
-/           = link_to event.title, edit_admin_event_path(event)
-/         %td 
-/           = event.created_at.to_s(:short)
-/         %td 
-/           = link_to 'Edit', edit_admin_event_path(event)
-/         %td 
-/           = link_to 'Delete', admin_event_path(event), :confirm => 'Are you sure?', :method => :delete
-/ 
-/ 
-/ = link_to 'New event', new_admin_event_path 
+%h3 Eventos
+%table
+  %tr
+    %th Tittle
+    %th Status
+    %th Start Date
+    %th End Date
+    %th Priority
+    %th Created
+    %th
+    %th
+  %tr
+    - for event in @events
+      %tr
+        %td
+          = link_to event.title, admin_event_path(event)
+        %td
+          = event.event_status
+        %td
+          = event.start_date.to_s(:short)
+        %td
+          = event.end_date.to_s(:short)
+        %td
+          = event.event_priority
+        %td
+          = event.created_at.to_s(:short)
+        %td
+          = link_to 'Edit', edit_admin_event_path(event)
+        %td
+          = link_to 'Delete', admin_event_path(event), :confirm => 'Are you sure?', :method => :delete
+
+= link_to 'New event', new_admin_event_path 
+

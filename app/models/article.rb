@@ -1,3 +1,21 @@
+# +------------------+--------------+------+-----+---------+----------------+
+# | Field            | Type         | Null | Key | Default | Extra          |
+# +------------------+--------------+------+-----+---------+----------------+
+# | id               | int(11)      | NO   | PRI | NULL    | auto_increment | 
+# | user_id          | int(11)      | YES  |     | NULL    |                | 
+# | title            | varchar(100) | YES  |     | NULL    |                | 
+# | permalink        | varchar(50)  | YES  | UNI | NULL    |                | 
+# | body             | text         | YES  |     | NULL    |                | 
+# | published_at     | datetime     | YES  |     | NULL    |                | 
+# | category         | varchar(30)  | YES  |     | NULL    |                | 
+# | author           | varchar(30)  | YES  |     | NULL    |                | 
+# | approved         | tinyint(1)   | YES  | MUL | 1       |                | 
+# | created_at       | datetime     | YES  |     | NULL    |                | 
+# | updated_at       | datetime     | YES  |     | NULL    |                | 
+# | short_body       | text         | YES  |     | NULL    |                | 
+# | expires_on       | datetime     | YES  |     | NULL    |                | 
+# | protected_record | tinyint(1)   | YES  |     | 0       |                | 
+# +------------------+--------------+------+-----+---------+----------------+
 class Article < ActiveRecord::Base
   
   acts_as_textiled :body, :short_body
@@ -39,7 +57,7 @@ class Article < ActiveRecord::Base
   end
   
   def self.find_permalink(permalink)
-    self.find(:first, :conditions => ["permalink = ?", permalink])
+    self.find(:first, :conditions => ["permalink = ? and protected_record = ? ", permalink, false])
   end
   
   def self.get_latest

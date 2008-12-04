@@ -1,9 +1,24 @@
+# +----------------+--------------+------+-----+-----------+----------------+
+# | Field          | Type         | Null | Key | Default   | Extra          |
+# +----------------+--------------+------+-----+-----------+----------------+
+# | id             | int(11)      | NO   | PRI | NULL      | auto_increment | 
+# | title          | varchar(255) | YES  |     | NULL      |                | 
+# | event_status   | varchar(255) | YES  |     | Confirmed |                | 
+# | description    | text         | YES  |     | NULL      |                | 
+# | start_date     | datetime     | YES  |     | NULL      |                | 
+# | end_date       | datetime     | YES  |     | NULL      |                | 
+# | event_priority | varchar(255) | YES  |     | Normal    |                | 
+# | created_at     | datetime     | YES  |     | NULL      |                | 
+# | updated_at     | datetime     | YES  |     | NULL      |                | 
+# +----------------+--------------+------+-----+-----------+----------------+
 class Event < ActiveRecord::Base
+  
+  EVENT_STATUS = ["Confirmed", "Not Confirmed"]
+  PRIORITIES = ["Normal", "Important", "Very Important"]
   
   acts_as_textiled :description
     
   validates_presence_of :title
-  after_save  :sweep_partial_cache
   
   def self.get_this_month
     month = Time.now.month

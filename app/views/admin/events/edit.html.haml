@@ -1,12 +1,8 @@
-%h2 
-  Editing article
-  %i 
-    %u
-      = @article.title
+%h3 Editando Evento
 
-- form_for(@article, :url => { :action => "update" } ) do |f| 
+- form_for(@event, :url => { :action => "update" } ) do |f| 
   = f.error_messages
-  = render :partial => 'form', :locals => { :f => f, :article => @article }
-  = f.submit 'Update'
+  = render :partial => 'form', :locals => { :f => f, :event => @event }
+  = f.submit 'Salvar'
   
-= link_to 'Back', admin_articles_path
+= link_to 'Volver', admin_events_path

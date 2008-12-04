@@ -1,5 +1,5 @@
 class CacheSweeper < ActionController::Caching::Sweeper
-  observe Article, Birthday, Settings, MenuItem
+  observe Article, Birthday, Settings, MenuItem, Event
 
   def after_save(record)
     expire_fragment(%r{articles/*})

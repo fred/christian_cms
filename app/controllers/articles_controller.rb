@@ -37,7 +37,15 @@ class ArticlesController < ApplicationController
   # GET /articles/1
   # GET /articles/1.xml
   def show
-    @article = Article.find_permalink(params[:permalink]) || Article.find(params[:permalink])
+    
+    if params[:permalink]
+      @article = Article.find_permalink(params[:permalink])
+    end
+    
+    if params[:id] && authorized_admin?
+      @article = Article.find(params[:id])
+    end
+    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @article }

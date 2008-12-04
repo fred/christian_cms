@@ -1,34 +1,25 @@
-<table>
-	<tr>
-		<td> </td>
-		<td> <%= error_message_on :event, :title, "Nombre ", "","inputError" %> </td>
-	</tr>
-	<tr>
-		<td class="bold"> Titulo del Evento: </td>
-		<td> <%= text_field :event, :title, :size => "26" %> </td>
-	</tr>
-	<tr>
-	    <td> </td>
-	    <td> <%= error_message_on :event, :description, "Descripcion ", "","inputError" %> </td>
-	</tr>
-	<tr>
-	    <td class="bold"> Descripcion: </td>
-	    <td> <%= text_area :event, :description, :rows => 4, :cols => 24 %> </td>
-	</tr>
-	<tr>
-	    <td class="bold"> Status: </td>
-		<td><%= select :event, :event_status, @event_status %> </td>
-	</tr>
-	<tr>
-	    <td class="bold"> Prioridad </td>
-		<td><%= select :event, :event_priority, @priorities %> </td>
-	</tr>
-	<tr>
-	    <td class="bold"> Fecha que Empieza </td>
-		<td><%= datetime_select :event, :start_date %> </td>
-	</tr>
-	<tr>
-	    <td class="bold"> Fecha que Termina </td>
-		<td><%= datetime_select :event, :end_date %> </td>
-	</tr>
-</table>
+
+%p
+  = error_message_on :event, :title, "Nombre ", "","inputError" 
+%p
+  %b Titulo del Evento:
+  %br
+  = text_field :event, :title, :size => "26" 
+%p
+  = error_message_on :event, :description, "Descripcion ", "","inputError"
+%p
+  %b  Descripcion:
+  %br
+  = text_area :event, :description, :rows => 4, :cols => 24
+%p
+  %b  Status:
+  = select :event, :event_status, Event::EVENT_STATUS
+%p
+  %b  Prioridad
+  = select :event, :event_priority, Event::PRIORITIES
+%p
+  %b  Fecha que Empieza
+  = datetime_select :event, :start_date
+%p
+  %b  Fecha que Termina
+  = datetime_select :event, :end_date

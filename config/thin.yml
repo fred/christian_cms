@@ -1,0 +1,17 @@
+development:
+  pid: tmp/pids/thin_dev.pid
+  log: log/thin_dev.log
+  timeout: 60
+  port: 3002
+  environment: development
+  daemonize: true
+  address: 127.0.0.1
+
+production:
+  pid: tmp/pids/thin_prod.pid
+  log: log/thin_prod.log
+  timeout: 60
+  port: 3003
+  environment: production
+  daemonize: true
+  address: 127.0.0.1

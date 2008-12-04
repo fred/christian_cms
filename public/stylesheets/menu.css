@@ -16,13 +16,14 @@
 	padding:0 0 0 0px;
 }
 #dolphinnav ul {
-	margin:0;
+	margin: 0 0 0 5px;
 	padding:0;
 	list-style-type:none;
 	width:auto;
 	float:left;
 }
 #dolphinnav ul li {
+	background:#fff url(/images/dolphin_bg.gif) repeat-x bottom left;
 	display:block;
 	float:left;
 	margin:0 1px;
@@ -32,7 +33,7 @@
 	float:left;
 	color:#EAF3F8;
 	text-decoration:none;
-	padding:10px 14px 0 14px;
+	padding:10px 13px 0 13px;
 	height:23px;
 }
 #dolphinnav ul li a span {
@@ -49,10 +50,11 @@
 	width:auto;
 	cursor:pointer;
 }
-#dolphinnav ul li a.current,#dolphinnav ul li a.current:hover {
+#dolphinnav ul li a.current,
+#dolphinnav ul li a.current:hover {
 	color:#fff;
 	background:#1D6893 url(/images/dolphin_left-ON.gif) no-repeat top left;
-	line-height:275%;
+	/*line-height:275%;*/
 }
 #dolphinnav ul li a.current span {
 	display:block;

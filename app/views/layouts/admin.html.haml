@@ -1,7 +1,10 @@
 !!! strict
 %html
   %head
-    %title= controller.action_name
+    %title
+      = controller.controller_name
+      \-
+      = controller.action_name
     %meta{ 'http-equiv' => 'Content-Type', :content => 'text/html; charset=UTF-8' }
     = stylesheet_link_tag "blueprint/src/reset.css"
     = stylesheet_link_tag "blueprint/src/grid.css"
@@ -19,25 +22,28 @@
   
   #site
     = link_to(image_tag("/images/logo1.png", :class => "logo_header"), admin_home)
+    %br
     = link_to(image_tag("/images/control_panel.png", :class => "logo_header"), admin_home)
     #header
       #dolphincontainer
         #dolphinnav
           %ul
             %li
-              = link_to "Usuarios", admin_users_path
+              = link_to "Usuarios", admin_users_path, :class => is_current_menu("users")
             %li
-              = link_to "Articulos", admin_articles_path
+              = link_to "Articulos", admin_articles_path, :class => is_current_menu("articles")
             %li
-              = link_to "Settings", admin_settings_path
+              = link_to "Eventos", admin_events_path, :class => is_current_menu("events")
             %li
-              = link_to "Boletines", admin_buletins_path
+              = link_to "Settings", admin_settings_path, :class => is_current_menu("settings")
             %li
-              = link_to "Menus", admin_menu_items_path
+              = link_to "Boletines", admin_buletins_path, :class => is_current_menu("buletins")
             %li
-              = link_to "Cumpleaños", admin_birthdays_path
+              = link_to "Menus", admin_menu_items_path, :class => is_current_menu("menu_items")
             %li
-              = link_to "Mensages", admin_messages_path
+              = link_to "Cumpleaños", admin_birthdays_path, :class => is_current_menu("birthdays")
+            %li
+              = link_to "Mensages", admin_messages_path, :class => is_current_menu("messages")
             %li
               = link_to "Website", "/"
             %li

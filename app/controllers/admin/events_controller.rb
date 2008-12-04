@@ -1,7 +1,6 @@
 class Admin::EventsController < Admin::BaseController
   
   # GET /events
-  # GET /events.xml
   def index
     if params[:sort]
       order = case params[:sort]
@@ -15,10 +14,6 @@ class Admin::EventsController < Admin::BaseController
     current_page = (params[:page] ||= 1).to_i
 
     @events = Event.paginate :page => current_page, :per_page => per_page, :order => order
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @events }
-    end
   end
   
   def search
@@ -41,76 +36,48 @@ class Admin::EventsController < Admin::BaseController
     else
       @event = Event.find_permalink(params[:permalink])
     end
-    @meta_title = @meta_title + " - " + @event.title 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @event }
-    end
   end
 
   # GET /events/new
   # GET /events/new.xml
   def new
-    @event_status = ["Confirmed", "Not Confirmed"]
-    @priorities = ["Normal", "Important", "Very Important"]
     @event = Event.new
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @event }
-    end
   end
 
   # GET /events/1/edit
   def edit
-    @event_status = ["Confirmed", "Not Confirmed"]
-    @priorities = ["Normal", "Important", "Very Important"]
     @event = Event.find(params[:id])
   end
 
   # POST /events
-  # POST /events.xml
   def create
-    @event_status = ["Confirmed", "Not Confirmed"]
-    @priorities = ["Normal", "Important", "Very Important"]
     @event = Event.new(params[:event])
-    respond_to do |format|
-      if @event.save
-        flash[:notice] = 'Evento fue creado con sucesso.'
-        format.html { redirect_to events_path }
-        format.xml  { render :xml => @event, :status => :created, :location => @event }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @event.errors, :status => :unprocessable_entity }
-      end
+    if @event.save
+      flash[:notice] = 'Evento fue creado con sucesso.'
+      redirect_to :action => "index" 
+    else
+      render :action => "new"
     end
   end
 
   # PUT /events/1
-  # PUT /events/1.xml
   def update
     @event = Event.find(params[:id])
-    
-    respond_to do |format|
-      if @event.update_attributes(params[:event])
-        flash[:notice] = 'Evento fue salvo con sucesso.'
-        format.html { redirect_to events_path }
-        format.xml  { render :xml => @event, :status => :created, :location => @event }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @event.errors, :status => :unprocessable_entity }
-      end
+    if @event.update_attributes(params[:event])
+      flash[:notice] = 'Evento fue salvo con sucesso.'
+      redirect_to :action => "edit", :id => @event.id
+    else
+      render :action => "edit"
     end
   end
 
   # DELETE /events/1
-  # DELETE /events/1.xml
   def destroy
     @event = Event.find(params[:id])
-    @event.destroy
-    respond_to do |format|
-      format.html { redirect_to("/") }
-      format.xml  { head :ok }
+    if @event.destroy
+      flash[:notice] = 'Evento no fue deletado sucesso.'
     end
+    redirect_to :action => "index"
   end
   
   

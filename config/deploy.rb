@@ -101,8 +101,8 @@ namespace :deploy do
   end
 end
 
-before "deploy", "sphinx:stop"
-after "deploy", "sphinx:reload"
+#before "deploy", "sphinx:stop"
+#after "deploy", "sphinx:reload"
 
 task :after_symlink, :roles => :app do
   run "ln -nfs #{shared_path}/config/database.yml #{current_path}/config/database.yml"

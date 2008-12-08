@@ -3,10 +3,14 @@
 	<%= image_tag "iglesia3.png", :class => "iglesia_logo" %>
 	
 	<div class="search">
-  	<% form_tag({ :controller => "articles", :action => "search" }, :method => 'get') do %>
-      <%= text_field_tag "query", nil, :size => 17 %>
-      <%= submit_tag "Buscar en el Sitio" %>
-    <% end %>
+  	<% #form_tag({ :controller => "articles", :action => "search" }, :method => 'get') do 
+  	%>
+      <%= #text_field_tag "query", nil, :size => 17 
+      %>
+      <%= #submit_tag "Buscar en el Sitio" 
+      %>
+    <% #end 
+    %>
   </div>
 	
 	<h2> La Comunidad </h2>

@@ -35,7 +35,7 @@ set :deploy_via, :remote_cache
 # Rails environment. Used by application setup tasks and migrate tasks.
 set :rails_env, "production"
 
-default_environment["PATH"] = "/opt/ree/bin:/opt/ree/lib/ruby/gems/1.8/bin:$PATH"
+#default_environment["PATH"] = "/opt/ree/bin:/opt/ree/lib/ruby/gems/1.8/bin:$PATH"
 
 # If you aren't deploying to /u/apps/#{application} on the target
 # servers (which is the default), you can specify the actual location

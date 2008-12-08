@@ -57,7 +57,7 @@ class Article < ActiveRecord::Base
   end
   
   def self.find_permalink(permalink)
-    self.find(:first, :conditions => ["permalink = ? and protected_record = ? ", permalink, false])
+    self.find(:first, :conditions => ["permalink = ? and approved = ? ", permalink, true])
   end
   
   def self.get_latest
@@ -70,8 +70,7 @@ class Article < ActiveRecord::Base
 
   def self.get_articles
     Article.find(:all,
-     :conditions =>  ["category = 'articulo'"], 
-     :order => "created_at DESC",
+     :order => "published_at DESC",
      :limit => 5
     )
   end

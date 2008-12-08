@@ -4,7 +4,5 @@ require 'haml'
 require 'feed_tools'
 require 'will_paginate'
 require 'json'
-#require "google_query"
 require "ferret"
-require 'yahoo-weather'
 require "redcloth"

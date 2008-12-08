@@ -85,18 +85,34 @@ end
 
 namespace :passenger do 
   %w(start stop restart).each do |action| 
-  desc "#{action} this app's Thin Server" 
+  desc "#{action} this app's passenger Server" 
     task action.to_sym, :roles => :app do 
       run "touch #{current_path}/tmp/restart.txt"
     end
   end
-end 
+end
+
+namespace :thin do 
+  desc "Stop this app's Thin Server" 
+  task :stop, :roles => :app do 
+    run "thin -C #{shared_path}/thin.yml stop"
+  end
+  desc "Start this app's Thin Server" 
+  task :start, :roles => :app do 
+    run "thin -C #{shared_path}/thin.yml start"
+  end
+  desc "Restart this app's Thin Server" 
+  task :restart, :roles => :app do 
+    find_and_execute_task("thin:stop")
+    find_and_execute_task("thin:start")
+  end
+end
 
 namespace :deploy do 
   %w(start stop restart).each do |action| 
     desc "#{action} our server"
     task action.to_sym do 
-      find_and_execute_task("passenger:#{action}")
+      find_and_execute_task("thin:#{action}")
     end
   end
 end

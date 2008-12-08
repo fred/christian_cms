@@ -28,13 +28,13 @@ class Article < ActiveRecord::Base
   
   has_permalink :title
   
-  define_index do
-    indexes title
-    indexes short_body
-    indexes body
-    indexes approved
-    has published_at
-  end
+  # define_index do
+  #   indexes title
+  #   indexes short_body
+  #   indexes body
+  #   indexes approved
+  #   has published_at
+  # end
   
 
   def set_permalink

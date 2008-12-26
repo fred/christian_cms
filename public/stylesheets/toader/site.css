@@ -22,6 +22,8 @@ usage:		creative commons attribution v3.0
 
 body {
 	background:#000;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 90%;
 }
 
 #header {
@@ -105,10 +107,11 @@ body {
 	width:100%;
 	z-index:2; /* Covers up annoying IE7 nav bar spacing issue. */
 	position:absolute;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size:1.1em;
 }
 
 #content {
-	font-size:1.1em;
 	background:#FFF;
 	width: 860px;
 	width: 82%;
@@ -270,10 +273,28 @@ h2 {
 	font-size:1.8em;	
 	line-height:1.5em;
 	margin-bottom:0.6em;
+	font-family: Georgia,serif;
+	font-style: normal;
+	font-variant: small-caps;
+	font-weight: normal;
+	font-size: 2.2em;
+	line-height: normal;
+	font-size-adjust: none;
+	font-stretch: normal;
+	-x-system-font: none;
+	
 }
 h3 {
-	font-size:1.4em;
+	font-size:1.5em;
 	margin-bottom:0.5em;
+	font-family: Monaco,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	line-height: normal;
+	font-size-adjust: none;
+	font-stretch: normal;
+	-x-system-font: none;
 }
 h4 {
 	font-size:1.2em;
@@ -393,7 +414,8 @@ pre {
 	word-wrap: break-word;       /* Internet Explorer 5.5+ */ 
 }
 .secreto {
-	color: #ffeffe;
+	/*color: #ffeffe;*/
+	color: #000;
 }
 .edit_item_menu {
 	font-size:1.3em;

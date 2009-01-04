@@ -1,19 +1,19 @@
 /*Credits: Dynamic Drive CSS Library */
 /*URL: http://www.dynamicdrive.com/style/ */
 
-.pagination{
+.pagination {
 	padding: 2px;
 	font-size: 1.4em;
 }
 
-.pagination ul{
+.pagination ul {
 	margin: 0;
 	padding: 0;
 	text-align: left; /*Set to "right" to right align pagination interface*/
 	font-size: 16px;
 }
 
-.pagination li{
+.pagination li {
 	list-style-type: none;
 	display: inline;
 	padding-bottom: 1px;
@@ -28,16 +28,19 @@
 
 .pagination a:hover, .pagination a:active{
 	border: 1px solid #2b66a5;
-	color: #000;
-	background-color: lightyellow;
+	color: #eee;
+	background-color: #2e6ab1;
 }
 
-.pagination li.currentpage{
-	font-weight: bold;
+.pagination .current{
 	padding: 0 5px;
-	border: 1px solid navy;
+	border: 1px solid #2b66a5;
 	background-color: #2e6ab1;
-	color: #FFF;
+	color: #eee;
+}
+
+.pagination .disabled {
+	display:none;
 }
 
 .pagination li.disablepage{

@@ -25,18 +25,17 @@
 	<div id="main">
 	
 		<div id="content">
-	
-			<!-- Side Column -->
-			<% cache("side_colum") do %>
-			  <%= render :partial => "/shared/theme/#{Settings.theme}/side_column"%>
-			<% end %>
 		
-			<!-- Content -->
-			<h2 class="flash_notice">
-				<%= flash[:notice] %>
-			</h2>
+		  <div class="left_side">
+  			<!-- Main Left Side Content -->
+  			<h2 class="flash_notice">
+  				<%= flash[:notice] %>
+  			</h2>
+  			<%= yield %>
+			</div>
 
-			<%= yield %>
+			<!-- Side Column -->
+		  <%= render :partial => "/shared/theme/#{Settings.theme}/side_column"%>
 		
 			<br clear="both"/>
 			<p class="blockquote"> 
@@ -45,7 +44,7 @@
 			
 			<br clear="both"/>
 			<%= render :partial => "/shared/google_adsense_hor" %>
-		
+					
 		</div>
 	
 	  <% cache('footer') do %>

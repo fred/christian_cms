@@ -27,20 +27,28 @@
 	  <li><%= link_to "ATOM Feed", formatted_articles_url(:atom)%></li>
 	</ul>
 	
-	<h2> <%= link_to "Ultimas Noticias.", articles_path %> </h2>
+<!-- 
+	<h2> 
+	  <%= #link_to "Ultimas Noticias.", articles_path 
+	  %>
+	</h2>
 	<ul>
-		<% Article.get_latest.each do |article| %>
+		<% #Article.get_latest.each do |article| 
+		%>
 			<li>
-				<%= link_to article.title, permalink_url(article.permalink) %>
+				<%= #link_to article.title, permalink_url(article.permalink) 
+				%>
 			</li>
-		<% end %>
+		<% #end 
+		%>
 	</ul>
+-->
 	
 	<h2> <%= link_to "Cumpleanos del Mes", month_birthdays_path %> </h2>
 	<ul>
 		<% Birthday.get_this_month.each do |t| %>
 			<li>
-				<%= t.birthdate.strftime("%b %d") %>, <%= t.first_name %> <%= t.last_name %>
+				<%= link_to("#{t.birthdate.strftime("%b %d")} #{t.first_name} #{t.last_name}",month_birthdays_path) %>
 			</li>
 		<% end %>
 	</ul>
@@ -62,8 +70,7 @@
 	  <% end %>
 	</ul>
 	
-  <%= #render :partial => "/shared/feedjit" 
-  %>
+  <%= render :partial => "/shared/feedjit" %>
   
   <%= #render :partial => "/shared/google_adsense_ver" 
   %>

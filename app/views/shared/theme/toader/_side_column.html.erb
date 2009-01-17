@@ -43,7 +43,7 @@
 		%>
 	</ul>
 -->
-	
+	<br />
 	<h2> <%= link_to "Cumpleanos del Mes", month_birthdays_path %> </h2>
 	<ul>
 		<% Birthday.get_this_month.each do |t| %>
@@ -53,6 +53,8 @@
 		<% end %>
 	</ul>
 	
+	
+	<br />
 	<h2> <%= link_to "Boletines del Mes", buletins_path %> </h2>
 	<ul>
 		<% Buletin.get_latest.each do |buletin| %>
@@ -62,6 +64,7 @@
 		<% end %>
 	</ul>
 	
+	
 	<br />
 	<h2> Links </h2>
 	<ul>
@@ -70,9 +73,19 @@
 	  <% end %>
 	</ul>
 	
+	
+	<br />
+	<br />
+	<h2> Sponsored Links </h2>
+	<ul>
+	  <li> <%= link_to("Penang Hotel", "http://www.hotelmingood.com/") %> </li>
+	</ul>
+	<%= link_to(image_tag("mingood_hotel.jpg"),"http://www.hotelmingood.com/") %> 
+	
+	<br />
+	<br />
+	<h2> Recent Visitors </h2>
   <%= render :partial => "/shared/feedjit" %>
   
-  <%= #render :partial => "/shared/google_adsense_ver" 
-  %>
 	
 </div>

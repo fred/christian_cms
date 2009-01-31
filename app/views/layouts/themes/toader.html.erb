@@ -17,7 +17,12 @@
 				  <% MenuItem.menus.each do |t| %>
 				    <li> <%= menu_item_link(t) %> </li>
 				  <% end %>
-					<li> <%= link_to _("Signup"), signup_url %> </li>
+					<% if logged_in? %>
+					  <li> <%= link_to _("Logout"), "/logout" %> </li>
+					<% else %>
+					  <li> <%= link_to _("Signup"), signup_url %> </li>
+      		  <li> <%= link_to _("Login"), "/login" %> </li>
+      		<% end %>
 				</ul>
 			</div>
 	</div>

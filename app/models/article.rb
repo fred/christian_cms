@@ -19,6 +19,8 @@
 class Article < ActiveRecord::Base
   
   acts_as_textiled :body, :short_body
+  
+  ajaxful_rateable :stars => 5
 
   belongs_to :user
     
@@ -36,6 +38,32 @@ class Article < ActiveRecord::Base
   #   has published_at
   # end
   
+  
+  def approved_comments
+    Comment.find(
+      :all, 
+      :conditions => ["commentable_id = ? AND commentable_type = ? AND approved = 1", self.id, "Article"]
+    )
+  end
+  
+  def approved_comments_count
+    Comment.count(
+      :conditions => ["commentable_id = ? AND commentable_type = ? AND approved = 1", self.id, "Article"]
+    )
+  end
+  
+  # @article.add_rating(params[:rating].to_i, :ip => request.remote_ip)
+  def add_rating(rating, ip)
+    if Rating.find(:first, :conditions => ["ip = ? AND rateable_id = ?", ip, self.id])
+      false
+    else
+      rating = Rating.new :rateable_id => self.id, 
+        :ip => ip, 
+        :rateable_type => self.class,
+        :value => rating
+      rating.save
+    end
+  end
 
   def set_permalink
     if self.permalink.to_s.empty?

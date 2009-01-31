@@ -4,7 +4,6 @@
   .comment
     %h4
       = boolean_to_image_small(t.approved) 
-      = t.article.title 
     %p
       name: 
       = h t.name
@@ -13,14 +12,12 @@
       = h t.email
     %p
       website:
-      = h t.website
+      = h t.website_url
     %p
-      when:
-      = time_ago_in_words(Time.now, t.created_at)
-      ago.
+      Submitted on: 
+      = t.created_at
     %p
-      = h t.body
-      
+      = h t.comment
     %p
       = approve_link(t)
       = link_to 'Show', admin_comment_path(t)

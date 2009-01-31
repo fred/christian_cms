@@ -13,9 +13,9 @@ class SessionsController < ApplicationController
         cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
       end
       if self.current_user.admin
-        redirect_back_or_default('/')
+        redirect_back_or_default('/admin')
       else
-        redirect_to( :controller => "users", :action => "edit")
+        redirect_to("/")
       end
       
       flash[:notice] = "Logged in successfully"

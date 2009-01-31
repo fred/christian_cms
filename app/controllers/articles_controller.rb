@@ -42,8 +42,17 @@ class ArticlesController < ApplicationController
       @article = Article.find_permalink(params[:permalink])
     end
     
-    if params[:id] && authorized_admin?
+    if params[:id] #&& authorized_admin?
       @article = Article.find(params[:id])
+    end
+    
+    @comments = @article.approved_comments
+    @comment = Comment.new
+    @comment.commentable_id = @article.id
+    @comment.commentable_type = @article.class
+    if logged_in?
+      @comment.name = current_user.first_name
+      @comment.email = current_user.email
     end
     
     respond_to do |format|
@@ -51,6 +60,17 @@ class ArticlesController < ApplicationController
       format.xml  { render :xml => @article }
     end
   end
+  
+  def rate
+    @article = Article.find(params[:id])
+    @article.rate(params[:stars], current_user, params[:dimension])
+    id = "ajaxful-rating-#{!params[:dimension].blank? ? "#{params[:dimension]}-" : ''}article-#{@article.id}" 
+    render :update do |page|
+      page.replace_html id, ratings_for(@article, :wrap => false, :dimension => params[:dimension])
+      page.visual_effect :highlight, id
+    end
+  end
+  
   
   def moved_permanently
     # this is good if you have old articles deleted 

@@ -14,12 +14,13 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :menu_items
   map.resources :news
-  map.resources :articles, :collection => { :search => :get }
+  map.resources :articles, :collection => { :search => :get}, :member => {:rate => :post}
   map.resources :buletins
   map.resources :events
   map.resources :birthdays
   map.resources :settings
   map.resources :users
+  map.resources :comments
   map.resource :session
   map.resources :messages, :collection => {:thank_you => :any, :moved_permanently => :any}
 
@@ -72,7 +73,7 @@ ActionController::Routing::Routes.draw do |map|
   #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
   
   map.namespace :admin do |admin|
-    # Directs /admin/products/* to Admin::ProductsController (app/controllers/admin/products_controller.rb)
+    # Directs /admin/articles/* to Admin::ArticlesController (app/controllers/admin/articles_controller.rb)
     admin.resources :users
     admin.resources :settings
     admin.resources :articles
@@ -82,6 +83,8 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :news
     admin.resources :events
     admin.resources :messages
+    admin.resources :comments
+    admin.resources :users
   end
   
   # Sample resource route with more complex sub-resources

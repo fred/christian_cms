@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 19) do
+ActiveRecord::Schema.define(:version => 22) do
 
   create_table "articles", :force => true do |t|
     t.integer  "user_id"
@@ -27,8 +27,8 @@ ActiveRecord::Schema.define(:version => 19) do
     t.boolean  "protected_record",                :default => false
   end
 
-  add_index "articles", ["permalink"], :name => "index_articles_on_permalink", :unique => true
   add_index "articles", ["approved"], :name => "index_articles_on_approved"
+  add_index "articles", ["permalink"], :name => "index_articles_on_permalink", :unique => true
 
   create_table "birthdays", :force => true do |t|
     t.string   "first_name"
@@ -39,9 +39,9 @@ ActiveRecord::Schema.define(:version => 19) do
     t.datetime "updated_at"
   end
 
+  add_index "birthdays", ["birthdate"], :name => "index_birthdays_on_birthdate"
   add_index "birthdays", ["first_name"], :name => "index_birthdays_on_first_name"
   add_index "birthdays", ["last_name"], :name => "index_birthdays_on_last_name"
-  add_index "birthdays", ["birthdate"], :name => "index_birthdays_on_birthdate"
 
   create_table "buletins", :force => true do |t|
     t.string   "title"
@@ -53,6 +53,26 @@ ActiveRecord::Schema.define(:version => 19) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "comments", :force => true do |t|
+    t.string   "title",            :limit => 50, :default => ""
+    t.text     "comment"
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
+    t.integer  "user_id"
+    t.string   "remote_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name",             :limit => 40
+    t.string   "email",            :limit => 40
+    t.string   "website_url",      :limit => 40
+    t.boolean  "approved",                       :default => false
+  end
+
+  add_index "comments", ["approved"], :name => "index_comments_on_approved"
+  add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
+  add_index "comments", ["commentable_type"], :name => "index_comments_on_commentable_type"
+  add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
   create_table "events", :force => true do |t|
     t.string   "title"
@@ -112,11 +132,41 @@ ActiveRecord::Schema.define(:version => 19) do
     t.datetime "updated_at"
   end
 
+  create_table "rates", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "rateable_id"
+    t.string   "rateable_type"
+    t.integer  "stars"
+    t.string   "dimension"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "rates", ["rateable_id"], :name => "index_rates_on_rateable_id"
+  add_index "rates", ["user_id"], :name => "index_rates_on_user_id"
+
   create_table "settings", :force => true do |t|
     t.string   "var",        :null => false
     t.text     "value"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "taggings", :force => true do |t|
+    t.integer  "tag_id"
+    t.integer  "taggable_id"
+    t.integer  "tagger_id"
+    t.string   "tagger_type"
+    t.string   "taggable_type"
+    t.string   "context"
+    t.datetime "created_at"
+  end
+
+  add_index "taggings", ["tag_id"], :name => "index_taggings_on_tag_id"
+  add_index "taggings", ["taggable_id", "taggable_type", "context"], :name => "index_taggings_on_taggable_id_and_taggable_type_and_context"
+
+  create_table "tags", :force => true do |t|
+    t.string "name"
   end
 
   create_table "users", :force => true do |t|

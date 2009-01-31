@@ -16,8 +16,8 @@
 	padding:0 0 0 0px;
 }
 #dolphinnav ul {
-	margin: 0 0 0 5px;
-	padding:0;
+	margin: 0;
+	padding: 0;
 	list-style-type:none;
 	width:auto;
 	float:left;
@@ -33,7 +33,7 @@
 	float:left;
 	color:#EAF3F8;
 	text-decoration:none;
-	padding:10px 13px 0 13px;
+	padding:10px 10px 0 10px;
 	height:23px;
 }
 #dolphinnav ul li a span {

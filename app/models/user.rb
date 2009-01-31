@@ -1,6 +1,8 @@
 require 'digest/sha1'
 class User < ActiveRecord::Base
   
+  ajaxful_rater
+  
   HUMANIZED_ATTRIBUTES = {
     :email => "E-mail address",
     :password => "Contraseña",

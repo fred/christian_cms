@@ -37,43 +37,23 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  # Coverts to english latin1/spanish/portugues characters 
+  #  that should not be part of the permalink.
   def strip_diacritics(s)
-    # latin1 subset only
     s.tr("ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜÝàáâãäåçèéêëìíîïñòóôõöøùúûüýÿ",
          "AAAAAACEEEEIIIINOOOOOOUUUUYaaaaaaceeeeiiiinoooooouuuuyy")
   end
   
   protected
-    def meta_defaults
-      @meta_title = "Bienvenido a Comunidad Catolica Latina en Bangkok, Thailand"
-      @meta_description = "Donde los Catolicos Latinos se reúnen en Bangkok"
-    end
 
-    def rescue_action(exception)
-      exception.is_a?(ActiveRecord::RecordInvalid) ? render_invalid_record(exception.record) : super
-    end
-
-    def render_invalid_record(record)
-      render :action => (record.new_record? ? 'new' : 'edit')
-    end
-
-    def monthly_sweep
-      sweep_partial_cache if @@last_sweep.nil?
-      @time_diff = Time.now - @@last_sweep
-      @time_diff = ((@time_diff/60)/24).to_i
-      if (Time.now.day > 1) & (@time_diff > 28)
-        sweep_partial_cache
+    def sweep_partial_cache
+      @@last_sweep = Time.now
+      cache_dir = RAILS_ROOT+"/tmp/cache"
+      unless cache_dir == RAILS_ROOT+"/public"
+        file_name1 = cache_dir+"/*"
+        FileUtils.rm_r(Dir.glob(file_name1)) rescue Errno::ENOENT
+        RAILS_DEFAULT_LOGGER.info("Cache '#{file_name1}' delete.")
       end
     end
-
-  def sweep_partial_cache
-    @@last_sweep = Time.now
-    cache_dir = RAILS_ROOT+"/tmp/cache"
-    unless cache_dir == RAILS_ROOT+"/public"
-      file_name1 = cache_dir+"/*"
-      FileUtils.rm_r(Dir.glob(file_name1)) rescue Errno::ENOENT
-      RAILS_DEFAULT_LOGGER.info("Cache '#{file_name1}' delete.")
-    end
-  end
       
 end

@@ -30,29 +30,38 @@
 		<td> <label> Cumpleaños </label></td>
 		<td><%= date_select :user, 'birthday', :start_year => 1940, :end_year => Time.now.year %></td>
 	</tr>
+	
 	<tr>
 		<td> </td>
-		<td><h3>Telefonos </h3></td>
+		<td> El año no será mostrado </td>
 	</tr>
+	
 	<tr>
-		<td> <label> Casa </label></td>
+		<td> <br /> </td>
+		<td> <br /> </td>
+	</tr>
+	
+	<tr>
+		<td> <label> Telefono Casa </label></td>
 		<td><%= text_field :user, 'home_phone', :size => 22  %></td>
 	</tr>
 	<tr>
-		<td> <label> Mobile </label></td>
+		<td> <label> Telefono Mobile </label></td>
 		<td><%= text_field :user, 'mobile_phone', :size => 22  %></td>
 	</tr>
 
+
 	<tr>
-		<td> </td>
-		<td><h3> Información para hacer Login: </h3> </td>
+		<td> <br /> </td>
+		<td> <br /> </td>
 	</tr>
+
 	<tr>
 		<td> </td>
 		<td><%= error_message_on :user, :login, "Login ", "","inputError" %></td>
 	</tr>
 	<tr>
-		<td> <label> Login </label></td>
+		<td> <label> Login Username </label></td>
 		<td><%= text_field :user, 'login', :size => 22  %></td>
 	</tr>
 	<tr>
@@ -68,11 +77,17 @@
 		<td><%= error_message_on :user, :password_confirmation, "Confirmacion de Password ", "","inputError" %></td>
 	</tr>
 	<tr>
-		<td> <label> Confirmación Password </label></td>
+		<td> <label> Confirmación del Password </label></td>
 		<td><%= password_field :user, 'password_confirmation', :size => 22  %></td>
 	</tr>
+	
 	<tr>
-		<td> <label> Mostrar mi Información Público? </label></td>
+		<td> <br /> </td>
+		<td> <br /> </td>
+	</tr>
+	
+	<tr>
+		<td> <label> Disponer my información al público? </label></td>
 		<td><%= check_box :user, 'approved', :checked => true %></td>
 	</tr>
 	

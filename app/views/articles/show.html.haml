@@ -1,5 +1,6 @@
 %h2{:style=>"color:blue"}
   = @article.title
+
 .article
   %p
     = @article.short_body
@@ -7,3 +8,39 @@
     = @article.body
   %p.created_at
     = @article.created_at.strftime("%B %d, %Y")
+  
+
+- if !logged_in?
+  %p You need to login or register before rating this article
+- else
+  %p Give a rating to this article: 
+
+= ratings_for @article
+
+%br
+
+%h4 
+  Commentarios
+- @comments.each do |t|
+  .comment
+    %p 
+      %u 
+        %i
+          = user_comment_link(t)
+      said:
+    %p
+      = t.comment
+
+
+%br
+%h4
+  Post a comment
+  
+#thankyou{:style=>"display: none"}
+  %p Gracias por su mensage. El mensage esta pendiente a ser autorizado.
+  
+- remote_form_for(@comment, :url => {:controller => "comments", :action => "create"}, :success => "Element.show('thankyou');ClearForm();Element.hide('new_comment');") do |f|
+
+  = render :partial => "/comments/form", :locals => {:f => f}
+
+

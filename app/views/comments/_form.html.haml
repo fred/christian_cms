@@ -1,0 +1,22 @@
+
+= f.hidden_field :commentable_id
+= f.hidden_field :commentable_type
+
+= f.error_messages
+
+%p
+  = f.label :name
+  = f.text_field :name, :value => @comment.name, :size => 40
+%p
+  = f.label :email
+  = f.text_field :email, :value => @comment.email, :size => 40
+%p
+  = f.label :website_url
+  = f.text_field :website_url, :value => "http://", :size => 40
+%p
+  = f.label :comment
+
+%p
+  = f.text_area :comment, :cols => 58, :rows => 13
+
+= f.submit "Submit Comment"

@@ -33,9 +33,9 @@ body {
 	position:relative;
 }
 #masthead	{
-	width:80%;
+	width:76%;
 	margin:0 auto auto auto;
-	padding:40px 0 70px 160px;
+	padding:40px 0 70px 158px;
 	height:70px;
 	position:relative;
 }
@@ -56,7 +56,7 @@ body {
 
 #masthead li {
 	float:left;
-	margin-right:5px;
+	margin-right:6px;
 	background:#d8ed46 url(/images/toader/nav_over.gif) bottom repeat-x;
 }
 
@@ -71,7 +71,7 @@ body {
 
 #masthead li a {
 	padding:0.5em 8px 0.5em 0; 
-	margin-left:8px;
+	margin-left:6px;
 	display:block;	
 	background:transparent url(/images/toader/nav_over_right.gif) top right no-repeat;
 }

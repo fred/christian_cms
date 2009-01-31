@@ -39,6 +39,14 @@ class Article < ActiveRecord::Base
   # end
   
   
+  def self.last_published_date
+    Article.find(:first,
+      :select => "id, published_at",
+      :order => "published_at DESC"
+    ).published_at
+  end
+  
+  
   def approved_comments
     Comment.find(
       :all, 

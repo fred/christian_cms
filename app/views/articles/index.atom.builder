@@ -7,8 +7,8 @@ atom_feed(:url => formatted_article_url(:atom)) do |feed|
     feed.entry(post) do |xml|
       
       xml.title(post.title)
-      xml.description(post.title)
-      xml.content(post.title, :type => 'html')
+      xml.description(post.short_body)
+      xml.content(post.short_body, :type => 'html')
       xml.author(Settings.meta_content_author)               
       xml.pubDate(post.published_at.strftime("%a, %d %b %Y %H:%M:%S %z"))
       xml.published(post.published_at.strftime("%a, %d %b %Y %H:%M:%S %z"))

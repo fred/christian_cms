@@ -19,7 +19,7 @@ module Sass::Script
   # and then left as static CSS files.
   # Any dynamic CSS should be left in <style> tags in the HTML.
   module Functions
-    instance_methods.each { |m| undef_method m unless m =~ /^__/ }
+    instance_methods.each { |m| undef_method m unless m.to_s =~ /^__/ }
     extend self
 
     # Creates a Sass::Script::Color object from hue, saturation, and lightness.
@@ -52,7 +52,7 @@ module Sass::Script
       unless value.is_a?(Sass::Script::Number) && value.unitless?
         raise ArgumentError.new("#{value} is not a unitless number")
       end
-      Sass::Script::Number.new(value.value * 100, '%')
+      Sass::Script::Number.new(value.value * 100, ['%'])
     end
 
     # Rounds a number to the nearest whole number.

@@ -61,6 +61,22 @@ class ArticlesController < ApplicationController
     end
   end
   
+  def tags
+    
+    if params[:tag]
+      per_page = 10
+      current_page = (params[:page] ||= 1).to_i
+
+      @articles = Article.tagged_with(params[:tag], :on => "tags").paginate :page => current_page, 
+        :per_page => per_page, 
+        :order => "published_at DESC", 
+        :conditions => ["articles.approved = ?", true]
+      render :action => "index"
+    else
+      redirect_to :action => "index"
+    end
+  end
+  
   def rate
     @article = Article.find(params[:id])
     @article.rate(params[:stars], current_user, params[:dimension])

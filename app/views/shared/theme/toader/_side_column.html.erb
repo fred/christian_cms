@@ -40,6 +40,16 @@
 	
 	
 	<br />
+	<h2> Tags </h2>
+	<ul>
+		<% Tag.find(:all, :select => "distinct *").each do |tag| %>
+			<li> 
+				<%= link_to tag.name, tag_link(tag.name) %>
+			</li>
+		<% end %>
+	</ul>
+		
+	<br />
 	<h2> <%= link_to "Boletines del Mes", buletins_path %> </h2>
 	<ul>
 		<% Buletin.get_latest.each do |buletin| %>

@@ -14,7 +14,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :menu_items
   map.resources :news
-  map.resources :articles, :collection => { :search => :get}, :member => {:rate => :post}
+  map.resources :articles, :collection => { :search => :get}, :member => {:rate => :post, :tags => :get}
   map.resources :buletins
   map.resources :events
   map.resources :birthdays
@@ -24,6 +24,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :session
   map.resources :messages, :collection => {:thank_you => :any, :moved_permanently => :any}
 
+
+  map.connect 'articles/tags/:tag', :controller => 'articles', :action => 'tags'
+  
   # allow neat permalinked urls
   map.connect 'articles/page/:page',
     :controller => 'articles', :action => 'index',

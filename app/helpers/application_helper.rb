@@ -3,6 +3,10 @@ require 'md5'
 module ApplicationHelper
   
   
+  def tag_link(tag)
+    url_for :controller => "articles", :action => "tags", :tag => tag
+  end
+  
   def display_bold(bol)
     if bol
       "bold"

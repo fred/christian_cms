@@ -8,7 +8,11 @@
     = @article.body
   %p.created_at
     = @article.created_at.strftime("%B %d, %Y")
-  
+
+  %p.item_tags 
+    Tags: 
+    - @article.tag_list.each do |tag|
+      = link_to tag, tag_link(tag)
 
 - if !logged_in?
   %p You need to login or register before rating this article

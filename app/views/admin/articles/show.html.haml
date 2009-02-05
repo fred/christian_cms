@@ -1,12 +1,23 @@
-%h3
+%h4
+  Titulo: 
   = @article.title
 
-%p 
-  %br
+%h4
+  Permalink: 
+  = @article.permalink
+
+%h4 
+  Tags:
+  = @article.tag_list
+
+%h4
+  Creado Por:
+  = @article.author
+
+%p
   = @article.short_body
 
 %p
-  %br
   = @article.body
 
 %p 

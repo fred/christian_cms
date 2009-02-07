@@ -3,8 +3,10 @@
 	<META http-equiv="Content-Language" content="es">
 	<meta name="keywords" content=<%= Settings.content_keywords %>/> 
 	<meta name="author" content=<%= Settings.content_author %>/>	
-	<title> <%= Settings.meta_title %> - <%= Settings.logo_subtitle %> </title>
+	<meta name="title" content=<%= Settings.meta_title %>/>	
 	<meta name="description" content="<%= Settings.meta_description %>" />
+	<link rel="SHORTCUT ICON" href="<%= Settings.favicon %>">
+	<title> <%= Settings.meta_title %> - <%= Settings.logo_subtitle %> </title>
 	<%= stylesheet_link_tag 'scaffold' %>
 	<%= stylesheet_link_tag 'toader/site' %>
 	<%= stylesheet_link_tag 'table' %>

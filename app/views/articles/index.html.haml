@@ -1,19 +1,20 @@
 - @articles.each do |article|
-  
-  - cache("articles/#{article.permalink}") do
-    .article
-      %h2 
-        = link_to(article.title, permalink_url(article.permalink))
+
+  .article
+    %h2 
+      = link_to(article.title, permalink_url(article.permalink))
+    .paragraph_text
       = article.short_body
-      - if !article.body.empty?
-        %p 
-          = link_to("leer mas...", permalink_url(article.permalink), :class => 'read_more_link')
+    - if !article.body.empty?
+      %p 
+        = link_to("leer mas...", permalink_url(article.permalink), :class => 'read_more_link')
+    - if !article.tag_list.empty?
       %p.item_tags 
         Tags: 
         - article.tag_list.each do |tag|
           = link_to tag, tag_link(tag)
-      %p.created_at
-        = article.published_at.strftime("%B %d, %Y")
+    %p.created_at
+      = article.published_at.strftime("%B %d, %Y")
       
 %h3 Paginas:
 = will_paginate @articles

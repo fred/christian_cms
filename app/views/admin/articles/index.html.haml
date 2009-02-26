@@ -1,29 +1,36 @@
 %h3= link_to "Crear Articulo", new_admin_article_path 
-%table
-  %tr
-    %th Titulo
-    %th Fecha
-    %th Activo
-    %th Protegido
-    %th
-    %th
-    %th
-  %tr
-    - for article in @articles
+
+%table{:summary=>"Lista de Articulos"}
+  %caption Lista de Articulos
+  %thead
+    %tr
+      %th ID
+      %th Titulo
+      %th Fecha
+      %th Activo
+      %th Lock
+      %th
+      %th
+      %th
       %tr
-        %td 
+  %tbody
+    - for article in @articles
+      %tr{:class => cycle("", "odd", :name => "row_class")}
+        %th{:scope=>"row", :id => article.id}
+          = link_to article.id, admin_article_path(article)
+        %td{:scope=>"row"}
           = link_to article.title, edit_admin_article_path(article)
-        %td 
+        %td{:scope=>"row"} 
           = article.published_at.to_s(:short)
-        %td 
+        %td{:scope=>"row"}
           = boolean_to_image_small(article.approved)
-        %td 
+        %td{:scope=>"row"}
           = boolean_to_image_lock(article.protected_record)
-        %td 
-          = link_to 'Preview', admin_article_path(article)
-        %td 
+        %td{:scope=>"row"}
+          = link_to 'Ver', article_path(article), :target => "blank"
+        %td{:scope=>"row"}
           = link_to 'Editar', edit_admin_article_path(article)
-        %td 
+        %td{:scope=>"row"}
           = link_to 'Deletar', admin_article_path(article), :confirm => 'Are you sure?', :method => :delete
 
 

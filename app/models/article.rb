@@ -17,9 +17,7 @@
 # | protected_record | tinyint(1)   | YES  |     | 0       |                | 
 # +------------------+--------------+------+-----+---------+----------------+
 class Article < ActiveRecord::Base
-  
-  acts_as_textiled :body, :short_body
-  
+    
   acts_as_taggable_on :tags
   
   ajaxful_rateable :stars => 5

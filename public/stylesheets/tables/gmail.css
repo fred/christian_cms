@@ -1,0 +1,75 @@
+/* xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xx  CSS Table Gallery            xx          
+xx  Author: Mauricio Samy Silva  xx
+xx  URL: http://www.maujor.com/  xx
+xx  Country: Brazil              xx
+xx  Date: 2005-09-28             xx
+xx  xxxxxxxxxxxxxxxxxxxxxxxxxxxxx*/
+table { 
+	font: 0.8em Arial, Helvetica, sans-serif;
+	border-collapse:collapse;	
+	background:#e8eef7;
+	color:#000; 
+	}
+#itsthetable > table {width:99%;}
+#itsthetable {
+	height:350px;
+	overflow:auto;
+	background:#c6dbff; 
+	padding-bottom:3px;
+	}
+caption { 
+	height:102px;
+	font-size:000000.1em;  
+	color:#c6dbff; 
+	background:#c6dbff url("caption.gif") left top  no-repeat;  
+	}
+caption:hover{ 
+	font-size:000000.1em; 
+	color:#c6dbff;
+	background:transparent url("caption.gif") center bottom no-repeat;
+	}
+th {font-weight:300;}
+tr th, tr td {border-bottom:1px solid #ccc;}
+table a, table a:link {text-decoration:none; color:#666;}
+table a:visited {color:#999;} 
+table a:hover {color:#f00; background:#fafafa; display:block;} 
+tbody tr th  {
+	width:80px;
+	vertical-align:top;
+	padding-left: 50px; 
+	background:transparent url("det1gmail.gif") left top no-repeat;
+	}
+tbody tr td  {
+	height:1.7em;
+	vertical-align:top;
+	padding-left:10px; 
+	background:transparent url("det2gmail.gif") left top no-repeat; 
+	}
+thead { background:#fff;}
+tr th + td + td + td + td {
+	width:60px; 
+	padding-left:20px;
+	font-size:0.9em; 
+	background:transparent url("det3gmail.gif") 0 0  no-repeat;
+	} 
+tr.odd th + td + td + td + td {
+	width:60px; 
+	padding-left:20px;
+	font-size:0.9em; 
+	background:none;
+	} 
+tfoot th, tfoot td {
+	height:105px;
+	font-weight:bold; 
+	height:2.0em; 
+	padding-left:10px; 
+	vertical-align: top;
+	}
+tfoot th{
+	height:102px;
+	background:#c6dbff url("footerth.gif") right top no-repeat; 
+	}
+tfoot td {height:102px;
+	background:#c6dbff url("footertd.gif") left top no-repeat; 
+	}

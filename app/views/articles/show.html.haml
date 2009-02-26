@@ -1,23 +1,29 @@
-%h2{:style=>"color:blue"}
+/%h2{:style=>"color:blue"}
+
+.middle_headline
   = @article.title
 
 .article
-  %p
-    = @article.short_body
-  %p
-    = @article.body
-  %p.created_at
-    = @article.created_at.strftime("%B %d, %Y")
 
-  %p.item_tags 
-    Tags: 
-    - @article.tag_list.each do |tag|
-      = link_to tag, tag_link(tag)
+  .paragraph_text
+
+    = @article.short_body
+
+    = @article.body
+
+    %p.created_at
+      = @article.created_at.strftime("%B %d, %Y")
+
+    - if !@article.tag_list.empty?
+      %p.item_tags 
+        Tags
+        - @article.tag_list.each do |tag|
+          = link_to tag, tag_link(tag)
 
 - if !logged_in?
   %p You need to login or register before rating this article
 - else
-  %p Give a rating to this article: 
+  %p Rate this Article: 
 
 = ratings_for @article
 

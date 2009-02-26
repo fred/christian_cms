@@ -1,134 +1,76 @@
-%p
-  = f.label "Titulo"
-  %br
-  = f.text_field :title, :size => 50
+= render :partial => "/shared/tiny_mce"
 
-%p
-  = f.label "Permalink (automatico)"
-  %br
-  = f.text_field :permalink, :size => 50
-%br
+%fieldset
+  %legend 
+    Main
   
-%p
-  = f.label :tags
-  %br
-  = f.text_field :tag_list, {:size => 50, :value => @article.tag_list}
-  %br
-  %label Tags separados por coma. ex. "joking, clowning, sports, food"
-%br
+  %p
+    = f.label "Categoria"
+    %br
+    = f.select :category, Category::LIST.collect
+    
+  %p
+    = f.label "Titulo"
+    %br
+    = f.text_field :title, :size => 60
 
-%p
-  = f.label "Categoria"
-  = f.select :category, Category::LIST.collect
-%br
-
-%p
-  = f.label "Autor"
-  = f.text_field :author, {:size => 24, :value => current_user.login}
-%br
-
-%p
-  = f.check_box :approved
-  %label Activo (mostrar en pagina principal)
-
-%p
-  = f.check_box :protected_record
-  %label Protegido? (Articulos protegidos no podran ser Deletados)
-%br
-
-%p
-  = f.label "Texto Principal (500 caracteres)"
-  %br
-  = textile_editor :article, :short_body, :rows => 26, :cols => 100
-
-%p
-  = f.label "Text Longo (secundario, 2500 caracteres)"
-  %br
-  = textile_editor :article, :body, :rows => 22, :cols => 100
-
-%p 
-  %label
-    Fecha de Publicacion
-  %br
-  = f.date_select :published_at, :start_year => Time.now.year-2, :end_year => Time.now.year+2
-
-
+  %p
+    = f.label "Permalink (automatico)"
+    %br
+    = f.text_field :permalink, :size => 60
   
-%br
-#formatting_guide.showhide
-  %h3
-    Formatting guide
-  %table
-    %tr
-      %th
-        To get this effect…
-      %th
-        Type this…
-    %tr
-      %td
-        %h1
-          Header1
-      %td
-        h1. Header1
-    %tr
-      %td
-        %h2
-          Header2
-      %td
-        h2. Header2
-    %tr
-      %td
-        %h3
-          Header3
-      %td
-        h3. Header3
-    %tr
-      %td
-        %b
-          Bold phrase
-      %td
-        *Bold phrase*
-    %tr
-      %td
-        %i
-          Italic phrase
-      %td
-        _Italic phrase_
-      
-    %tr
-      %td
-        %ul
-          %li
-            Bulleted list
-          %li
-            Bulleted list
-      
-      %td
-        * Bulleted list
-        %br
-        * Bulleted list
-    
-    %tr
-      %td
-        %ol
-          %li
-            Numbered list
-          %li
-            Numbered list
-      
-      %td
-        \# Numbered list
-        %br
-        \# Numbered list
-    
-    %tr
-      %td
-        %blockquote
-          Indented block
-      %td
-        &gt; Indented block 
-    %tr
-      %td
-        <a href="http://www.google.com">Google</a>
-      %td
-        "Google":http://www.google.com
+  %p
+    = f.label :tags
+    %br
+    = f.text_field :tag_list, {:size => 60, :value => @article.tag_list}
+    %br
+    %span.small_tip
+      Tags separados por coma. ex. "joking, clowning, sports, food"
+
+  %p
+    = f.label "Autor"
+    %br
+    = f.text_field :author, {:size => 24, :value => current_user.login}
+
+%fieldset
+  %legend 
+    Settings
+
+  %p
+    = f.check_box :approved 
+    %label Articulo Activo
+    %span.small_tip
+      Para mostrar en pagina principal.
+  %br
+  
+  %p
+    = f.check_box :protected_record
+    %label Protegido? 
+    %span.small_tip
+      Articulos protegidos no podran ser deletados del systema.
+  %br
+  
+  %p 
+    %label Fecha de Publicacion
+    %br
+    = f.date_select :published_at, :start_year => Time.now.year-2, :end_year => Time.now.year+2
+    %span.small_tip
+      Fecha en que el articulo aparecera en la pagina principal en orden de fecha.
+
+
+%fieldset
+  %legend 
+    Texto
+
+  %p
+    = f.label "Texto Principal (1,000 caracteres)"
+    %br
+    = textile_editor :article, :short_body, :rows => 30, :cols => 120
+  
+  %br
+  
+    %p
+    = f.label "Text Secundario (longo 5,000 caracteres)"
+    %br
+    = textile_editor :article, :body, :rows => 30, :cols => 120
+

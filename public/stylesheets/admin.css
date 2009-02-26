@@ -102,3 +102,11 @@ p {
 	color: black;
 	background:pink;
 }
+
+.small_tip {
+	font-size: 1.0em;
+	font-style: italic;
+	color: #666;
+	display: block;
+	font-weight:normal;
+}

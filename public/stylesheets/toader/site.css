@@ -179,7 +179,9 @@ textarea {
 	margin-bottom:0.5em;
 }
 
-.articles ul li, .article ul li, .right_side_column ul li {
+.articles ul li, .article ul li {
+}
+.right_side_column ul li {
 	background:url(/images/toader/bullet.gif) left no-repeat;
 	padding-left:1em;
 	font-size: 1.3em;
@@ -260,8 +262,7 @@ a {
 	font-size: 1.0em;
 }
 p {
-	line-height:1.3em;	
-	font-size:1.3em;
+	font-size:1.2em;
 	margin-bottom:0.7em;
 	margin-top:0.7em;
 }
@@ -277,7 +278,8 @@ h2 {
 	font-size:1.8em;	
 	line-height:1.5em;
 	margin-bottom:0.6em;
-	font-family: Georgia,serif;
+	/*font-family: Georgia,serif;*/
+	font-family: times, Times New Roman, times-roman, georgia, serif;
 	font-style: normal;
 	font-variant: small-caps;
 	font-weight: normal;
@@ -291,7 +293,8 @@ h2 {
 h3 {
 	font-size:1.5em;
 	margin-bottom:0.5em;
-	font-family: Monaco,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace;
+	/*font-family: Monaco,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace;*/
+	font-family: times, Times New Roman, times-roman, georgia, serif;
 	font-style: normal;
 	font-variant: normal;
 	font-weight: normal;
@@ -305,7 +308,7 @@ h4 {
 	margin-bottom:0.5em;
 }
 .articles li, .article li {
-	font-size:1.2em;
+	/*font-size:1.2em;*/
 }
 .articles label, .article label {
 	text-decoration: underline;

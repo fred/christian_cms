@@ -12,11 +12,11 @@
     = stylesheet_link_tag "blueprint/src/forms.css"
     = stylesheet_link_tag "fancy"
     = stylesheet_link_tag "admin.css"
-    = stylesheet_link_tag "admin_pagination.css"
+    = stylesheet_link_tag "admin_pagination"
     = stylesheet_link_tag "admin_scaffold"
-    /= stylesheet_link_tag "table"
     = stylesheet_link_tag "menu"
-    
+    - if action_name == "index"
+      = stylesheet_link_tag 'tables/inphecthyuz'
   %body
   
   
@@ -47,7 +47,7 @@
             %li
               = link_to "Comments", admin_comments_path, :class => is_current_menu("comments")
             %li
-              = link_to "Website", "/"
+              = link_to "Website", "/", :target => "blank"
             %li
               = link_to "Logout", "/logout"
     .clear

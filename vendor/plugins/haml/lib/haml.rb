@@ -1,6 +1,8 @@
 dir = File.dirname(__FILE__)
 $LOAD_PATH.unshift dir unless $LOAD_PATH.include?(dir)
 
+require 'haml/version'
+
 # = Haml (XHTML Abstraction Markup Language)
 #
 # Haml is a markup language
@@ -97,7 +99,6 @@ $LOAD_PATH.unshift dir unless $LOAD_PATH.include?(dir)
 # These characters render XHTML tags.
 #
 # ==== %
-#
 #
 # The percent character is placed at the beginning of a line.
 # It's followed immediately by the name of an element,
@@ -221,65 +222,6 @@ $LOAD_PATH.unshift dir unless $LOAD_PATH.include?(dir)
 #
 #   <input>
 #
-# ==== []
-#
-# Square brackets follow a tag definition and contain a Ruby object
-# that is used to set the class and id of that tag.
-# The class is set to the object's class
-# (transformed to use underlines rather than camel case)
-# and the id is set to the object's class, followed by its id.
-# Because the id of an object is normally an obscure implementation detail,
-# this is most useful for elements that represent instances of Models.
-# Additionally, the second argument (if present) will be used as a prefix for
-# both the id and class attributes.
-# For example:
-#
-#   # file: app/controllers/users_controller.rb
-#
-#   def show
-#     @user = CrazyUser.find(15)
-#   end
-#
-#   -# file: app/views/users/show.haml
-#
-#   %div[@user, :greeting]
-#     %bar[290]/
-#     Hello!
-#
-# is compiled to:
-#
-#   <div class='greeting_crazy_user' id='greeting_crazy_user_15'>
-#     <bar class='fixnum' id='fixnum_581' />
-#     Hello!
-#   </div>
-#
-# ==== /
-#
-# The forward slash character, when placed at the end of a tag definition,
-# causes the tag to be self-closed.
-# For example:
-#
-#   %br/
-#   %meta{'http-equiv' => 'Content-Type', :content => 'text/html'}/
-#
-# is compiled to:
-#
-#   <br />
-#   <meta http-equiv='Content-Type' content='text/html' />
-#
-# Some tags are automatically closed, as long as they have no content.
-# +meta+, +img+, +link+, +script+, +br+, and +hr+ tags are closed by default.
-# This list can be customized by setting the <tt>:autoclose</tt> option (see below).
-# For example:
-#
-#   %br
-#   %meta{'http-equiv' => 'Content-Type', :content => 'text/html'}
-#
-# is also compiled to:
-#
-#   <br />
-#   <meta http-equiv='Content-Type' content='text/html' />
-#
 # ==== . and #
 #
 # The period and pound sign are borrowed from CSS.
@@ -349,6 +291,65 @@ $LOAD_PATH.unshift dir unless $LOAD_PATH.include?(dir)
 #     <div class='item'>
 #       <div class='description'>What a cool item!</div>
 #     </div>
+#   </div>
+#
+# ==== /
+#
+# The forward slash character, when placed at the end of a tag definition,
+# causes the tag to be self-closed.
+# For example:
+#
+#   %br/
+#   %meta{'http-equiv' => 'Content-Type', :content => 'text/html'}/
+#
+# is compiled to:
+#
+#   <br />
+#   <meta http-equiv='Content-Type' content='text/html' />
+#
+# Some tags are automatically closed, as long as they have no content.
+# +meta+, +img+, +link+, +script+, +br+, and +hr+ tags are closed by default.
+# This list can be customized by setting the <tt>:autoclose</tt> option (see below).
+# For example:
+#
+#   %br
+#   %meta{'http-equiv' => 'Content-Type', :content => 'text/html'}
+#
+# is also compiled to:
+#
+#   <br />
+#   <meta http-equiv='Content-Type' content='text/html' />
+#
+# ==== []
+#
+# Square brackets follow a tag definition and contain a Ruby object
+# that is used to set the class and id of that tag.
+# The class is set to the object's class
+# (transformed to use underlines rather than camel case)
+# and the id is set to the object's class, followed by its id.
+# Because the id of an object is normally an obscure implementation detail,
+# this is most useful for elements that represent instances of Models.
+# Additionally, the second argument (if present) will be used as a prefix for
+# both the id and class attributes.
+# For example:
+#
+#   # file: app/controllers/users_controller.rb
+#
+#   def show
+#     @user = CrazyUser.find(15)
+#   end
+#
+#   -# file: app/views/users/show.haml
+#
+#   %div[@user, :greeting]
+#     %bar[290]/
+#     Hello!
+#
+# is compiled to:
+#
+#   <div class='greeting_crazy_user' id='greeting_crazy_user_15'>
+#     <bar class='fixnum' id='fixnum_581' />
+#     Hello!
 #   </div>
 #
 # ==== > and <
@@ -427,6 +428,35 @@ $LOAD_PATH.unshift dir unless $LOAD_PATH.include?(dir)
 # It's compiled to:
 #
 #   <p>hello</p>
+#
+# ==== #{}
+#
+# Ruby code can also be interpolated within plain text using <tt>#{}</tt>,
+# similarly to Ruby string interpolation.
+# For example,
+#
+#   %p This is #{h quality} cake!
+#
+# is the same as
+#
+#   %p= "This is the #{h quality} cake!"
+#
+# and might compile to
+#
+#   <p>This is scrumptious cake!</p>
+#
+# Backslashes can be used to escape "#{" strings,
+# but they don't act as escapes anywhere else in the string.
+# For example:
+#
+#   %p
+#     \\ Look at \\#{h word} lack of backslash: \#{foo}
+#
+# might compile to
+#
+#  <p>
+#    \\ Look at \yon lack of backslash: #{foo}
+#  </p>
 #
 # ==== ~
 #
@@ -762,35 +792,6 @@ $LOAD_PATH.unshift dir unless $LOAD_PATH.include?(dir)
 #     hello there you!
 #   </p>
 #
-# ==== ==
-#
-# Two equals characters interpolates Ruby code into plain text,
-# similarly to Ruby string interpolation.
-# For example,
-#
-#   %p== This is #{h quality} cake!
-#
-# is the same as
-#
-#   %p= "This is #{h quality} cake!"
-#
-# and might compile to
-#
-#   <p>This is scrumptious cake!</p>
-#
-# Backslashes can be used to escape "#{" strings,
-# but they don't act as escapes anywhere else in the string.
-# For example:
-#
-#   %p
-#     == \\ Look at \\#{h word} lack of backslash: \#{foo}
-#
-# might compile to
-#
-#  <p>
-#    \\ Look at \yon lack of backslash: #{foo}
-#  </p>
-#
 # ==== &=
 #
 # An ampersand followed by one or two equals characters
@@ -806,6 +807,15 @@ $LOAD_PATH.unshift dir unless $LOAD_PATH.include?(dir)
 #
 # If the <tt>:escape_html</tt> option is set,
 # &= behaves identically to =.
+#
+# & can also be used on its own so that <tt>#{}</tt> interpolation is escaped.
+# For example,
+#
+#   & I like #{"cheese & crackers"}
+#
+# compiles to
+#
+#   I like cheese &amp; crackers
 #
 # ==== !=
 #
@@ -823,6 +833,15 @@ $LOAD_PATH.unshift dir unless $LOAD_PATH.include?(dir)
 # compiles to
 #
 #   I feel &lt;strong&gt;!
+#   I feel <strong>!
+#
+# ! can also be used on its own so that <tt>#{}</tt> interpolation is unescaped.
+# For example,
+#
+#   ! I feel #{"<strong>"}!
+#
+# compiles to
+#
 #   I feel <strong>!
 #
 # ===== Blocks
@@ -1001,52 +1020,11 @@ $LOAD_PATH.unshift dir unless $LOAD_PATH.include?(dir)
 #                           See also Whitespace Preservation, above.
 #
 module Haml
-  # Returns a hash representing the version of Haml.
-  # The :major, :minor, and :teeny keys have their respective numbers.
-  # The :string key contains a human-readable string representation of the version.
-  # If Haml is checked out from Git,
-  # the :rev key will have the revision hash.
-  def self.version
-    return @@version if defined?(@@version)
 
-    numbers = File.read(scope('VERSION')).strip.split('.').map { |n| n.to_i }
-    @@version = {
-      :major => numbers[0],
-      :minor => numbers[1],
-      :teeny => numbers[2]
-    }
-    @@version[:string] = [:major, :minor, :teeny].map { |comp| @@version[comp] }.compact.join('.')
-
-    if File.exists?(scope('REVISION'))
-      rev = File.read(scope('REVISION')).strip
-      rev = nil if rev !~ /^([a-f0-9]+|\(.*\))$/
-    end
-
-    if rev.nil? && File.exists?(scope('.git/HEAD'))
-      rev = File.read(scope('.git/HEAD')).strip
-      if rev =~ /^ref: (.*)$/
-        rev = File.read(scope(".git/#{$1}")).strip
-      end
-    end
-
-    if rev
-      @@version[:rev] = rev
-      unless rev[0] == ?(
-        @@version[:string] << "."
-        @@version[:string] << rev[0...7]
-      end
-    end
-
-    @@version
-  end
-
-  # Returns the path of file relative to the Haml root.
-  def self.scope(file) # :nodoc:
-    File.join(File.dirname(__FILE__), '..', file)
-  end
+  extend Haml::Version
 
   # A string representing the version of Haml.
-  # A more fine-grained representation is generated by Haml.version.
+  # A more fine-grained representation is available from Haml.version.
   VERSION = version[:string] unless defined?(Haml::VERSION)
 
   # This method is called by init.rb,

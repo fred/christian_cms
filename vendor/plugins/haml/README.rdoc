@@ -49,7 +49,7 @@ check out the RDocs for the Haml and Sass modules.
 The most basic element of Haml
 is a shorthand for creating HTML tags:
 
-  %tagname{ :attr1 => 'value1', :attr2 => 'value2' } Contents
+  %tagname{:attr1 => 'value1', :attr2 => 'value2'} Contents
 
 No end-tag is needed; Haml handles that automatically.
 Adding <tt>class</tt> and <tt>id</tt> attributes is even easier.
@@ -91,7 +91,7 @@ You can also put plain text as a child of an element:
     Hello,
     World!
 
-It's even possible to embed Ruby code into Haml documents.
+It's also possible to embed Ruby code into Haml documents.
 An equals sign, <tt>=</tt>, will output the result of the code.
 A hyphen, <tt>-</tt>, will run the code but not output the result.
 You can even use control statements
@@ -315,6 +315,13 @@ writing documentation, implementing new features, and getting Hampton
 coffee (a fitting task for a boy-genius). Nathan lives in Seattle, Washington and
 while not being a student at University of Washington he consults for
 Unspace Interactive and Microsoft.
+
+Chris Eppstein is a core contributor to Sass and the creator of Compass, the first
+Sass-based framework. Chris focuses on making Sass more powerful, easy to use, and
+on ways to speed its adoption through the web development community. Chris lives in
+San Jose, CA with his wife and daughter. He is the Software Architect for Caring.com,
+a website devoted to the 34 Million caregivers whose parents are sick or elderly,
+that uses Haml and Sass.
 
 If you use this software, you must pay Hampton a compliment. And
 buy Nathan some jelly beans. Maybe pet a kitten. Yeah. Pet that kitty.

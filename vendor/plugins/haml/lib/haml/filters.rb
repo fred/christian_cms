@@ -74,7 +74,7 @@ module Haml
           if contains_interpolation?(text)
             return if options[:suppress_eval]
 
-            push_script(<<RUBY, false)
+            push_script <<RUBY
 find_and_preserve(#{filter.inspect}.render_with_options(#{unescape_interpolation(text)}, _hamlout.options))
 RUBY
             return
@@ -225,7 +225,8 @@ END
 
       def compile(precompiler, text)
         return if precompiler.options[:suppress_eval]
-        src = ::ERB.new(text).src.sub(/^_erbout = '';/, "").gsub("\n", ';')
+        src = ::ERB.new(text).src.sub(/^#coding:.*?\n/, '').
+          sub(/^_erbout = '';/, "").gsub("\n", ';')
         precompiler.send(:push_silent, src)
       end
     end

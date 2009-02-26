@@ -15,9 +15,7 @@ class Event < ActiveRecord::Base
   
   EVENT_STATUS = ["Confirmed", "Not Confirmed"]
   PRIORITIES = ["Normal", "Important", "Very Important"]
-  
-  acts_as_textiled :description
-    
+      
   validates_presence_of :title
   
   def self.get_this_month

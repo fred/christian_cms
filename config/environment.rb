@@ -52,15 +52,6 @@ Rails::Initializer.run do |config|
   # config.i18n.load_path << Dir[File.join(RAILS_ROOT, 'my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
 
-  # Your secret key for verifying cookie session data integrity.
-  # If you change this key, all old sessions will become invalid!
-  # Make sure the secret is at least 30 characters and all random, 
-  # no regular words or you'll be exposed to dictionary attacks.
-  config.action_controller.session = {
-    :session_key => '_la_comunidad',
-    :secret      => '91cf32a47f45dadc6d8e02e3P7ec63r4L8x61b5C4x6df06X4W8c9cOe173a4975ca3'
-  }
-
   # Use the database for sessions instead of the cookie-based default,
   # which shouldn't be used to store highly confidential information
   # (create the session table with "rake db:sessions:create")

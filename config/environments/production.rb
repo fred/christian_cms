@@ -24,3 +24,39 @@ config.cache_store = :file_store, "#{RAILS_ROOT}/tmp/cache/"
 
 # Disable delivery errors, bad email addresses will be ignored
 # config.action_mailer.raise_delivery_errors = false
+
+require 'memcache'
+
+# it’s a good idea to use Memcache also for session storage.
+config.action_controller.session_store = :mem_cache_store
+
+memcache_options = {
+  :c_threshold => 10_000,
+  :compression => false,
+  :debug => false,
+  :namespace => "ului_#{RAILS_ENV}",
+  :readonly => false,
+  :urlencode => false
+}
+
+CACHE = MemCache.new(memcache_options)
+
+CACHE.servers = '127.0.0.1:11211'
+
+# There's no real need to set an expiry time for memcached sessions, 
+# they'll just fall off the LRU.
+ActionController::Base.session_options[:expires] = 86400
+ActionController::Base.session_options[:cache] = CACHE
+
+
+# Your secret key for verifying cookie session data integrity.
+# If you change this key, all old sessions will become invalid!
+# Make sure the secret is at least 30 characters and all random,
+# no regular words or you'll be exposed to dictionary attacks.
+# Expires in 1 day
+config.action_controller.session = {
+  :session_key => '_comunidad_catolica_production',
+  :secret      => '91cf32a47f45f8a9a5ab0a5428bcc551a73b64ba340f67cb8a9dac6d8e02e3P7ec63r4L8x61b5C4x6df06X4W8c9cOe173a4975ca3',
+  :cache       => CACHE,
+  :expires => 86400
+}

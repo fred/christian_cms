@@ -1,10 +1,10 @@
 class Buletin < ActiveRecord::Base
   
   # Plugins
-  validates_as_attachment
   has_attachment :storage => :file_system, 
                  :max_size => 10.megabytes,
 		             :processor => "MiniMagick"
+  validates_as_attachment
   
   # Filters
   after_save :sweep_partial_cache

@@ -279,6 +279,65 @@ bar
 HAML
   end
 
+  def test_inline_if
+    assert_equal(<<HTML, render(<<HAML))
+<p>One</p>
+<p></p>
+<p>Three</p>
+HTML
+- for name in ["One", "Two", "Three"]
+  %p= name unless name == "Two"
+HAML
+  end
+
+  def test_end_with_method_call
+    assert_equal(<<HTML, render(<<HAML))
+2|3|4
+b-a-r
+HTML
+= [1, 2, 3].map do |i|
+  - i + 1
+- end.join("|")
+= "bar".gsub(/./) do |s|
+  - s + "-"
+- end.gsub(/-$/) do |s|
+  - ''
+HAML
+  end
+
+  def test_multiline_with_colon_after_filter
+    assert_equal(<<HTML, render(<<HAML))
+Foo
+Bar
+HTML
+:plain
+  Foo
+= { :a => "Bar",      |
+    :b => "Baz" }[:a] |
+HAML
+    assert_equal(<<HTML, render(<<HAML))
+
+Bar
+HTML
+:plain
+= { :a => "Bar",      |
+    :b => "Baz" }[:a] |
+HAML
+  end
+
+  def test_multiline_in_filter
+    assert_equal(<<HTML, render(<<HAML))
+Foo |
+Bar |
+Baz
+HTML
+:plain
+  Foo |
+  Bar |
+  Baz
+HAML
+  end
+
   # HTML escaping tests
 
   def test_ampersand_equals_should_escape

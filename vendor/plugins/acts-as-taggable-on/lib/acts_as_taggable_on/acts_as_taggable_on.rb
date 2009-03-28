@@ -19,9 +19,11 @@ module ActiveRecord
           args.compact! if args
           for tag_type in args
             tag_type = tag_type.to_s
+            # use aliased_join_table_name for context condition so that sphix can join multiple
+            # tag references from same model without getting an ambiguous column error
             self.class_eval do
               has_many "#{tag_type.singularize}_taggings".to_sym, :as => :taggable, :dependent => :destroy, 
-                :include => :tag, :conditions => ["context = ?",tag_type], :class_name => "Tagging"
+                :include => :tag, :conditions => ['#{aliased_join_table_name rescue "taggings"}.context = ?',tag_type], :class_name => "Tagging"
               has_many "#{tag_type}".to_sym, :through => "#{tag_type.singularize}_taggings".to_sym, :source => :tag
             end
             
@@ -61,6 +63,10 @@ module ActiveRecord
 
               def find_related_#{tag_type}_for(klass, options = {})
                 related_tags_for('#{tag_type}', klass, options)
+              end
+              
+              def top_#{tag_type}(limit = 10)
+                tag_counts_on('#{tag_type}', :order => 'count desc', :limit => limit.to_i)
               end
             RUBY
           end      
@@ -164,16 +170,18 @@ module ActiveRecord
         #  :at_most - Exclude tags with a frequency greater than the given value
         #  :on - Scope the find to only include a certain context
         def find_options_for_tag_counts(options = {})
-          options.assert_valid_keys :start_at, :end_at, :conditions, :at_least, :at_most, :order, :limit, :on
+          options.assert_valid_keys :start_at, :end_at, :conditions, :at_least, :at_most, :order, :limit, :on, :id
           
           scope = scope(:find)
           start_at = sanitize_sql(["#{Tagging.table_name}.created_at >= ?", options.delete(:start_at)]) if options[:start_at]
           end_at = sanitize_sql(["#{Tagging.table_name}.created_at <= ?", options.delete(:end_at)]) if options[:end_at]
 
-          type_and_context = "#{Tagging.table_name}.taggable_type = #{quote_value(base_class.name)}"
+          taggable_type = sanitize_sql(["#{Tagging.table_name}.taggable_type = ?", base_class.name])
+          taggable_id = sanitize_sql(["#{Tagging.table_name}.taggable_id = ?", options.delete(:id)]) if options[:id]
           
           conditions = [
-            type_and_context,
+            taggable_type,
+            taggable_id,
             options[:conditions],
             start_at,
             end_at
@@ -197,7 +205,7 @@ module ActiveRecord
             :joins      => joins.join(" "),
             :conditions => conditions,
             :group      => group_by
-          }.update(options)
+          }
         end    
         
         def is_taggable?
@@ -254,8 +262,8 @@ module ActiveRecord
           add_custom_context(context)
         end
         
-        def tag_counts_on(context,options={})
-          self.class.tag_counts_on(context,{:conditions => ["#{Tag.table_name}.name IN (?)", tag_list_on(context)]}.reverse_merge!(options))
+        def tag_counts_on(context, options={})
+          self.class.tag_counts_on(context, options.merge(:id => self.id))
         end
 
         def related_tags_for(context, klass, options = {})
@@ -290,7 +298,7 @@ module ActiveRecord
             next unless instance_variable_get("@#{tag_type.singularize}_list")
             owner = instance_variable_get("@#{tag_type.singularize}_list").owner
             new_tag_names = instance_variable_get("@#{tag_type.singularize}_list") - tags_on(tag_type).map(&:name)
-            old_tags = tags_on(tag_type).reject { |tag| instance_variable_get("@#{tag_type.singularize}_list").include?(tag.name) }
+            old_tags = tags_on(tag_type, owner).reject { |tag| instance_variable_get("@#{tag_type.singularize}_list").include?(tag.name) }
           
             self.class.transaction do
               base_tags.delete(*old_tags) if old_tags.any?

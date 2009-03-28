@@ -20,3 +20,4 @@ db/*.lzma
 db/*.sql 
 db/sphinx/
 log/
+public/system

@@ -38,9 +38,9 @@
 		<% end %>
 	</ul>
 	
-	
+<!-- 	
 	<br />
-	<h2> Tags </h2>
+	<h2> Popular Tags </h2>
 	<ul>
 		<% Tag.find(:all, :select => "distinct *").each do |tag| %>
 			<li> 
@@ -48,6 +48,7 @@
 			</li>
 		<% end %>
 	</ul>
+-->
 		
 	<br />
 	<h2> <%= link_to "Boletines del Mes", buletins_path %> </h2>
@@ -81,6 +82,9 @@
 	<br />
 	<h2> Recent Visitors </h2>
   <%= render :partial => "/shared/feedjit" %>
-  
+
+	<br />
+	<br />  
+  <%= render :partial => "/shared/google_adsense_ver" %>
 	
 </div>

@@ -1,7 +1,7 @@
 set :application, "comunidad-catolica.com"
 
 # Primary domain name of your application. Used as a default for all server roles.
-set :domain, "209.20.76.20"
+set :domain, "comunidad-catolica.com"
 
 # Login user for ssh.
 set :user, "fred"
@@ -49,7 +49,6 @@ role :db,  domain, :primary => true
 role :scm, domain
 
 
-
 # following line added per latest railsmachine instructions
 #set :runner, 'deploy'
 
@@ -95,11 +94,11 @@ end
 namespace :thin do 
   desc "Stop this app's Thin Server" 
   task :stop, :roles => :app do 
-    run "thin -C #{shared_path}/thin.yml stop"
+    run "thin -C #{shared_path}/config/thin.yml stop"
   end
   desc "Start this app's Thin Server" 
   task :start, :roles => :app do 
-    run "thin -C #{shared_path}/thin.yml start"
+    run "thin -C #{shared_path}/config/thin.yml start"
   end
   desc "Restart this app's Thin Server" 
   task :restart, :roles => :app do 

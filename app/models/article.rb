@@ -17,28 +17,28 @@
 # | protected_record | tinyint(1)   | YES  |     | 0       |                | 
 # +------------------+--------------+------+-----+---------+----------------+
 class Article < ActiveRecord::Base
-    
-  acts_as_taggable_on :tags
   
-  ajaxful_rateable :stars => 5
-
+  # Relationships
   belongs_to :user
-    
+  
+  # Validations
   validates_presence_of :title
   validates_presence_of :short_body
   validates_uniqueness_of :title
   
+  # Filters
+  before_destroy :is_protected?
+  after_save :sweep_partial_cache
+  
+  # Plugins
   has_permalink :title
-  
-  # define_index do
-  #   indexes title
-  #   indexes short_body
-  #   indexes body
-  #   indexes approved
-  #   has published_at
-  # end
+  acts_as_taggable_on :tags
+  ajaxful_rateable :stars => 5
   
   
+  ### Methods ###
+  
+  # Last published date for an article
   def self.last_published_date
     Article.find(:first,
       :select => "id, published_at",
@@ -46,7 +46,7 @@ class Article < ActiveRecord::Base
     ).published_at
   end
   
-  
+  # Approved comments of an article
   def approved_comments
     Comment.find(
       :all, 
@@ -83,6 +83,7 @@ class Article < ActiveRecord::Base
     PermalinkFu.escape(str)
   end
   
+  # Sphinx full text search
   def self.full_text_search(q, limit, order_by)
      return nil if q.nil? or q==""
      results = self.find_by_contents(q,
@@ -111,11 +112,9 @@ class Article < ActiveRecord::Base
     )
   end
   
-  before_destroy :is_protected?
-  after_save :sweep_partial_cache
-  
   private
   
+  # Protected articles cant be deleted
   def is_protected?
     if self.protected_record
       raise "Article is protected, You cannot delete it"
@@ -124,6 +123,7 @@ class Article < ActiveRecord::Base
     end
   end
   
+  # Sweep the fragments cache after an update
   def sweep_partial_cache
     cache_dir = RAILS_ROOT+"/tmp/cache/views/*"
     FileUtils.rm_r(Dir.glob(cache_dir)) rescue Errno::ENOENT

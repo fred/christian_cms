@@ -1,6 +1,12 @@
 class MenuItem < ActiveRecord::Base
+  
+  # Hardcoded Types
   MENU_TYPES = ["Link", "Menu", "Sidebar"]
   
+  # Filters
+  after_save :sweep_partial_cache
+  
+  # Validations
   validates_presence_of :title
   
   def self.menus
@@ -22,10 +28,7 @@ class MenuItem < ActiveRecord::Base
       :order => "display_order ASC", 
       :conditions => ["menu_type = ?", "Sidebar"]
     )
-  end  
-      
-  
-  after_save :sweep_partial_cache
+  end
   
   private
   def sweep_partial_cache

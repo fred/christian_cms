@@ -1,25 +1,20 @@
 class Buletin < ActiveRecord::Base
   
+  # Plugins
+  validates_as_attachment
   has_attachment :storage => :file_system, 
                  :max_size => 10.megabytes,
 		             :processor => "MiniMagick"
   
-  validates_as_attachment
+  # Filters
+  after_save :sweep_partial_cache
   
-  def self.find_paginated(per_page, current_page, order_by)
-    self.find(:all,
-      :order => order_by, 
-      :page => { :size => per_page, :current => current_page, :first => 1 }
-    )
-  end
+  ### Methods ###
 
   def self.get_latest
     time = Time.now
     Buletin.find(:all, :conditions => ["month(created_at) = ? AND year(created_at) = ?", time.month, time.year])
   end
-   
-   
-  after_save :sweep_partial_cache
   
   private
   def sweep_partial_cache

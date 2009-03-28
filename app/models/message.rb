@@ -1,8 +1,14 @@
 class Message < ActiveRecord::Base
   
+  # Validations
   validates_presence_of :name
+  validates_presence_of :body
   
+  # Filters
   after_create :deliver_notification
+  
+  
+  ### Methods ### 
   
   def deliver_notification
     Notifications.deliver_new_message(self)

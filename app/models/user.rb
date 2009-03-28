@@ -1,8 +1,7 @@
 require 'digest/sha1'
 class User < ActiveRecord::Base
   
-  ajaxful_rater
-  
+  # Attributes for spanish language
   HUMANIZED_ATTRIBUTES = {
     :email => "E-mail address",
     :password => "Contraseña",
@@ -13,6 +12,7 @@ class User < ActiveRecord::Base
   # Virtual attribute for the unencrypted password
   attr_accessor :password
 
+  # Validations
   validates_presence_of     :login, :email, :first_name
   validates_presence_of     :password,                   :if => :password_required?
   validates_presence_of     :password_confirmation,      :if => :password_required?
@@ -21,6 +21,8 @@ class User < ActiveRecord::Base
   validates_length_of       :login,    :within => 3..40
   validates_length_of       :email,    :within => 3..100
   validates_uniqueness_of   :login, :email, :case_sensitive => false
+  
+  # Filters
   before_save :encrypt_password
   
   # prevents a user from submitting a crafted form that bypasses activation
@@ -31,10 +33,16 @@ class User < ActiveRecord::Base
     :nationality, :birthday, :display_address, :display_name, 
     :family_role, :civil_state, :sacraments
   
-  #apply_simple_captcha
-  has_many :articles
   cattr_accessor :current_user
   
+  # Plugins
+  ajaxful_rater
+    
+  # Relationships
+  has_many :articles
+  
+  
+  ### Class Methods ###
 
   def self.human_attribute_name(attr)
     HUMANIZED_ATTRIBUTES[attr.to_sym] || super
@@ -86,35 +94,7 @@ class User < ActiveRecord::Base
   end
   
   
-  def self.find_paginated(per_page, current_page, order_by)
-    if authorized_admin?
-      self.find(:all,
-        :order => order_by,
-        :page => { :size => per_page, :current => current_page, :first => 1 }
-      )
-    else
-      self.find(:all,
-        :order => order_by, 
-        :conditions => ["approved = 1"],
-        :page => { :size => per_page, :current => current_page, :first => 1 }
-      )
-    end
-  end
-  
-  def self.find_with_ferret_paginated(q,options = {})
-     return nil if q.nil? or q==""
-     results = self.find_id_by_contents(q)
-     page ||= options[:page]
-     per_page ||= options[:per_page]
-     id_array = []
-     results[1].each do |t|
-       id_array << t[:id]
-     end
-     self.paginate id_array, 
-      :page => page, 
-      :per_page => per_page
-  end
-
+  # Sphinx find method
   def self.full_text_search(q, limit, order_by)
     return nil if q.nil? or q==""
     results = self.find_by_contents(q,

@@ -19,6 +19,11 @@ class ApplicationController < ActionController::Base
   before_filter :login_from_cookie
   #before_filter :get_rate
   
+  def initialize
+		@start_time = Time.now
+	end
+	
+  
   def get_rate
     @rate = MoneyRate.get_rate("USD","THB")
     Time.zone = "Bangkok"

@@ -65,10 +65,6 @@ module Sass
         @scanner.eos? && @tok.nil?
       end
 
-      def rest
-        @scanner.rest
-      end
-
       private
 
       def read_token
@@ -141,7 +137,7 @@ module Sass
       end
 
       def last_match_position
-        current_position - @scanner.matchedsize
+        current_position - @scanner.matched_size
       end
 
       def after_interpolation?

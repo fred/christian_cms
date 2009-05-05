@@ -1,6 +1,6 @@
 class Admin::ArticlesController < Admin::BaseController
   
-  cache_sweeper :cache_sweeper, :only => [:create, :update, :destroy]
+  #cache_sweeper :article_sweeper, :only => [ :create, :update, :destroy ] 
   
   # GET /admin/articles
   # GET /admin/articles.xml

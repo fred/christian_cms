@@ -195,7 +195,10 @@ END
       @index = index + 1
 
       case text[0]
-      when DIV_CLASS, DIV_ID; render_div(text)
+      when DIV_CLASS; render_div(text)
+      when DIV_ID
+        return push_plain(text) if text[1] == ?{
+        render_div(text)
       when ELEMENT; render_tag(text)
       when COMMENT; render_comment(text[1..-1].strip)
       when SANITIZE
@@ -278,7 +281,7 @@ END
       text, tab_change = @to_merge.inject(["", 0]) do |(str, mtabs), (type, val, tabs)|
         case type
         when :text
-          [str << val.gsub('#{', "\\\#{"), mtabs + tabs]
+          [str << val.gsub('#{', "\\\#{").inspect[1...-1], mtabs + tabs]
         when :script
           if mtabs != 0 && !@options[:ugly]
             val = "_hamlout.adjust_tabs(#{mtabs}); " + val
@@ -291,9 +294,9 @@ END
 
       @precompiled <<
         if @options[:ugly]
-          "_erbout << #{unescape_interpolation(text)};"
+          "_erbout << \"#{text}\";"
         else
-          "_hamlout.push_text(#{unescape_interpolation(text)}, #{tab_change}, #{@dont_tab_up_next_text.inspect});"
+          "_hamlout.push_text(\"#{text}\", #{tab_change}, #{@dont_tab_up_next_text.inspect});"
         end
       @to_merge = []
       @dont_tab_up_next_text = false

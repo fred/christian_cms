@@ -4,9 +4,14 @@ require 'enumerator'
 
 module Haml
   module Util
-    class << self; include Haml::Util; end
+    extend self
 
     RUBY_VERSION = ::RUBY_VERSION.split(".").map {|s| s.to_i}
+
+    # Returns the path of file relative to the Haml root.
+    def scope(file)
+      File.expand_path File.join(File.dirname(__FILE__), '..', '..', file)
+    end
 
     def to_hash(arr)
       arr.compact.inject({}) {|h, (k, v)| h[k] = v; h}
@@ -32,6 +37,17 @@ module Haml
           new_powerset << subset + [el]
         end
         new_powerset
+      end
+    end
+
+    def merge_adjacent_strings(enum)
+      e = enum.inject([]) do |a, e|
+        if e.is_a?(String) && a.last.is_a?(String)
+          a.last << e
+        else
+          a << e
+        end
+        a
       end
     end
 

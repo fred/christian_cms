@@ -67,14 +67,14 @@ module Sass
 
     # The regex that matches and extracts data from
     # attributes of the form <tt>:name attr</tt>.
-    ATTRIBUTE = /^:([^\s=:]+)\s*(=?)(?:\s+|$)(.*)/
+    ATTRIBUTE = /^:([^\s=:"]+)\s*(=?)(?:\s+|$)(.*)/
 
     # The regex that matches attributes of the form <tt>name: attr</tt>.
-    ATTRIBUTE_ALTERNATE_MATCHER = /^[^\s:]+\s*[=:](\s|$)/
+    ATTRIBUTE_ALTERNATE_MATCHER = /^[^\s:"]+\s*[=:](\s|$)/
 
     # The regex that matches and extracts data from
     # attributes of the form <tt>name: attr</tt>.
-    ATTRIBUTE_ALTERNATE = /^([^\s=:]+)(\s*=|:)(?:\s+|$)(.*)/
+    ATTRIBUTE_ALTERNATE = /^([^\s=:"]+)(\s*=|:)(?:\s+|$)(.*)/
 
     # Creates a new instace of Sass::Engine that will compile the given
     # template string when <tt>render</tt> is called.
@@ -94,7 +94,7 @@ module Sass
         :load_paths => ['.']
       }.merge! options
       @template = template
-      @environment = Environment.new
+      @environment = Environment.new(nil, @options)
       @environment.set_var("important", Script::String.new("!important"))
     end
 
@@ -115,10 +115,6 @@ module Sass
 
     protected
 
-    def environment
-      @environment
-    end
-
     def render_to_tree
       root = Tree::Node.new(@options)
       append_children(root, tree(tabulate(@template)).first, true)
@@ -131,7 +127,7 @@ module Sass
       tab_str = nil
       first = true
       enum_with_index(string.gsub(/\r|\n|\r\n|\r\n/, "\n").scan(/^.*?$/)).map do |line, index|
-        index += 1
+        index += (@options[:line] || 1)
         next if line.strip.empty?
 
         line_tab_str = line[/^\s*/]
@@ -186,10 +182,10 @@ END
       node.line = line.index
       node.filename = line.filename
 
-      unless node.is_a?(Tree::CommentNode)
-        append_children(node, line.children, false)
+      if node.is_a?(Tree::CommentNode)
+        node.lines = line.children
       else
-        node.children = line.children
+        append_children(node, line.children, false)
       end
       return node
     end
@@ -229,7 +225,7 @@ END
         case child
         when Tree::MixinDefNode
           raise SyntaxError.new("Mixins may only be defined at the root of a document.", line.index)
-        when Tree::DirectiveNode
+        when Tree::DirectiveNode, Tree::FileNode
           raise SyntaxError.new("Import directives may only be used at the root of a document.", line.index)
         end
       end
@@ -408,7 +404,7 @@ END
         raise SyntaxError.new("Invalid variable \"#{arg}\".", @line) unless arg =~ Script::VALIDATE
         raise SyntaxError.new("Required arguments must not follow optional arguments \"#{arg}\".", @line) if default_arg_found && !default
         default = parse_script(default, :offset => line.offset + line.text.index(default)) if default
-        { :name => arg[1..-1], :default_value => default }
+        [arg[1..-1], default]
       end
       Tree::MixinDefNode.new(name, args, @options)
     end
@@ -430,7 +426,7 @@ END
     end
 
     def import_paths
-      paths = @options[:load_paths] || []
+      paths = (@options[:load_paths] || []).dup
       paths.unshift(File.dirname(@options[:filename])) if @options[:filename]
       paths
     end

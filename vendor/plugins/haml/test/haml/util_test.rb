@@ -1,8 +1,13 @@
 #!/usr/bin/env ruby
 require File.dirname(__FILE__) + '/../test_helper'
+require 'pathname'
 
 class UtilTest < Test::Unit::TestCase
   include Haml::Util
+
+  def test_scope
+    assert(File.exist?(scope("Rakefile")))
+  end
 
   def test_to_hash
     assert_equal({
@@ -37,6 +42,7 @@ class UtilTest < Test::Unit::TestCase
   end
 
   def test_powerset
+    return unless Set[Set[]] == Set[Set[]] # There's a bug in Ruby 1.8.6 that breaks nested set equality
     assert_equal([[].to_set].to_set,
       powerset([]))
     assert_equal([[].to_set, [1].to_set].to_set,

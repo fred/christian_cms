@@ -141,6 +141,10 @@ HAML
     assert_raise(Haml::Error) { render("- haml_tag :p, :/ do\n  foo") }
   end
 
+  def test_haml_tag_error_return
+    assert_raise(Haml::Error) { render("= haml_tag :p") }
+  end
+
   def test_is_haml
     assert(!ActionView::Base.new.is_haml?)
     assert_equal("true\n", render("= is_haml?"))
@@ -176,6 +180,11 @@ HAML
   def test_find_and_preserve_with_block
     assert_equal("<pre>Foo&#x000A;Bar</pre>\nFoo\nBar\n",
                  render("= find_and_preserve do\n  %pre\n    Foo\n    Bar\n  Foo\n  Bar"))
+  end
+
+  def test_find_and_preserve_with_block_and_tags
+    assert_equal("<pre>Foo\nBar</pre>\nFoo\nBar\n",
+                 render("= find_and_preserve([]) do\n  %pre\n    Foo\n    Bar\n  Foo\n  Bar"))
   end
 
   def test_preserve_with_block

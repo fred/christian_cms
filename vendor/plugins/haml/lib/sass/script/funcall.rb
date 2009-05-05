@@ -1,3 +1,4 @@
+require File.join(File.dirname(__FILE__), 'functions')
 module Sass
   module Script
     class Funcall # :nodoc:
@@ -18,7 +19,7 @@ module Sass
           return Script::String.new("#{name}(#{args.map {|a| a.perform(environment)}.join(', ')})")
         end
 
-        return Functions.send(name, *args)
+        return Functions::EvaluationContext.new(environment.options).send(name, *args)
       rescue ArgumentError => e
         raise e unless e.backtrace.first =~ /:in `(#{name}|perform)'$/
         raise Sass::SyntaxError.new("#{e.message} for `#{name}'")

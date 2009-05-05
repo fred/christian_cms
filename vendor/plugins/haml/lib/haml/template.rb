@@ -1,20 +1,11 @@
 require 'haml/engine'
 
 module Haml
-  class Template
-    class << self
-      @@options = {}
+  module Template
+    extend self
 
-      # Gets various options for Haml. See README.rdoc for details.
-      def options
-        @@options
-      end
-
-      # Sets various options for Haml. See README.rdoc for details.
-      def options=(value)
-        @@options = value
-      end
-    end
+    @options = {}
+    attr_accessor :options
   end
 end
 
@@ -35,7 +26,7 @@ if defined?(RAILS_ROOT)
   # because the new init file is sufficiently flexible
   # to not need updating.
   rails_init_file = File.join(RAILS_ROOT, 'vendor', 'plugins', 'haml', 'init.rb')
-  haml_init_file = Haml.scope('init.rb')
+  haml_init_file = Haml::Util.scope('init.rb')
   begin
     if File.exists?(rails_init_file)
       require 'fileutils'

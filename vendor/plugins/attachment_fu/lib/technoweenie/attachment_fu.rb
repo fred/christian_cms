@@ -102,7 +102,11 @@ module Technoweenie # :nodoc:
         attachment_options[:storage]     ||= parent_options[:storage]
         attachment_options[:path_prefix] ||= attachment_options[:file_system_path]
         if attachment_options[:path_prefix].nil?
-          attachment_options[:path_prefix] = attachment_options[:storage] == :s3 ? table_name : File.join("public", table_name)
+          attachment_options[:path_prefix] = case attachment_options[:storage]
+            when :s3 then table_name
+            when :cloud_files then table_name
+            else File.join("public", table_name)
+          end
         end
         attachment_options[:path_prefix]   = attachment_options[:path_prefix][1..-1] if options[:path_prefix].first == '/'
 
@@ -179,7 +183,6 @@ module Technoweenie # :nodoc:
         base.after_save :after_process_attachment
         base.after_destroy :destroy_file
         base.after_validation :process_attachment
-        base.attr_accessible :uploaded_data
         if defined?(::ActiveSupport::Callbacks)
           base.define_callbacks :after_resize, :after_attachment_saved, :before_thumbnail_saved
         end

@@ -19,6 +19,9 @@ module Sass::Script
   # and then left as static CSS files.
   # Any dynamic CSS should be left in <style> tags in the HTML.
   #
+  # Within a sass function you can call the options method to gain access to the
+  # options hash that was used to create the Sass::Engine that is processing the function call.
+  #
   # The following functions are provided:
   # * +hsl+ - converts an <tt>hsl(hue, saturation, lightness)</tt> triplet into a color.
   #
@@ -41,8 +44,17 @@ module Sass::Script
   #
   #   Example: <tt>abs(-10px) => 10px</tt>
   module Functions
+    class EvaluationContext # :nodoc:
+      include Sass::Script::Functions
+
+      attr_reader :options
+
+      def initialize(options)
+        @options = options
+      end
+    end
+
     instance_methods.each { |m| undef_method m unless m.to_s =~ /^__/ }
-    extend self
 
     # Creates a Sass::Script::Color object from hue, saturation, and lightness.
     # As per the CSS3 spec (http://www.w3.org/TR/css3-color/#hsl-color),

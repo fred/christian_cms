@@ -1,4 +1,4 @@
-class CacheSweeper < ActionController::Caching::Sweeper
+class ArticleSweeper < ActionController::Caching::Sweeper
   observe Article, Birthday, Settings, MenuItem, Event
 
   def after_save(record)

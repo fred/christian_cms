@@ -23,7 +23,7 @@ config.action_controller.perform_caching             = true
 # config.action_mailer.raise_delivery_errors = false
 
 # Using file_Store for session store:
-config.action_controller.session_store = :p_store
+config.action_controller.session_store = :cookie_store
 config.action_controller.session = {
   :session_key => '_comunidad_catolica_production',
   :secret      => '91cf32a47f45f8a9a5ab0a5428bcc551a73b64ba340f67cb8a9dac6d8e02e3P7ec63r4L8x61b5C4x6df06X4W8c9cOe173a4975ca3'

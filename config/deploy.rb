@@ -123,5 +123,6 @@ task :after_symlink, :roles => :app do
   run "ln -nfs #{shared_path}/config/database.yml #{current_path}/config/database.yml"
   run "ln -nfs #{shared_path}/assets/buletins #{current_path}/public/"
   run "mkdir -p #{current_path}/tmp/cache"
+  run "mkdir -p #{current_path}/tmp/sessions"
 end
 

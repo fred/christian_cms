@@ -1,6 +1,8 @@
-<h2>Website Settings</h2>
+<% @title = "Mensages Dejadas en el Sitio" %>
 
-<table>
+<h3><%= @title %></h3>
+
+<table id="itsthetable">
 <tr>
 	<% form_for :setting, @setting, :url=>{:action=>'create'} do |f| -%>
 		<th><%= f.text_field :var, :size => 20 %></th>

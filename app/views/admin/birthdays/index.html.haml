@@ -1,4 +1,6 @@
-%h3 Lista de Cumpleaños
+- @title = "Lista de Cumpleaños"
+%h3 
+  = @title
 
 .article
   %h4
@@ -28,7 +30,7 @@
     |
     = link_to "TODOS", admin_birthdays_path
 
-  %table
+  %table{:summary => @title}
     %tr
       %th
         = link_to "Nombre", :sort => "first_name" 

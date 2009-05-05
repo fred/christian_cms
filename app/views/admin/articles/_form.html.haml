@@ -65,12 +65,13 @@
   %p
     = f.label "Texto Principal (1,000 caracteres)"
     %br
-    = textile_editor :article, :short_body, :rows => 30, :cols => 120
+    = f.text_area :short_body, :rows => 30, :cols => 120
   
   %br
   
     %p
     = f.label "Text Secundario (longo 5,000 caracteres)"
     %br
-    = textile_editor :article, :body, :rows => 30, :cols => 120
+    = f.text_area :body, :rows => 30, :cols => 120
+    
 

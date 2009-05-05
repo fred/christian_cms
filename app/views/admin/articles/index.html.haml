@@ -1,6 +1,8 @@
-%h3= link_to "Crear Articulo", new_admin_article_path 
+- @title = "Lista de Articulos"
 
-%table{:summary=>"Lista de Articulos"}
+%h3= link_to "Crear Articulo", new_admin_article_path
+
+%table{:summary => @title, :id => "itsthetable"}
   %caption Lista de Articulos
   %thead
     %tr

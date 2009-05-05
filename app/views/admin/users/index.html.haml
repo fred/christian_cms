@@ -1,5 +1,9 @@
-%h3 Usuarios
-%table
+- @title = "Lista de Usuarios"
+
+%h3 
+  = @title
+
+%table{:summary => @title, :id => "itsthetable"}
   %tr
     %th Login
     %th First Name

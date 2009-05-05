@@ -1,7 +1,10 @@
+- @title = "Mensages Dejadas en el Sitio"
 
-%h3 Mensages Dejadas en el Sitio
+%h3 
+  = @title
 
-%table
+%table{:summary => @title, :id => "itsthetable"}
+
   %tr
     %th Name
     %th Email

@@ -12,6 +12,7 @@ ActionController::Routing::Routes.draw do |map|
   map.register '/register', :controller => 'users', :action => 'new'
   map.signup '/signup', :controller => 'users', :action => 'new'
   
+  map.resource  :session
   map.resources :menu_items
   map.resources :news
   map.resources :articles, :collection => { :search => :get}, :member => {:rate => :post, :tags => :get}
@@ -21,7 +22,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :settings
   map.resources :users
   map.resources :comments
-  map.resource :session
   map.resources :messages, :collection => {:thank_you => :any, :moved_permanently => :any}
 
 

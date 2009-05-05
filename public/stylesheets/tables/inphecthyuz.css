@@ -5,68 +5,76 @@ URL: www.infectedfx.net
 Country: Mexico
 */
 
-table {
+#itsthetable table {
+	width:99%;
 	border-spacing:1px;
 	font-family:Verdana, Arial, Helvetica, sans-serif;
-	font-size:1.1em;
+	font-size:1.2em;
 	background-color:#E7E7E7;
 	color: #666;
 }
 
-caption {
+#itsthetable caption {
 	font-weight: bold;
-	background: #50ADEA url(http://infectedfx.net/css/tables/corner.gif) no-repeat right top;
+	background: #50ADEA;
 	border-bottom:2px solid #1975d7;
-	color: #FFF;
+	color: #fff;
 	text-transform:uppercase;
-	padding:10px;
+	padding:4px;
 }
 
-td, th {
-	padding: 4px;
+#itsthetable td {
+	padding: 1px;
+} 
+#itsthetable th {
+	padding: 2px 2px;
 }
 
-thead th {
+#itsthetable thead th {
 	text-align: center;
 	background: #F5F5F5;
 	color: #666;
 	border: 1px solid #FFF;
-	text-transform:uppercase;
+	font-size: 1.0em;
+}
+#itsthetable thead th a {
+	color: #666;
+	text-decoration:none;
 }
 
-tbody th {
-	font-weight: bold;
+#itsthetable tbody th {
+	font-weight: normal;
 }
 
-tbody tr		{
+#itsthetable tbody tr	{
 	background-color:#FFF; 
 	text-align:left;
-	}
-tbody tr.odd 	{
+}
+#itsthetable tbody tr.odd {
 	background: #f9f9f9;
 	border-top:1px solid #FFF;
 }
 
-tbody th a:link, tbody th a:visited{
+#itsthetable tbody th a:link, 
+#itsthetable tbody th a:visited {
 	color:#96D030;
-	background:url(http://infectedfx.net/css/tables/layout.gif) no-repeat; 
-	padding:3px 0px 0px 18px;
-	}
-tbody th a:hover{
+	padding-left: 2px;
+	text-align: center;
+}
+#itsthetable tbody th a:hover {
 	color:#FF8601;
-	}
+}
 
-tbody tr td { 
-	padding-top: 12px;
-	padding-bottom: 12px;
+#itsthetable tbody tr td { 
+	padding: 2px 2px;
 	background: #FFF;
 	border: 1px solid #FFF;
-	}
+}
 
-tbody tr.odd td{ 
+#itsthetable tbody tr.odd td {
 	background: #f9f9f9;
 	border-top:1px solid #FFF;
-	}
+}
 
 table td a:link, table td a:visited {
 	color: #1975D7;
@@ -78,26 +86,26 @@ table td a:hover {
 	border-bottom:2px solid #8FD5FF;
 	text-decoration: none ;
 }
-tbody td a[href="http://www.infectedfx.net"] {
-	margin: 0 auto;
-	height: 15px;
-	background: url(http://infectedfx.net/css/tables/ok.gif) no-repeat;
-	border-bottom: 0;
-	padding:3px 0px 0px 18px;
-	font-weight:bold;
-	color:#FF8601;
-}
-
-table a[title^="Download"] { 
-	background: url(http://infectedfx.net/css/tables/down.gif) no-repeat center;
-	padding:20px 0px 0px 15px;
-}
 
 tfoot th, tfoot td {
 	background-color:#E7E7E7; padding:10px;
-	text-align:center; 
-	font-family:Georgia, "Times New Roman", Times, serif;
-	font-size:22px; font-weight:bold; font-style:italic;
-	border-bottom:3px solid #CCC;
-	border-top:1px solid #DFDFDF;
+	text-align: center; 
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 1.4em; 
+	font-weight: bold; 
+	font-style: italic;
+	border-bottom: 3px solid #CCC;
+	border-top: 1px solid #DFDFDF;
 }
+
+td img, th img {
+	text-align: center;
+	outline: none;
+	border: 1px solid #aaa;
+} 
+td img a, th img a {
+	text-align: center;
+	outline: none;
+	border: none;
+}
+

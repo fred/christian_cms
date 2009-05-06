@@ -3,7 +3,7 @@
 
 <%= error_messages_for :buletin %>
 
-<% form_for @buletin do |f| -%>
+<% form_for @buletin, :url => { :action => "update" }, :html => { :multipart => true } do |f| %>
 
 <table>
 	
@@ -29,7 +29,7 @@
 	
 </table>
 
-<% end -%>
+<% end %>
 
-<br/>
-<%= link_to 'Volver a Lista', :action => 'index' %>
+
+<h3><%= link_to 'Volver a Lista', :action => 'index' %></h3>

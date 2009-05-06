@@ -3,7 +3,6 @@ class Admin::BuletinsController < Admin::BaseController
   # GET /articles
   # GET /articles.xml
   def index
-    @buletin = Buletin.new
     if params[:sort]
       order = case params[:sort]
         when "title" then "title ASC, created_at ASC"
@@ -16,6 +15,8 @@ class Admin::BuletinsController < Admin::BaseController
     per_page = 20
     current_page = (params[:page] ||= 1).to_i
     @buletins = Buletin.paginate :page => current_page, :per_page => per_page, :order => order
+    
+    @buletin = Buletin.new
   end
 
   
@@ -51,9 +52,9 @@ class Admin::BuletinsController < Admin::BaseController
   # DELETE /admin/buletins/1
   # DELETE /admin/buletins/1.xml
   def destroy
-    if @buletin = Buletin.find(params[:id]).destroy
+    if Buletin.find(params[:id]).destroy
       flash[:notice] = "Boletin apagado con successo."
-      redirect_to buletins_path
+      redirect_to admin_buletins_path
     end
   rescue
     flash[:notice] = "Boletin no pudo ser apagado."

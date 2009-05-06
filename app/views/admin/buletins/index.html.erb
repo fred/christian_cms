@@ -17,9 +17,8 @@
 			<td class='table_center'><%= link_to "Download", buletin.public_filename %> </td>
 			<td class='table_center'><%= buletin.created_at.strftime(" %b %d, %Y ") %> </td>
 			<% if authorized_admin? %>
-	    		<td class='table_center'><%= link_to 'Edit', :action => 'edit', :id => buletin 
-				%></td>
-				<td class='table_center'><%= link_to 'Del', { :action => 'destroy', :id => buletin }, :confirm => 'Are you sure?', :method => :post 
+	    		<td class='table_center'><%= link_to 'Edit', edit_admin_buletin_path(buletin)	%></td>
+				<td class='table_center'><%= link_to 'Del', admin_buletin_path(buletin), :confirm => 'Are you sure?', :method => :delete 
 				%></td>
 			<% end %>	
 	  	</tr>
@@ -30,30 +29,28 @@
 
 <%= will_paginate @buletins %>
 
-<% if authorized_admin? %>
+<h3> Upload Buletin </h3>
+<%= error_messages_for :buletin %>
 
-	<h3> Upload Buletin </h3>
-	<%= error_messages_for :buletin %>
-	<% form_for(:buletin, :url => { :action => 'create' }, :html => { :multipart => true, :class => 'niceform_' }) do |f| -%>
+<% form_for(@buletin, :url => admin_buletins_path, :html => { :multipart => true, :class => 'niceform_' }) do |f| %>
 
-		<table>
-			<tr>
-				<td><label>Boletin: </label></td>
-				<td><%= f.file_field :uploaded_data, :size => 20 %></td>
-			</tr>
-			<tr>
-				<td><label>Nombre: </label></td>
-				<td> <%= f.text_field :title, :size => 20 %></td>
-			</tr>
-			<tr>
-				<td><label>Fecha: </label></td>
-				<td> <%= f.date_select :created_at, :start_year => 2005 %></td>
-			</tr>
-			<tr>
-				<td> </td>
-				<td> <%= submit_tag 'Upload' %> </td>
-			</tr>
-		</table>
-	<% end -%>
+	<table>
+		<tr>
+			<td><label>Boletin: </label></td>
+			<td><%= f.file_field :uploaded_data, :size => 20 %></td>
+		</tr>
+		<tr>
+			<td><label>Nombre: </label></td>
+			<td> <%= f.text_field :title, :size => 20 %></td>
+		</tr>
+		<tr>
+			<td><label>Fecha: </label></td>
+			<td> <%= f.date_select :created_at, :start_year => 2005 %></td>
+		</tr>
+		<tr>
+			<td> </td>
+			<td> <%= submit_tag 'Upload' %> </td>
+		</tr>
+	</table>
 	
 <% end %>

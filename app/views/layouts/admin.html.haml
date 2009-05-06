@@ -60,3 +60,19 @@
             
     .clear
     
+    %br
+    
+    %p
+      &nbsp;
+      Rails-
+      = RAILS_GEM_VERSION
+      |
+      Ruby-
+      = RUBY_VERSION
+      _p
+      = RUBY_PATCHLEVEL
+    %p
+      &nbsp;
+      Completed in: 
+      = sprintf('%f', (Time.now.usec - @start_time.usec) / 1000000.0)
+      seconds

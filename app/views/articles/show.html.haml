@@ -7,9 +7,10 @@
 
   .paragraph_text
 
-    = @article.short_body
-
-    = @article.body
+    - if !@article.body.empty?
+      = @article.body
+    - else
+      = @article.short_body
 
     %p.created_at
       = @article.created_at.strftime("%B %d, %Y")

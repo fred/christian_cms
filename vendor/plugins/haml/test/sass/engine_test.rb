@@ -18,11 +18,13 @@ class SassEngineTest < Test::Unit::TestCase
     ":" => 'Invalid attribute: ":".',
     ": a" => 'Invalid attribute: ": a".',
     ":= a" => 'Invalid attribute: ":= a".',
-    "a\n  :b" => 'Invalid attribute: ":b ".',
+    "a\n  :b" => 'Invalid attribute: ":b " (no value).',
+    "a\n  b:" => 'Invalid attribute: "b: " (no value).',
     "a\n  :b: c" => 'Invalid attribute: ":b: c".',
     "a\n  :b:c d" => 'Invalid attribute: ":b:c d".',
     "a\n  :b=c d" => 'Invalid attribute: ":b=c d".',
-    "a\n  :b c;" => 'Invalid attribute: ":b c;" (This isn\'t CSS!).',
+    "a\n  :b c;" => 'Invalid attribute: ":b c;" (no ";" required at end-of-line).',
+    "a\n  b: c;" => 'Invalid attribute: "b: c;" (no ";" required at end-of-line).',
     "a\n  b : c" => 'Invalid attribute: "b : c".',
     "a\n  b=c: d" => 'Invalid attribute: "b=c: d".',
     ":a" => 'Attributes aren\'t allowed at the root of a document.',
@@ -85,7 +87,11 @@ class SassEngineTest < Test::Unit::TestCase
     "& foo\n  bar: baz\n  blat: bang" => ["Base-level rules cannot contain the parent-selector-referencing character '&'.", 1],
     "a\n  b: c\n& foo\n  bar: baz\n  blat: bang" => ["Base-level rules cannot contain the parent-selector-referencing character '&'.", 3],
   }
-  
+
+  def teardown
+    clean_up_sassc
+  end
+
   def test_basic_render
     renders_correctly "basic", { :style => :compact }
   end
@@ -185,7 +191,18 @@ SASS
   end
 
   def test_sass_import
+    assert !File.exists?(sassc_path("importee"))
     renders_correctly "import", { :style => :compact, :load_paths => [File.dirname(__FILE__) + "/templates"] }
+    assert File.exists?(sassc_path("importee"))
+  end
+
+  def test_no_cache
+    assert !File.exists?(sassc_path("importee"))
+    renders_correctly("import", {
+        :style => :compact, :cache => false,
+        :load_paths => [File.dirname(__FILE__) + "/templates"],
+      })
+    assert !File.exists?(sassc_path("importee"))
   end
 
   def test_units
@@ -640,8 +657,7 @@ foo
   bar: baz
 SASS
 assert_equal(<<CSS, actual_css)
-/* 
- * This is a comment that
+/* This is a comment that
  * continues to the second line. */
 foo {
   bar: baz; }
@@ -681,6 +697,68 @@ a
 SASS
   end
 
+  # Regression tests
+
+  def test_comment_beneath_attr
+    assert_equal(<<RESULT, render(<<SOURCE))
+.box {
+  border-style: solid; }
+RESULT
+.box
+  :border
+    //:color black
+    :style solid
+SOURCE
+
+    assert_equal(<<RESULT, render(<<SOURCE))
+.box {
+  /* :color black */
+  border-style: solid; }
+RESULT
+.box
+  :border
+    /*:color black
+    :style solid
+SOURCE
+
+    assert_equal(<<RESULT, render(<<SOURCE, :style => :compressed))
+.box{border-style:solid}
+RESULT
+.box
+  :border
+    /*:color black
+    :style solid
+SOURCE
+  end
+
+  def test_compressed_comment_beneath_directive
+    assert_equal(<<RESULT, render(<<SOURCE, :style => :compressed))
+@foo{a:b}
+RESULT
+@foo
+  a: b
+  /*b: c
+SOURCE
+  end
+
+  def test_comment_with_crazy_indentation
+    assert_equal(<<CSS, render(<<SASS))
+/* This is a loud comment:
+ *          Where the indentation is wonky. */
+.comment {
+  width: 1px; }
+CSS
+/*
+  This is a loud comment:
+           Where the indentation is wonky.
+//
+  This is a silent comment:
+           Where the indentation is wonky.
+.comment
+  width: 1px
+SASS
+  end
+
   private
   
   def render(sass, options = {})
@@ -705,5 +783,10 @@ SASS
 
   def filename(name, type)
     File.dirname(__FILE__) + "/#{type == 'sass' ? 'templates' : 'results'}/#{name}.#{type}"
+  end
+
+  def sassc_path(template)
+    sassc_path = File.join(File.dirname(__FILE__) + "/templates/#{template}.sass")
+    Sass::Files.send(:sassc_filename, sassc_path, Sass::Engine::DEFAULT_OPTIONS)
   end
 end

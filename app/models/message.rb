@@ -7,7 +7,6 @@ class Message < ActiveRecord::Base
   # Filters
   after_create :deliver_notification
   
-  
   ### Methods ### 
   
   def deliver_notification

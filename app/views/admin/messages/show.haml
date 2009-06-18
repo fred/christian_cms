@@ -2,23 +2,24 @@
   %b Nombre:
   =h @message.name 
 
-
 %p
   %b Email:
-  =h @message.email 
-
+  =h @message.email
 
 %p
   %b Telefono:
   =h @message.phone_number 
 
+%p
+  %b Fecha:
+  =h @message.created_at.strftime("%d %b, %Y - %H:%M:%S")
 
 %p
   %b Mensage:
-  =h @message.body 
-
+  =h @message.body
 
 %p
   %b Urgente contacto:
   =h @message.urgent_contact 
+
 

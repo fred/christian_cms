@@ -1,13 +1,12 @@
 %h3 Menu y Links
 
-%table
+%table{:id => "gradient-style"}
   %tr
     %th Menu type
     %th Title
     %th Url
-    %th Order
+    %th Menu Order
     %th New Page
-    %th Article
     %th
     %th
     %th
@@ -19,7 +18,6 @@
       %td= link_to menu_item.url, menu_item.url 
       %td=h menu_item.display_order 
       %td=h boolean_to_word(menu_item.new_page)
-      %td=h menu_item.article_id 
       %td= link_to 'Show', admin_menu_item_path(menu_item) 
       %td= link_to 'Edit', edit_admin_menu_item_path(menu_item) 
       %td= link_to 'Destroy', admin_menu_item_path(menu_item), :confirm => 'Are you sure?', :method => :delete 

@@ -10,10 +10,11 @@ unless defined?(Sass::MERB_LOADED)
     env  = Merb.environment
   end
 
-  Sass::Plugin.options.merge!(:template_location  => root + '/public/stylesheets/sass',
-                              :css_location       => root + '/public/stylesheets',
-                              :always_check       => env != "production",
-                              :full_exception     => env != "production")
+  Sass::Plugin.options.merge!(:template_location => root + '/public/stylesheets/sass',
+                              :css_location      => root + '/public/stylesheets',
+                              :cache_location    => root + '/tmp/sass-cache',
+                              :always_check      => env != "production",
+                              :full_exception    => env != "production")
   config = Merb::Plugins.config[:sass] || Merb::Plugins.config["sass"] || {}
 
   if defined? config.symbolize_keys!
@@ -24,7 +25,7 @@ unless defined?(Sass::MERB_LOADED)
 
   if version[0] > 0 || version[1] >= 9
 
-    class Merb::Rack::Application # :nodoc:
+    class Merb::Rack::Application
       def call_with_sass(env)
         if !Sass::Plugin.checked_for_updates ||
             Sass::Plugin.options[:always_update] || Sass::Plugin.options[:always_check]
@@ -39,7 +40,7 @@ unless defined?(Sass::MERB_LOADED)
 
   else
 
-    class MerbHandler # :nodoc:
+    class MerbHandler
       def process_with_sass(request, response)
         if !Sass::Plugin.checked_for_updates ||
             Sass::Plugin.options[:always_update] || Sass::Plugin.options[:always_check]

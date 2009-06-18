@@ -10,11 +10,21 @@
 
 <p>
   <b>Website:</b>
-  <%=h @comment.website %>
+  <%=h @comment.website_url %>
 </p>
 
 <p>
-  <b>Body:</b>
+  <b>Fecha:</b>
+  <%=h @comment.created_at.to_s(:short) %>
+</p>
+
+<p>
+  <b>Articulo:</b>
+  <%=h @comment.article.title %>
+</p>
+
+<p>
+  <b>Mensage:</b>
   <%=h @comment.comment %>
 </p>
 

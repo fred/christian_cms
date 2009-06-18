@@ -5,41 +5,94 @@ module Sass::Tree
     # The character used to include the parent selector
     PARENT = '&'
 
+    # The CSS selectors for this rule.
+    # Each string is a selector line, and the lines are meant to be separated by commas.
+    # For example,
+    #
+    #     foo, bar, baz,
+    #     bip, bop, bup
+    #
+    # would be
+    #
+    #     ["foo, bar, baz",
+    #      "bip, bop, bup"]
+    #
+    # @return [Array<String>]
     attr_accessor :rules
 
-    def initialize(rule, options)
+    # The CSS selectors for this rule,
+    # parsed for commas and parent-references.
+    # It's only set once {Tree::Node#perform} has been called.
+    #
+    # It's an array of arrays of arrays.
+    # The first level of arrays represents distinct lines in the Sass file;
+    # the second level represents comma-separated selectors;
+    # the third represents structure within those selectors,
+    # currently only parent-refs (represented by `:parent`).
+    # For example,
+    #
+    #     &.foo, bar, baz,
+    #     bip, &.bop, bup
+    #
+    # would be
+    #
+    #     [[[:parent, "foo"], ["bar"], ["baz"]],
+    #      [["bip"], [:parent, "bop"], ["bup"]]]
+    #
+    # @return [Array<Array<Array<String|Symbol>>>]
+    attr_accessor :parsed_rules
+
+    # @param rule [String] The first CSS rule. See \{#rules}
+    def initialize(rule)
       @rules = [rule]
-      super(options)
+      super()
     end
 
+    # Compares the contents of two rules.
+    #
+    # @param other [Object] The object to compare with
+    # @return [Boolean] Whether or not this node and the other object
+    #   are the same
     def ==(other)
       self.class == other.class && rules == other.rules && super
     end
 
+    # Adds another {RuleNode}'s rules to this one's.
+    #
+    # @param node [RuleNode] The other node
     def add_rules(node)
       @rules += node.rules
     end
 
+    # @return [Boolean] Whether or not this rule is continued on the next line
     def continued?
       @rules.last[-1] == ?,
     end
 
+    # Computes the CSS for the rule.
+    #
+    # @param tabs [Fixnum] The level of indentation for the CSS
+    # @param super_rules [Array<Array<String>>] The rules for the parent node
+    #   (see \{#rules}), or `nil` if there are no parents
+    # @return [String] The resulting CSS
+    # @raise [Sass::SyntaxError] if the rule has no parents but uses `&`
     def to_s(tabs, super_rules = nil)
-      resolve_parent_refs!(super_rules)
+      resolved_rules = resolve_parent_refs(super_rules)
 
       attributes = []
       sub_rules = []
 
-      rule_separator = @style == :compressed ? ',' : ', '
-      line_separator = [:nested, :expanded].include?(@style) ? ",\n" : rule_separator
+      rule_separator = style == :compressed ? ',' : ', '
+      line_separator = [:nested, :expanded].include?(style) ? ",\n" : rule_separator
       rule_indent = '  ' * (tabs - 1)
-      per_rule_indent, total_indent = [:nested, :expanded].include?(@style) ? [rule_indent, ''] : ['', rule_indent]
+      per_rule_indent, total_indent = [:nested, :expanded].include?(style) ? [rule_indent, ''] : ['', rule_indent]
 
-      total_rule = total_indent + @rules.map do |line|
+      total_rule = total_indent + resolved_rules.map do |line|
         per_rule_indent + line.join(rule_separator)
       end.join(line_separator)
 
       children.each do |child|
+        next if child.invisible?
         if child.is_a? RuleNode
           sub_rules << child
         else
@@ -51,7 +104,7 @@ module Sass::Tree
       if !attributes.empty?
         old_spaces = '  ' * (tabs - 1)
         spaces = '  ' * tabs
-        if @options[:line_comments] && @style != :compressed
+        if @options[:line_comments] && style != :compressed
           to_return << "#{old_spaces}/* line #{line}"
 
           if filename
@@ -70,22 +123,22 @@ module Sass::Tree
           to_return << " */\n"
         end
 
-        if @style == :compact
+        if style == :compact
           attributes = attributes.map { |a| a.to_s(1) }.select{|a| a && a.length > 0}.join(' ')
           to_return << "#{total_rule} { #{attributes} }\n"
-        elsif @style == :compressed
+        elsif style == :compressed
           attributes = attributes.map { |a| a.to_s(1) }.select{|a| a && a.length > 0}.join(';')
           to_return << "#{total_rule}{#{attributes}}"
         else
           attributes = attributes.map { |a| a.to_s(tabs + 1) }.select{|a| a && a.length > 0}.join("\n")
-          end_attrs = (@style == :expanded ? "\n" + old_spaces : ' ')
+          end_attrs = (style == :expanded ? "\n" + old_spaces : ' ')
           to_return << "#{total_rule} {\n#{attributes}#{end_attrs}}\n"
         end
       end
 
-      tabs += 1 unless attributes.empty? || @style != :nested
+      tabs += 1 unless attributes.empty? || style != :nested
       sub_rules.each do |sub|
-        to_return << sub.to_s(tabs, @rules)
+        to_return << sub.to_s(tabs, resolved_rules)
       end
 
       to_return
@@ -93,28 +146,39 @@ module Sass::Tree
 
     protected
 
-    def resolve_parent_refs!(super_rules)
+    # Runs any SassScript that may be embedded in the rule,
+    # and parses the selectors for commas.
+    #
+    # @param environment [Sass::Environment] The lexical environment containing
+    #   variable and mixin values
+    def perform!(environment)
+      @parsed_rules = @rules.map {|r| parse_selector(interpolate(r, environment))}
+      super
+    end
+
+    private
+
+    def resolve_parent_refs(super_rules)
       if super_rules.nil?
-        @rules.each do |line|
-          line.map! do |rule|
+        return @parsed_rules.map do |line|
+          line.map do |rule|
             if rule.include?(:parent)
               raise Sass::SyntaxError.new("Base-level rules cannot contain the parent-selector-referencing character '#{PARENT}'.", self.line)
             end
 
             rule.join
-          end.compact!
+          end.compact
         end
-        return
       end
 
       new_rules = []
       super_rules.each do |super_line|
-        @rules.each do |line|
+        @parsed_rules.each do |line|
           new_rules << []
 
           super_line.each do |super_rule|
             line.each do |rule|
-              rule.unshift(:parent, " ") unless rule.include?(:parent)
+              rule = [:parent, " ", *rule] unless rule.include?(:parent)
 
               new_rules.last << rule.map do |segment|
                 next segment unless segment == :parent
@@ -124,12 +188,7 @@ module Sass::Tree
           end
         end
       end
-      @rules = new_rules
-    end
-
-    def perform!(environment)
-      @rules = @rules.map {|r| parse_selector(interpolate(r, environment))}
-      super
+      new_rules
     end
 
     def parse_selector(text)

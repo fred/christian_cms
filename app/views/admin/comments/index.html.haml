@@ -14,12 +14,18 @@
       website:
       = h t.website_url
     %p
+      articulo:
+      = link_to(t.article.title, admin_article_path(t.article))
+    %p
       Submitted on: 
       = t.created_at
     %p
       = h t.comment
     %p
       = approve_link(t)
-      = link_to 'Show', admin_comment_path(t)
-      = link_to 'Edit', edit_admin_comment_path(t)
-      = link_to 'Destroy', admin_comment_path(t), :confirm => 'Are you sure?', :method => :delete
+      |
+      = link_to 'Leer', admin_comment_path(t)
+      |
+      = link_to 'Editar', edit_admin_comment_path(t)
+      |
+      = link_to 'Delete', admin_comment_path(t), :confirm => 'Estas Seguro?', :method => :delete

@@ -3,16 +3,15 @@
 %h3 
   = @title
 
-%table{:summary => @title, :id => "itsthetable"}
+%table{:summary => @title, :id => "gradient-style"}
 
   %tr
-    %th Name
+    %th Nombre
     %th Email
-    %th Phone number
-    %th Body
-    %th Urgent
+    %th Telefono
+    %th Mensage 
+    %th Urgente
     %th Fecha
-    %th 
     %th 
     %th 
 
@@ -23,7 +22,6 @@
       %td=h message.phone_number
       %td=h truncate(message.body, 46, "...")
       %td= boolean_to_word(message.urgent_contact)
-      %td= link_to(message.created_at.strftime("%d %b, %Y - %H:%M:%S"),admin_message_path(message))
-      %td= link_to 'Leer', admin_message_path(message)
+      %td= link_to(message.created_at.to_s(:short),admin_message_path(message))
       %td= link_to 'Editar', edit_admin_message_path(message)
       %td= link_to 'Deletar', admin_message_path(message), :confirm => 'Estas Seguro que quieres deletar este mensage?', :method => :delete

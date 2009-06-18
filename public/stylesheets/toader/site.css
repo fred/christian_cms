@@ -103,7 +103,8 @@ body {
 }
 
 #main {
-	background:#FFF url(/images/toader/main.gif) repeat-x;
+/*	background:#FFF url(/images/toader/main.gif) repeat-x;*/
+	background: #fff url("/images/bg2_light.jpg") top left;
 	width:100%;
 	z-index:2; /* Covers up annoying IE7 nav bar spacing issue. */
 	position:absolute;
@@ -112,16 +113,17 @@ body {
 }
 
 #content {
-	background:#FFF;
 	width: 860px;
 	width: 82%;
 	margin:0 auto;
 	padding: 20px 10px 20px 20px;
 	border-left: 1px solid #bbb;
 	border-right: 1px solid #bbb;
+/*	
 	background: url("/images/bg2_light.jpg") top left;
 	background-repeat: repeat-y repeat-x;
-}
+*/
+	}
 #content h1 {
 	font-size: 2.4em;
 	color: #444;
@@ -143,14 +145,22 @@ body {
 .article {
 	width: 98%;
 	padding: 10px 0px 20px 10px;
+	margin-bottom:20px;
 	position:relative;
+	border-bottom:1px solid #666;
 }
 
+.article h2,
+.article h2 a {
+	text-decoration: none;
+	font-style: italic;
+	color: #333;
+}
 
-.articles a, .article a {
+.article a, .article a {
 	font-size: 1.0em;
 }
-.articles ul, .article ul {
+.article ul, .article ul {
 	margin:1em 0;	
 }
 select {
@@ -251,7 +261,7 @@ textarea {
 
 body {
 	font:62.5% "Trebuchet MS"; /* Change this % to alter the size of the whole page */
-	color:#333;
+	color: #333;
 }
 
 a {
@@ -277,8 +287,7 @@ h1 {
 h2 {
 	font-size:1.8em;	
 	line-height:1.5em;
-	margin-bottom:0.6em;
-	/*font-family: Georgia,serif;*/
+	margin-bottom:0em;
 	font-family: times, Times New Roman, times-roman, georgia, serif;
 	font-style: normal;
 	font-variant: small-caps;
@@ -390,6 +399,15 @@ h4 {
 	font-style: italic;
 	margin: 2px;
 }
+.created_at_up {
+  color: #666;
+	font-size:1.2em;
+	font-style: italic;
+	margin: 0px;
+	border:none;
+}
+
+
 .flash_notice {
 	color: orange;
 }
@@ -527,12 +545,12 @@ pre {
 .read_more_link {
 	font-weight: bold;
 	color: blue;
-	font-size: 1.2em !important;
+	font-size: 1.0em !important;
 	font-weight: bold !important;
 }
 .iglesia_logo {
 	margin-bottom: 0px;
-	margin-left:20px;
+	margin-left: 20px;
 }
 
 .search {
@@ -670,4 +688,14 @@ ul.sub_topic {
 }
 #thankyou {
 	background-color: yellow;
+}
+
+.small {
+	font-size:0.9em;
+}
+.smaller {
+	font-size:0.8em;
+}
+.smallest {
+	font-size:0.7em;
 }

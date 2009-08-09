@@ -55,13 +55,15 @@
 	  <% cache('footer') do %>
 		  <%= render :partial => "/shared/theme/#{Settings.theme}/footer" %>
 	  <% end %>
-	  <p class="smaller">
-	    &nbsp;
-	    Powered by: Rails-<%= RAILS_GEM_VERSION %> |
-	    Ruby-<%= RUBY_VERSION %>_p<%= RUBY_PATCHLEVEL %>
+	  <p class="powered_by">
+	    Powered by: 
+	    <%= link_to "Ruby on Rails", "http://rubyonrails.org/" %> | 
+	    <%= link_to "Nginx", "http://wiki.nginx.org/Main" %> |
+	    <%= link_to "Gentoo", "http://gentoo.org/" %> | 
+	    <%= link_to "Git", "http://github.com/" %> 
 	    <br />
-	    &nbsp;
-	    Completed in: <%= sprintf('%f', (Time.now.usec - @start_time.usec).to_f / 1000000) %> seconds
+	    Completed in: <%= sprintf('%1.3f', (Time.now.usec - @start_time.usec).to_f / 1000000).gsub("-","") %> seconds
+	    <br />
 	  </p>
 	
 	</div>

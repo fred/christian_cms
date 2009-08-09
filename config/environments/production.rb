@@ -7,7 +7,7 @@ config.cache_classes = true
 # Use a different logger for distributed setups
 # config.logger = SyslogLogger.new
 
-# Enable threaded mode
+# Comment this to Enable threaded mode
 config.threadsafe!
 
 # Full error reports are disabled and caching is turned on

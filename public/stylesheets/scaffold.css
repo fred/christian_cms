@@ -1,71 +1,67 @@
+/* Errors */
 
-/**** ERROR FORM FIELDS ****/
+#flash_notice, #flash_error {
+  padding: 5px 8px;
+  margin: 10px 0;
+}
+
+#flash_notice {
+  background-color: #CFC;
+  border: solid 1px #6C6;
+}
+
+#flash_error {
+  background-color: #FCC;
+  border: solid 1px #C66;
+}
+
 .fieldWithErrors {
-  /*padding: 0px;
-  margin:0px;
-  background-color: #133E66;*/
   display: inline;
+	border-color: red;
 }
-.fieldWithErrors input {
-	border: 2px solid #ff9999;
+.fieldWithErrors input, 
+.fieldWithErrors select, 
+.fieldWithErrors textarea {
+	border-color: red;
 }
+
+.error  { 
+	background: #FBE3E4; 
+	color: #8a1f11; 
+	border-color: #FBC2C4; 
+}
+
 #errorExplanation {
-  width: 280px;
-  border: 1px solid #133E66;
-  padding: 5px;
-  background-color: #f0f0f0;
+  width: 400px;
+  border: 2px solid #CF0000;
+  padding: 0px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #FBE3E4;
 }
+
 #errorExplanation h2 {
   text-align: left;
-  font-weight: bold;
-  padding: 6px 8px 6px 8px;
-  font-size: 12px;
-  margin: -7px;
-  background-color: #538ECC;
+  padding: 5px 5px 5px 15px;
+  font-size: 1.3em;
+  margin: 0;
+  background-color: #c00;
   color: #fff;
 }
+
 #errorExplanation p {
   color: #333;
   margin-bottom: 0;
-  padding: 2px;
+  padding: 8px;
+	font-size: 1.4em;
 }
+
 #errorExplanation ul {
-	padding: 0 0 0 12px;
-	margin:0;
-	line-height: 160%;
+  margin: 2px 24px;
 }
+
 #errorExplanation ul li {
-  font-size: 12px;
-  list-style: square;
-  font-style: italic;
+  font-size: 1.2em;
+  list-style: disc;
+	color: #222;
 }
-.inputError {
-	color: red;
-	font-size: 1.2em;
-}
-
-div.uploadStatus {
-  margin: 3px;
-}
-
-div.progressBar {
-  margin: 3px;
-}
-
-div.progressBar div.border {
-  background-color: #fff;
-  border: 1px solid grey;
-  width: 100%;
-}
-
-div.progressBar div.background {
-  background-color: #333;
-  height: 18px;
-  width: 0%;
-}
-
-.select_addressbook {
-	border: 1px solid #ccc;
-	padding: 5px;
-}
-

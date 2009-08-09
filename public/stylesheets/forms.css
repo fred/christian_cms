@@ -1,0 +1,433 @@
+/* -------------------------------------------------------------- 
+   
+   forms.css
+   * Sets up some default styling for forms
+   * Gives you classes to enhance your forms
+   
+   Usage:
+   * For text fields, use class .title or .text
+   
+-------------------------------------------------------------- */
+
+/* Admin Forms */
+
+.small_tip {
+	font-size: 1.0em;
+	font-style: italic;
+	color: #666;
+	display: block;
+}
+.label_field {
+	/*border-bottom:1px solid #999;*/
+	padding: 1px;
+	margin: 3px 0 0 0;
+	clear: both;
+	float: left;
+	width: 99%;
+	font-size: 1.15em;
+	color: #444;
+}
+.label {
+	padding: 0 4px 0 0;
+	font-weight: bold;
+}
+.value {
+  font-style: italic;
+	padding: 0 0 0 4px;
+}
+label.value {
+	margin: 20px;
+	padding: 0 2px;
+	color: #666;
+	background-color: #eee;
+	border: 1px solid #ddd;
+	font-size: 1.4em;
+	width: 40%;
+}
+label.value_text {
+	margin: 20px;
+	padding: 0 2px;
+	color: #666;
+	font-size: 1.4em;
+}
+
+fieldset {
+	padding: 10px;
+	margin: 0 0;
+	border: 1px solid #aaa;
+}
+
+fieldset label {
+	font-size: 1.0em;
+}
+
+fieldset p {
+	margin-top: 8px;
+}
+
+legend { 
+	font-size:1.5em; color: #333;
+}
+
+
+/* Form fields
+-------------------------------------------------------------- */
+
+li {
+	font-size: 1.15em;
+	list-style: none;
+}
+label {
+  font-size: 1.2em;
+}
+input, select {
+	color: #333;
+	padding: 4px;
+	font-size: 1.1em;
+}
+input, input.text, input.title, select {
+  margin: 0.2em 0 0.2em 0;
+  border:1px solid #999;
+}
+textarea {
+	margin: 0.2em 0 0.2em 0;
+  border: 1px solid #999;
+}
+input.text:focus, input.title:focus,
+textarea:focus, select:focus {
+  border:1px solid #666;
+}
+
+input.text, 
+input.title   { width: 300px; padding: 5px; }
+input.title   { font-size:1.5em; }
+textarea  { 
+	padding:3px;
+	border: 1px solid #999;
+}
+
+input.inline	{display: inline; clear:none;}
+
+.button-to, .button-to div		{display: inline;}
+
+/* Success, notice and error boxes
+-------------------------------------------------------------- */
+
+
+.error,
+.notice, 
+.success    { padding: .8em; margin-bottom: 1em; border: 2px solid #ddd; font-size: 1.2em;}
+
+.error      { background: #FBE3E4; color: #8a1f11; border-color: #FBC2C4; }
+.notice     { background: #FFF6BF; color: #514721; border-color: #FFD324; }
+.success    { background: #E6EFC2; color: #264409; border-color: #C6D880; }
+.error a    { color: #8a1f11; }
+.notice a   { color: #514721; }
+.success a  { color: #264409; }
+
+
+
+
+#columnarForm fieldset
+{
+	float: left;
+	display: block;
+	width: 22em;
+	margin: 0 0.8em 0.8em 0;
+	padding: 0 0.8em 0.8em 0.8em;
+	min-height: 150px;
+}
+
+#columnarForm fieldset.50-wider {
+	width: 20em;
+}
+#columnarForm ul,
+#columnarForm ol {
+	margin: 0.5em 0 0 0.2em;
+	padding: 0;
+}
+
+#columnarForm fieldset.radio
+{
+	width: 15em;
+	margin: 1em 0 2em 0;
+}
+
+#columnarForm fieldset.radio input
+{
+	clear: both;
+	float: left;
+	width: auto;
+}
+
+#columnarForm fieldset.radio label
+{
+	font-weight: normal;
+}
+
+#columnarForm label.first
+{
+	padding-top: 1em;
+}
+
+#columnarForm select
+{
+	display: block;
+}
+
+#horizontalForm fieldset
+{
+	display: block;
+	margin: 0 0 0.6em 0;
+	padding: 0.6em;
+}
+
+#horizontalForm fieldset.radio
+{
+	margin: 1em 0 2em 0;
+}
+
+#horizontalForm fieldset.radio input
+{
+	clear: both;
+	float: left;
+	width: auto;
+}
+
+#horizontalForm fieldset.radio label
+{
+	font-weight: normal;
+}
+
+#horizontalForm input
+{
+	display: block;
+	width: 15em;
+}
+
+#horizontalForm input.submit
+{
+	clear: both;
+}
+
+#horizontalForm label
+{
+	float: left;
+	display: block;
+	margin: 1em 1em 0 0;
+	font-weight: bold;
+}
+
+#horizontalForm select
+{
+	display: block;
+}
+
+#marginForm fieldset
+{
+	display: block;
+	margin: 0 0 1em 0;
+	border: 0 solid #FFFFFF;
+	border-top: 1px solid #000000;
+	padding: 0 1em 1em 1em;
+}
+
+#marginForm fieldset.radio
+{
+	margin: 0 0 0 -1em;
+	border: 0 solid #FFFFFF;
+}
+
+#marginForm fieldset.radio input
+{
+	position: static;
+	clear: both;
+	float: left;
+}
+
+#marginForm fieldset.radio label
+{
+	position: relative;
+	top: -1.25em;
+	display: inline;
+	width: auto;
+	margin: 0 0 0 8em;
+	font-weight: bold;
+	font-weight: normal;
+}
+
+#marginForm fieldset.radio legend
+{
+	float: left;
+	font-weight: bold;
+}
+
+#marginForm input
+{
+	position: relative;
+	top: -1.4em;
+	left: 8em;
+	display: block;
+}
+
+#marginForm input.submit
+{
+	clear: both;
+	top: 0;
+}
+
+#marginForm label
+{
+	clear: both;
+	float: left;
+	display: block;
+	width: 8em;
+	margin-top: -1em;
+	font-weight: bold;
+}
+
+#marginForm label.first
+{
+	margin-top: 1em;
+}
+
+#marginForm select
+{
+	position: relative;
+	top: -1.4em;
+	left: 8em;
+	display: block;
+}
+
+#verticalForm fieldset
+{
+	display: block;
+	width: 560px;
+	margin: 0 0 2em 0;
+	padding: 0 1em 1em 1em;
+}
+
+#verticalForm fieldset.radio
+{
+	width: 15em;
+	margin: 1em 0 2em 0;
+}
+
+#verticalForm fieldset.radio input
+{
+	clear: both;
+	float: left;
+	width: auto;
+}
+
+#verticalForm fieldset.radio label
+{
+	font-weight: normal;
+}
+
+#verticalForm input
+{
+	display: block;
+	width: 15em;
+}
+
+#verticalForm label
+{
+	display: block;
+	margin-bottom: 1em;
+	font-weight: bold;
+}
+
+#verticalForm label.first
+{
+	padding-top: 1em;
+}
+
+#verticalForm select
+{
+	display: block;
+}
+
+#columnarForm input.hidden {
+	display: none;
+	border: none;
+}
+
+
+input.small {
+	padding: 2px;
+}
+
+select#user_time_zone,
+input#user_avatar,
+select#job_contract_id,
+select#user_customer_id {
+	padding:0px;
+	font-size: 0.9em;
+}
+
+
+#columnarForm input.smaller_input {
+	padding:2px;
+	font-size: 1.0em;
+	width: 186px;
+}
+
+
+input#job_jtype_ids_,
+input#job_job_last,
+input#job_category_ids_,
+input#job_user_ids_, 
+input#remember_me,
+input#customer_allow_notifications,
+input#user_client,
+input#user_client_false,
+input#user_client_true,
+input#user_role_ids_
+{
+	border: none;
+}
+
+input#job_jtype_ids_,
+input#job_job_last,
+input#job_category_ids_,
+input#job_user_ids_ {
+  margin: 1px 0 0 0;
+}
+input#job_job_map, 
+input#job_job_attachment{
+	margin: 0;
+	widht: 60px;
+}
+
+.checkbox_list {
+  width: 48%;
+  padding: 0px;
+  margin: 0px;
+  float: left;
+}
+.checkbox_list li {
+  margin: 0;
+  padding: 0;
+}
+
+.checkbox_list h4 {
+  font-weight: bold;
+  margin: 3px 0px 0px 0px;
+}
+
+select#job_status_code,
+input#job_extra_notes,
+input#job_job_number,
+input#job_job_last {
+	display: inline;
+	margin: 2px;
+}
+
+#columnarForm table td label {
+  font-size: 1.2em;
+}
+
+.show_table {
+  font-size: 1.2em;
+}

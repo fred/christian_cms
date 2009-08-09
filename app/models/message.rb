@@ -3,6 +3,7 @@ class Message < ActiveRecord::Base
   # Validations
   validates_presence_of :name
   validates_presence_of :body
+  validates_presence_of :email
   
   # Filters
   after_create :deliver_notification

@@ -285,7 +285,7 @@ h1 {
 }
 
 h2 {
-  font-size: 2.2em;
+  font-size: 2.4em;
 	line-height:1.5em;
 	margin: 7px 0;
 	font-family: times, Times New Roman, times-roman, georgia, serif;
@@ -299,7 +299,7 @@ h2 {
 	-x-system-font: none;
 }
 h3 {
-	font-size:1.8em;
+	font-size:2em;
 	margin: 5px 0;
 	/*font-family: Monaco,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace;*/
 	font-family: times, Times New Roman, times-roman, georgia, serif;
@@ -689,6 +689,9 @@ ul.sub_topic {
 	background-color: yellow;
 }
 
+.centered {
+  text-align: center;
+}
 .small {
 	font-size:0.9em;
 }
@@ -702,4 +705,9 @@ ul.sub_topic {
 .powered_by {
   text-align: center;
   font-size: 1.0em;
+}
+
+
+ul.bullet li {
+  list-style: disc;
 }

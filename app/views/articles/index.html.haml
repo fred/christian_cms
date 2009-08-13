@@ -1,7 +1,7 @@
 - @articles.each do |article|
 
   .article
-    %h2 
+    %h3 
       = link_to(article.title, permalink_url(article.permalink))
     %p.created_at_up
       = article.published_at.strftime("%B %d, %Y")

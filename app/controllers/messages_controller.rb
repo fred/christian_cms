@@ -20,7 +20,7 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       if @message.save
-        flash[:notice] = 'Message was successfully send.'
+        flash[:notice] = 'Mensaje fue enviado con suceso.'
         format.html { redirect_to :action => "thank_you" }
         format.xml  { render :xml => @message, :status => :created, :location => @message }
       else

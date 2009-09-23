@@ -9,9 +9,9 @@ require 'rake/rdoctask'
 
 require 'tasks/rails'
 
-begin
-   require 'vlad'
-   Vlad.load
- rescue LoadError
-   # do nothing
- end
+# begin
+#    require 'vlad'
+#    Vlad.load
+#  rescue LoadError
+#    # do nothing
+#  end

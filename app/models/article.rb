@@ -31,7 +31,7 @@ class Article < ActiveRecord::Base
   after_save :sweep_partial_cache
   
   # Plugins
-  has_permalink :title
+  has_permalink :title, :update => true
   acts_as_taggable_on :tags
   ajaxful_rateable :stars => 5
   

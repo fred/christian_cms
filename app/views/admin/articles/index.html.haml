@@ -17,7 +17,7 @@
       %tr
   %tbody
     - for article in @articles
-      %tr{:class => cycle("", "odd", :name => "row_class")}
+      %tr
         %th{:scope=>"row", :id => article.id}
           = link_to article.id, admin_article_path(article)
         %td{:scope=>"row"}

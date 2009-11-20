@@ -35,6 +35,8 @@ Rails::Initializer.run do |config|
   # Calendars
   config.gem "calendar_date_select"
   config.gem 'haml'
+  # Testing, FactoryGirl
+  config.gem "thoughtbot-factory_girl",   :lib => "factory_girl",   :source => "http://gems.github.com"
     
   # These cause problems with irb. Left in for reference
   # config.gem 'rspec-rails', :lib => 'spec/rails', :version => '1.1.11'
@@ -83,6 +85,13 @@ Rails::Initializer.run do |config|
   # Activate observers that should always be running
   # Please note that observers generated using script/generate observer need to have an _observer suffix
   # config.active_record.observers = :user_observer
+  
+  # The internationalization framework can be changed 
+  # to have another default locale (standard is :en) or more load paths. 
+  # All files from config/locales/*.rb,yml are added automatically. 
+  # config.i18n.load_path << Dir[File.join(RAILS_ROOT, 'my', 'locales', '*.{rb,yml}')] 
+  config.i18n.default_locale = :es
+  
 end
 
 

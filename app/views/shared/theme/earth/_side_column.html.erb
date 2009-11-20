@@ -1,0 +1,43 @@
+<!-- Sidebar -->
+<div id="sidebar">
+	<ul>
+		<li>
+			<h2>La Comunidad</h2>
+			<ul class="items">
+    		<li> <%= link_to "Quienes Somos", permalink_url("quienes-somos") %> </li>
+    		<li> <%= link_to "Miembros", users_path %></li>
+    		<li> <%= link_to "Contactenos", permalink_url("contactenos") %> </li>
+    		<li> <%= link_to "Dejar Mensage", "/messages/new" %> </li>
+    		<li> <%= link_to "Mapa/Como llegar", permalink_url("mapa") %> </li>
+    	</ul>
+    	<%= image_tag "/images/iglesia3.png" %>
+		</li>
+		
+		<li>
+		  <h2> Cumpleanos del Mes </h2>
+    	<ul>
+    		<% Birthday.get_this_month.each do |t| %>
+    			<li>
+    			  <span><%= t.birthdate.strftime("%d") %></span><%= link_to("#{t.first_name} #{t.last_name}",month_birthdays_path) %>
+    			</li>
+    		<% end %>
+    	</ul>
+		</li>
+		
+		<%= image_tag "/images/jesus.jpeg" %>
+		
+		<h2> Links </h2>
+  	<ul class="links">
+  	  <% MenuItem.links.each do |t| %>
+  	    <li> <%= menu_item_link(t) %> </li>
+  	  <% end %>
+  	</ul>
+
+    <br />
+	  <h2> Recent Visitors </h2>
+    <%= render(:partial => "/shared/feedjit") if RAILS_ENV == "production" %>
+		
+	</ul>
+</div>
+<!-- end #sidebar -->
+

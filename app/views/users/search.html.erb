@@ -21,7 +21,7 @@
 	
 	<tbody>
 	<% for user in @users %>
-  	<tr class="<%= cycle("light", "dark", :name => "row_class") %>">
+  	<tr>
 		  <td class='table_center'><%= link_to user.first_name, :action => 'show', :id => user %> </td>
 		  <td class='table_center'><%= link_to user.last_name, :action => 'show', :id => user %></td>
   	</tr>

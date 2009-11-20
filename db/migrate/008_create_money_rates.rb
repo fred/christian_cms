@@ -8,10 +8,6 @@ class CreateMoneyRates < ActiveRecord::Migration
       t.column :expire_time,    :integer
       t.timestamps
     end
-    MoneyRate.create :name => "Thai bath to Dolar conversion",
-      :convert_to => "THB",
-      :convert_from => "USD",
-      :expire_time => "86400"
   end
 
   def self.down

@@ -176,19 +176,7 @@ ActiveRecord::Schema.define(:version => 23) do
     t.string   "sacraments"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "last_seen_at"
-    t.boolean  "approved",                                :default => false
-    t.string   "website"
-    t.string   "login_key"
-    t.datetime "login_key_expires_at"
-    t.boolean  "activated",                               :default => false
-    t.string   "bio"
-    t.text     "bio_html"
-    t.string   "openid_url"
-    t.datetime "last_login_at"
-    t.integer  "posts_count",                             :default => 0
+    t.boolean  "approved",                                :default => true
   end
-
-  add_index "users", ["last_seen_at"], :name => "index_users_on_last_seen_at"
 
 end

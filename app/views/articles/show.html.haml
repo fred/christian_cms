@@ -1,37 +1,33 @@
 /%h2{:style=>"color:blue"}
 
-.middle_headline
-  = @article.title
-
-.article
-
-  .paragraph_text
-
+.post
+  %h2.title 
+    = link_to(@article.title, permalink_url(@article.permalink))
+  %p.created_at_up
+    = @article.published_at.strftime("%B %d, %Y")
+  .entry
     - if !@article.body.empty?
       = @article.body
     - else
       = @article.short_body
-
     %p.created_at
       = @article.created_at.strftime("%B %d, %Y")
-
     - if !@article.tag_list.empty?
       %p.item_tags 
         Tags
         - @article.tag_list.each do |tag|
           = link_to tag, tag_link(tag)
 
-- if !logged_in?
-  %p You need to login or register before rating this article
-- else
-  %p Rate this Article: 
+/- if !logged_in?
+/  %p You need to login or register before rating this article
+/- else
+/  %p Rate this Article:
 
 = ratings_for @article
 
 %br
 
-%h4 
-  Commentarios
+%h3 Commentarios
 - @comments.each do |t|
   .comment
     %p 
@@ -41,12 +37,12 @@
       said:
     %p
       = t.comment
-    %p.small = @comment.created_at.to_s(:short)
-
+    %p.small 
+      = @comment.created_at.to_s(:short)
 
 %br
 %h4
-  Post a comment
+  Deje un Comentario
   
 #thankyou{:style=>"display: none"}
   %p Gracias por su mensage. El mensage esta pendiente a ser autorizado.

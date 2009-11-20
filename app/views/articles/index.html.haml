@@ -1,16 +1,16 @@
 - @articles.each do |article|
 
-  .article
-    %h3 
+  .post
+    %h2.title 
       = link_to(article.title, permalink_url(article.permalink))
     %p.created_at_up
-      = article.published_at.strftime("%B %d, %Y")
-      
-    .paragraph_text
+      = l(article.published_at, :format => :long)
+    .entry
       = article.short_body
-    - if !article.body.empty?
-      %p 
-        = link_to("leer mas...", permalink_url(article.permalink), :class => 'read_more_link')
+      %p.links 
+        = link_to("leer mas...", permalink_url(article.permalink), :class => 'more')
+        = link_to("Comments",permalink_url(article.permalink), :class => "comments")
+        
     /- if !article.tag_list.empty?
     /  %p.item_tags 
     /    Tags: 

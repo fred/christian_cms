@@ -20,5 +20,5 @@ config.action_mailer.raise_delivery_errors = false
 # no regular words or you'll be exposed to dictionary attacks.
 config.action_controller.session = {
   :session_key => '_comunidad_catolica_dev',
-  :secret      => '91cf32a47f45dadc6d8e02e3P7ec63r4L8x61b5C4x6df06X4W8c9cOe173a4975ca3'
+  :secret      => '733ac61e32f9d9e6c3964877028b5b77cc84437fffadb95e048a96d1ed0df1380787cc349d7ee25fcf1490edf599f17d4b9bfd01c1a7611644d0e0588979c016'
 }

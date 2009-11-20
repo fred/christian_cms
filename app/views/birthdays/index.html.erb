@@ -30,7 +30,7 @@
 	
 		<tbody>
 		<% for birthday in @birthdays %>
-	  	<tr class="<%= cycle("light", "dark", :name => "row_class") %>">
+	  	<tr>
 			  <td class='table_center'><%= birthday.first_name %> </td>
 			  <td class='table_center'><%= birthday.last_name %> </td>
 			  <td class='table_center'><%= birthday.birthdate.strftime("%b-%d") %> </td>

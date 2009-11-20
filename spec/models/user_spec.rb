@@ -5,7 +5,10 @@ require File.dirname(__FILE__) + '/../spec_helper'
 include AuthenticatedTestHelper
 
 describe User do
-  fixtures :users
+
+  def setup
+    @user = Factory(:fred)
+  end
 
   describe 'being created' do
     before do
@@ -50,61 +53,65 @@ describe User do
   end
 
   it 'resets password' do
-    users(:quentin).update_attributes(:password => 'new password', :password_confirmation => 'new password')
-    User.authenticate('quentin', 'new password').should == users(:quentin)
+    @user.update_attributes(:password => 'new password', :password_confirmation => 'new password')
+    User.authenticate('fred', 'new password').should == @user
   end
 
   it 'does not rehash password' do
-    users(:quentin).update_attributes(:login => 'quentin2')
-    User.authenticate('quentin2', 'test').should == users(:quentin)
+    @user.update_attributes(:login => 'fred2')
+    User.authenticate('fred2', 'welcome').should == @user
   end
 
   it 'authenticates user' do
-    User.authenticate('quentin', 'test').should == users(:quentin)
+    User.authenticate('fred', 'welcome').should == @user
   end
 
   it 'sets remember token' do
-    users(:quentin).remember_me
-    users(:quentin).remember_token.should_not be_nil
-    users(:quentin).remember_token_expires_at.should_not be_nil
+    @user.remember_me
+    @user.remember_token.should_not be_nil
+    @user.remember_token_expires_at.should_not be_nil
   end
 
   it 'unsets remember token' do
-    users(:quentin).remember_me
-    users(:quentin).remember_token.should_not be_nil
-    users(:quentin).forget_me
-    users(:quentin).remember_token.should be_nil
+    @user.remember_me
+    @user.remember_token.should_not be_nil
+    @user.forget_me
+    @user.remember_token.should be_nil
   end
 
   it 'remembers me for one week' do
     before = 1.week.from_now.utc
-    users(:quentin).remember_me_for 1.week
+    @user.remember_me_for 1.week
     after = 1.week.from_now.utc
-    users(:quentin).remember_token.should_not be_nil
-    users(:quentin).remember_token_expires_at.should_not be_nil
-    users(:quentin).remember_token_expires_at.between?(before, after).should be_true
+    @user.remember_token.should_not be_nil
+    @user.remember_token_expires_at.should_not be_nil
+    @user.remember_token_expires_at.between?(before, after).should be_true
   end
 
   it 'remembers me until one week' do
     time = 1.week.from_now.utc
-    users(:quentin).remember_me_until time
-    users(:quentin).remember_token.should_not be_nil
-    users(:quentin).remember_token_expires_at.should_not be_nil
-    users(:quentin).remember_token_expires_at.should == time
+    @user.remember_me_until time
+    @user.remember_token.should_not be_nil
+    @user.remember_token_expires_at.should_not be_nil
+    @user.remember_token_expires_at.should == time
   end
 
   it 'remembers me default two weeks' do
     before = 2.weeks.from_now.utc
-    users(:quentin).remember_me
+    @user.remember_me
     after = 2.weeks.from_now.utc
-    users(:quentin).remember_token.should_not be_nil
-    users(:quentin).remember_token_expires_at.should_not be_nil
-    users(:quentin).remember_token_expires_at.between?(before, after).should be_true
+    @user.remember_token.should_not be_nil
+    @user.remember_token_expires_at.should_not be_nil
+    @user.remember_token_expires_at.between?(before, after).should be_true
   end
 
 protected
   def create_user(options = {})
-    record = User.new({ :login => 'quire', :email => 'quire@example.com', :password => 'quire', :password_confirmation => 'quire' }.merge(options))
+    record = User.new({ :login => 'quire', 
+      :email => 'quire@example.com', 
+      :password => 'quire', 
+      :password_confirmation => 'quire',
+      :first_name => "quire" }.merge(options))
     record.save
     record
   end

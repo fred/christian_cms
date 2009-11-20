@@ -13,7 +13,7 @@
 	
 		<tbody>
 		<% for buletin in @buletins -%>
-	  	<tr class="<%= cycle("light", "dark", :name => "row_class") %>">
+	  	<tr>
   			<td class='table_center'><%= buletin.title %> </td>
   			<td class='table_center'><%= link_to "Download", buletin.public_filename %> </td>
   			<td class='table_center'><%= buletin.created_at.strftime(" %b %d, %Y ") %> </td>

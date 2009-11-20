@@ -46,15 +46,24 @@
             %li
               = link_to "Comments", admin_comments_path, :class => is_current_menu("comments")
             %li
-              = link_to "Website", "/", :target => "blank"
-            %li
               = link_to "Logout", "/logout"
     .clear
     
     #main
       .content
-        .flash_notice
-          %p= flash[:notice]
+      
+        - if flash[:error]
+          .error
+            %p= flash[:error]
+      
+        - if flash[:notice]
+          .notice
+            %p= flash[:notice]
+      
+        - if flash[:success]
+          .success
+            %p= flash[:success]
+            
         = yield
             
     .clear

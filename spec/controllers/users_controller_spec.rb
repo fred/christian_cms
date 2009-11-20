@@ -5,19 +5,19 @@ require File.dirname(__FILE__) + '/../spec_helper'
 include AuthenticatedTestHelper
 
 describe UsersController do
-  fixtures :users
-
+  
+  def setup
+    @user = Factory(:visitor)
+    login_as @user
+  end
+  
   it 'allows signup' do
     lambda do
       create_user
       response.should be_redirect      
     end.should change(User, :count).by(1)
   end
-
   
-
-  
-
   it 'requires login on signup' do
     lambda do
       create_user(:login => nil)
@@ -41,7 +41,7 @@ describe UsersController do
       response.should be_success
     end.should_not change(User, :count)
   end
-
+  
   it 'requires email on signup' do
     lambda do
       create_user(:email => nil)
@@ -54,6 +54,7 @@ describe UsersController do
   
   def create_user(options = {})
     post :create, :user => { :login => 'quire', :email => 'quire@example.com',
-      :password => 'quire', :password_confirmation => 'quire' }.merge(options)
+      :password => 'quire', :password_confirmation => 'quire', :first_name => "quire"}.merge(options)
   end
+
 end

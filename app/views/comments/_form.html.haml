@@ -4,19 +4,18 @@
 
 = f.error_messages
 
-%p
-  = f.label :name
-  = f.text_field :name, :value => @comment.name, :size => 40
-%p
-  = f.label :email
-  = f.text_field :email, :value => @comment.email, :size => 40
-%p
-  = f.label :website_url
-  = f.text_field :website_url, :value => "http://", :size => 40
-%p
-  = f.label :comment
+%table
+  %tr
+    %td= f.label :name, "Nombre: "
+    %td= f.text_field :name, :value => @comment.name, :size => 44
+  %tr
+    %td= f.label :email
+    %td= f.text_field :email, :value => @comment.email, :size => 44
+  %tr
+    %td= f.label :website_url, "Website"
+    %td= f.text_field :website_url, :value => "http://", :size => 44
+  %tr
+    %td= f.label :comment,"Comentario"
+    %td= f.text_area :comment, :cols => 38, :rows => 12
 
-%p
-  = f.text_area :comment, :cols => 58, :rows => 13
-
-= f.submit "Submit Comment"
+= f.submit "Dejar comentario"

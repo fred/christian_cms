@@ -2,6 +2,9 @@
 require 'md5'
 module ApplicationHelper
   
+  def w3c_date(date)
+    date.utc.strftime("%Y-%m-%dT%H:%M:%S+00:00")
+  end
   
   def tag_link(tag)
     url_for :controller => "articles", :action => "tags", :tag => tag

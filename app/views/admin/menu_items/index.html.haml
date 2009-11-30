@@ -18,8 +18,8 @@
       %td= link_to menu_item.url, menu_item.url 
       %td=h menu_item.display_order 
       %td=h boolean_to_word(menu_item.new_page)
-      %td= link_to 'Show', admin_menu_item_path(menu_item) 
-      %td= link_to 'Edit', edit_admin_menu_item_path(menu_item) 
-      %td= link_to 'Destroy', admin_menu_item_path(menu_item), :confirm => 'Are you sure?', :method => :delete 
+      %td= link_to 'Ver', admin_menu_item_path(menu_item) 
+      %td= link_to 'Editar', edit_admin_menu_item_path(menu_item) 
+      %td= link_to 'Del', admin_menu_item_path(menu_item), :confirm => 'Estas Seguro?', :method => :delete 
 
 %h3= link_to 'Crear Menu', new_admin_menu_item_path 

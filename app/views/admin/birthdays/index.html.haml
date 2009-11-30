@@ -2,6 +2,9 @@
 %h3 
   = @title
 
+%p= link_to 'Adicionar Cumpleaño', :action => 'new'
+%br
+
 .article
   %h4
     = link_to "Ene", "/admin/birthdays/?month=1" 
@@ -49,7 +52,7 @@
         %td= link_to 'Editar', edit_admin_birthday_path(birthday) 
         %td= link_to 'Deletar', admin_birthday_path(birthday), :confirm => 'Are you sure?', :method => :delete
 
-%h3= link_to 'Adicionar Cumpleaño', :action => 'new' 
+%h3= link_to 'Adicionar Cumpleaño', :action => 'new'
 
 
 - if !params[:month]

@@ -1,12 +1,12 @@
 %h3 Eventos
 %table{:id => "gradient-style"}
   %tr
-    %th Tittle
+    %th Titulo
     %th Status
-    %th Start Date
-    %th End Date
-    %th Priority
-    %th Created
+    %th Empiza
+    %th Termina
+    %th Prioridad
+    %th Creado
     %th
     %th
   %tr
@@ -25,9 +25,9 @@
         %td
           = event.created_at.to_s(:short)
         %td
-          = link_to 'Edit', edit_admin_event_path(event)
+          = link_to 'Editar', edit_admin_event_path(event)
         %td
-          = link_to 'Delete', admin_event_path(event), :confirm => 'Are you sure?', :method => :delete
+          = link_to 'Deletar', admin_event_path(event), :confirm => 'Estas Seguro?', :method => :delete
 
-= link_to 'New event', new_admin_event_path 
+= link_to 'Crear Nuevo Evento', new_admin_event_path 
 

@@ -1,8 +1,8 @@
-%h3 Edit Comment
+%h3 Editando Commentario
 
 - form_for(@comment, :url => { :action => "update" } ) do |f| 
   = f.error_messages 
   = render :partial => "form", :locals => { :f => f, :comment => @comment }
-  = f.submit "Update"
+  = f.submit "Salvar"
  
-= link_to 'Back', admin_comments_path
+= link_to 'Volver', admin_comments_path

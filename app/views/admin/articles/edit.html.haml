@@ -1,8 +1,9 @@
-%h2 
-  Editando Articulo
+- @title = "Editando Articulo:  #{@article.title}"
+%h2= @title
+
+%h3 
   %i 
-    %u
-      = @article.title
+    %u= @article.title
 
 - form_for(@article, :url => { :action => "update" } ) do |f| 
   = f.error_messages

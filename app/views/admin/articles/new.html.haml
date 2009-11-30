@@ -1,5 +1,6 @@
-
-%h2 Nuevo Articulo
+- @title = "Nuevo Articulo"
+%h2 
+  = @title
 
 - form_for(@article, :url => admin_articles_path ) do |f| 
   = f.error_messages

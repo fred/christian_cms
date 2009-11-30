@@ -2,7 +2,7 @@
   = @event.title
 
 %p 
-  %b Description:
+  %b Descripcion:
   = @event.description
 
 %p 
@@ -10,25 +10,25 @@
   = @event.event_status
 
 %p 
-  %b Start: 
+  %b Empieza: 
   = @event.start_date.to_s(:short)
 
 %p 
-  %b End: 
+  %b Termina: 
   = @event.end_date.to_s(:short)
 
 %p 
-  %b Priority
+  %b Prioridad
   = @event.event_priority
 
 %p
-  %b Create Date:
+  %b Creado en:
   = @event.created_at.to_s(:long)
 
 %p
-  %b Last Update:
+  %b Actualizado en:
   = @event.updated_at.to_s(:long)
 
-= link_to 'Edit', edit_admin_event_path(@event)
+= link_to 'Editar', edit_admin_event_path(@event)
 |
-= link_to 'Back', admin_events_path
+= link_to 'Volver', admin_events_path

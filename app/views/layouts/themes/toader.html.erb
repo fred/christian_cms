@@ -18,10 +18,10 @@
 				    <li> <%= menu_item_link(t) %> </li>
 				  <% end %>
 					<% if logged_in? %>
-					  <li> <%= link_to _("Logout"), "/logout" %> </li>
+					  <li> <%= link_to("Logout", "/logout") %> </li>
 					<% else %>
-					  <li> <%= link_to _("Signup"), signup_url %> </li>
-      		  <li> <%= link_to _("Login"), "/login" %> </li>
+					  <li> <%= link_to("Signup", signup_url) %> </li>
+      		  <li> <%= link_to("Login", "/login") %> </li>
       		<% end %>
 				</ul>
 			</div>

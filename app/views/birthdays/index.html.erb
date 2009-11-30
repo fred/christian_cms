@@ -1,48 +1,44 @@
 <h1>Lista de Cumplaños</h1>
 
-<div class="article">
-
-	<h3>
-  	<%= link_to "Ene", "/birthdays/?month=1" %> 
-  	<%= link_to "Feb", "/birthdays/?month=2" %> 
-  	<%= link_to "Mar", "/birthdays/?month=3" %> 
-  	<%= link_to "Abr", "/birthdays/?month=4" %> 
-  	<%= link_to "May", "/birthdays/?month=5" %> 
-  	<%= link_to "Jun", "/birthdays/?month=6" %> 
-  	<%= link_to "Jul", "/birthdays/?month=7" %> 
-  	<%= link_to "Ago", "/birthdays/?month=8" %> 
-  	<%= link_to "Sep", "/birthdays/?month=9" %> 
-  	<%= link_to "Oct", "/birthdays/?month=10" %> 
-  	<%= link_to "Nov", "/birthdays/?month=11" %> 
-  	<%= link_to "Dic", "/birthdays/?month=12" %> 
-  	<%= link_to "TODOS", birthdays_path %>
-	</h3>
-	
-	
-	<table class='nice_table'>
-		<thead>
-			<tr>
-				<td class='heading'><%= link_to "Nombre", 	 :sort => "first_name" %></td>
-				<td class='heading'><%= link_to "Appellido", :sort => "last_name" %></td>
-				<td class='heading'><%= link_to "Fecha",	 :sort => "birthdate" %></td>
-			</tr>
-		</thead>
-	
-		<tbody>
-		<% for birthday in @birthdays %>
-	  	<tr>
-			  <td class='table_center'><%= birthday.first_name %> </td>
-			  <td class='table_center'><%= birthday.last_name %> </td>
-			  <td class='table_center'><%= birthday.birthdate.strftime("%b-%d") %> </td>
-	  	</tr>
-		<% end %>
-		</tbody>
-	
-	</table>
+<h3>
+	<%= link_to "Ene", "/birthdays/?month=1" %> 
+	<%= link_to "Feb", "/birthdays/?month=2" %> 
+	<%= link_to "Mar", "/birthdays/?month=3" %> 
+	<%= link_to "Abr", "/birthdays/?month=4" %> 
+	<%= link_to "May", "/birthdays/?month=5" %> 
+	<%= link_to "Jun", "/birthdays/?month=6" %> 
+	<%= link_to "Jul", "/birthdays/?month=7" %> 
+	<%= link_to "Ago", "/birthdays/?month=8" %> 
+	<%= link_to "Sep", "/birthdays/?month=9" %> 
+	<%= link_to "Oct", "/birthdays/?month=10" %> 
+	<%= link_to "Nov", "/birthdays/?month=11" %> 
+	<%= link_to "Dic", "/birthdays/?month=12" %> 
+	<%= link_to "TODOS", birthdays_path %>
+</h3>
 
 
-</div>
+<table class='nice_table'>
+	<thead>
+		<tr>
+			<td class='heading'><%= link_to "Nombre", 	 :sort => "first_name" %></td>
+			<td class='heading'><%= link_to "Appellido", :sort => "last_name" %></td>
+			<td class='heading'><%= link_to "Fecha",	 :sort => "birthdate" %></td>
+		</tr>
+	</thead>
+
+	<tbody>
+	<% for birthday in @birthdays %>
+  	<tr>
+		  <td class='table_center'><%= birthday.first_name %> </td>
+		  <td class='table_center'><%= birthday.last_name %> </td>
+		  <td class='table_center'><%= l(birthday.birthdate, :format => "%B %d") %> </td>
+  	</tr>
+	<% end %>
+	</tbody>
+
+</table>
 
 <% if !params[:month] %>
+  <br />
 	<p><%= will_paginate @birthdays %></p>
 <% end %>

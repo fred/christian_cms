@@ -4,12 +4,12 @@
     %h2.title 
       = link_to(article.title, permalink_url(article.permalink))
     %p.created_at_up
-      = l(article.published_at, :format => :long)
+      = l(article.published_at, :format => "%d de %B, %Y")
     .entry
       = article.short_body
-      %p.links 
+      %p.links
         = link_to("leer mas...", permalink_url(article.permalink), :class => 'more')
-        = link_to("Comments",permalink_url(article.permalink), :class => "comments")
+        = link_to("Commentarios",permalink_url(article.permalink), :class => "Commentarios")
         
     /- if !article.tag_list.empty?
     /  %p.item_tags 

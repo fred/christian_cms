@@ -1,27 +1,25 @@
 <h2>Lista de Boletines</h2>
 
-<div class="article">
-	
-	<table class='nice_table'>
-		<thead>
-			<tr>
-				<td class='heading'><%= link_to "Nombre", 	:sort => "title" %></td>
-				<td class='heading'><%= link_to "Archivo", 	:sort => "file_name" %></td>
-				<td class='heading'><%= link_to "Fecha",	:sort => "date" %></td>
-			</tr>
-		</thead>
-	
-		<tbody>
-		<% for buletin in @buletins -%>
-	  	<tr>
-  			<td class='table_center'><%= buletin.title %> </td>
-  			<td class='table_center'><%= link_to "Download", buletin.public_filename %> </td>
-  			<td class='table_center'><%= buletin.created_at.strftime(" %b %d, %Y ") %> </td>
-  		</tr>
-		<% end %>
-		</tbody>
-	
-	</table>
-</div>
+<table class='nice_table'>
+	<thead>
+		<tr>
+			<td class='heading'><%= link_to "Nombre",  :sort => "title" %></td>
+			<td class='heading'><%= link_to "Archivo", :sort => "file_name" %></td>
+			<td class='heading'><%= link_to "Fecha",	 :sort => "date" %></td>
+		</tr>
+	</thead>
 
+	<tbody>
+	<% for buletin in @buletins -%>
+  	<tr>
+			<td class='table_center'><%= buletin.title %> </td>
+			<td class='table_center'><%= link_to "Download", buletin.public_filename %> </td>
+			<td class='table_center'><%= l(buletin.created_at, :format => "%d %b, %y") %> </td>
+		</tr>
+	<% end %>
+	</tbody>
+
+</table>
+
+<br />
 <%= will_paginate @buletins %>

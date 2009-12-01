@@ -9,21 +9,21 @@ class MenuItem < ActiveRecord::Base
   # Validations
   validates_presence_of :title
   
-  def self.menus
+  def self.menu_items
     find(:all, 
       :order => "display_order ASC", 
       :conditions => ["menu_type = ?", "Menu"]
     )
   end
     
-  def self.links
+  def self.link_items
     find(:all, 
       :order => "display_order ASC", 
       :conditions => ["menu_type = ?", "Link"]
     )
   end
   
-  def self.sidebars
+  def self.sidebar_items
     find(:all, 
       :order => "display_order ASC", 
       :conditions => ["menu_type = ?", "Sidebar"]

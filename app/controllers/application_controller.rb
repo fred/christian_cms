@@ -17,7 +17,13 @@ class ApplicationController < ActionController::Base
   layout "themes/#{Settings.theme}" rescue "themes/default"
   
   before_filter :login_from_cookie
-  #before_filter :get_rate
+  
+  before_filter :get_links
+  
+  def get_links
+    @sidebar_items = MenuItem.sidebar_items
+    @link_items = MenuItem.link_items
+  end
   
   def initialize
 		@start_time = Time.now

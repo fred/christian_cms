@@ -14,7 +14,7 @@
 			  <%= link_to image_tag("/images/logo2.png", :class => "logo_header2"), "/" %>
 			  
 				<ul>
-				  <% MenuItem.menus.each do |t| %>
+				  <% MenuItem.menu_items.each do |t| %>
 				    <li> <%= menu_item_link(t) %> </li>
 				  <% end %>
 					<% if logged_in? %>

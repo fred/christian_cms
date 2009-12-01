@@ -4,11 +4,11 @@
 		<li>
 			<h2>La Comunidad</h2>
 			<ul class="items">
-    		<li> <%= link_to "Quienes Somos", permalink_url("quienes-somos") %> </li>
-    		<li> <%= link_to "Miembros", users_path %></li>
-    		<li> <%= link_to "Contactenos", permalink_url("contactenos") %> </li>
+			  <% @sidebar_items.each do |item| %>
+			    <li> <%= link_to item.title, item.url %> </li>
+			  <% end %>
     		<li> <%= link_to "Dejar Mensage", "/messages/new" %> </li>
-    		<li> <%= link_to "Mapa/Como llegar", permalink_url("mapa") %> </li>
+    		<li> <%= link_to "Usuarios", users_path %></li>
     	</ul>
     	<%= image_tag "/images/iglesia3.png" %>
 		</li>
@@ -28,7 +28,7 @@
 		
 		<h2> Links </h2>
   	<ul class="links">
-  	  <% MenuItem.links.each do |t| %>
+  	  <% @link_items.each do |t| %>
   	    <li> <%= menu_item_link(t) %> </li>
   	  <% end %>
   	</ul>

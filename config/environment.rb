@@ -32,6 +32,7 @@ Rails::Initializer.run do |config|
   config.gem 'haml'
   config.gem "factory_girl"
   config.gem "ajaxful_rating"
+  config.gem 'rakismet'
   
   # These cause problems with irb. Left in for reference
   # config.gem 'rspec-rails', :lib => 'spec/rails', :version => '1.1.11'
@@ -98,3 +99,18 @@ end
 #. ExceptionNotifier.email_prefix = "[ CPP #{RAILS_ROOT} ERROR ] "
 # More Information at:
 # http://code.google.com/p/super-exception-notifier/
+
+
+ 
+# Domain Name:  comunidad-catolica.com
+# This is a global key. It will work across all domains.
+# 
+# Public Key: 6LddpwoAAAAAABd3bZ3gFywQUhpk673vMq6wq6XL
+# Use this in the JavaScript code that is served to your users
+# 
+# Private Key:  6LddpwoAAAAAAOE45l-NXTqIJcpBPdH8VRRwa3D1
+# Use this when communicating between your server and our server. 
+# Because this key is a global key, it is OK if the private key is distributed to multiple users.
+
+# ENV['RECAPTCHA_PUBLIC_KEY'] = '6LddpwoAAAAAABd3bZ3gFywQUhpk673vMq6wq6XL'
+# ENV['RECAPTCHA_PRIVATE_KEY'] = '6LddpwoAAAAAAOE45l-NXTqIJcpBPdH8VRRwa3D1'

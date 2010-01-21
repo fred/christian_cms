@@ -6,29 +6,29 @@
 %table{:summary => @title, :id => "gradient-style"}
   %tr
     %th Login
-    %th First Name
-    %th Last Name
-    %th Date
+    %th Nombre
+    %th Apellido
+    %th Fecha
     %th
     %th
     %th
   %tr
     - for user in @users
       %tr
+        %td{:class=> "mouse", :onclick => "document.location.href='#{admin_user_path(user)}'"}
+          =h user.login
+        %td{:class=> "mouse", :onclick => "document.location.href='#{admin_user_path(user)}'"} 
+          =h user.first_name
+        %td{:class=> "mouse", :onclick => "document.location.href='#{admin_user_path(user)}'"}
+          =h user.last_name
         %td 
-          = link_to user.login, edit_admin_user_path(user)
+          = user.created_at.strftime("%d %b, %Y")
         %td 
-          = link_to user.first_name, edit_admin_user_path(user)
+          = link_to 'Ver', admin_user_path(user)
+        %td
+          = link_to 'Editar', edit_admin_user_path(user)
         %td 
-          = link_to user.last_name, edit_admin_user_path(user) 
-        %td 
-          = user.created_at.to_s(:short)
-        %td 
-          = link_to 'Show', admin_user_path(user)
-        %td 
-          = link_to 'Edit', edit_admin_user_path(user)
-        %td 
-          = link_to 'Delete', admin_user_path(user), :confirm => 'Are you sure?', :method => :delete
+          = link_to 'Deletar', admin_user_path(user), :confirm => 'Estas seguro que quieres deletar este usuario?', :method => :delete
 
 
 = will_paginate @users

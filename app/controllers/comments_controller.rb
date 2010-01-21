@@ -25,6 +25,7 @@ class CommentsController < ApplicationController
   # GET /comments/new.xml
   def new
     @comment = Comment.new
+    @comment.remote_ip = request.remote_ip
 
     respond_to do |format|
       format.html # new.html.erb
@@ -34,6 +35,7 @@ class CommentsController < ApplicationController
   
   def create
     @comment = Comment.new(params[:comment])
+    @comment.remote_ip = request.remote_ip
     @article = Article.find(@comment.commentable_id)
     if logged_in?
       @comment.user_id = current_user.id

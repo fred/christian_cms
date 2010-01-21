@@ -20,20 +20,18 @@
       %tr
         %th{:scope=>"row", :id => article.id}
           = link_to article.id, admin_article_path(article)
-        %td{:scope=>"row"}
+        %td{:scope=>"row", :class=> "mouse", :onclick => "document.location.href='#{admin_article_path(article)}'"}
           = link_to article.title, edit_admin_article_path(article)
-        %td{:scope=>"row"} 
-          = article.published_at.to_s(:short)
-        %td{:scope=>"row"}
+        %td{:scope=>"row", :class=> "mouse", :onclick => "document.location.href='#{admin_article_path(article)}'"} 
+          = article.published_at.strftime("%d %b, %Y")
+        %td{:scope=>"row", :class=> "mouse", :onclick => "document.location.href='#{admin_article_path(article)}'"}
           = boolean_to_image_small(article.approved)
         %td{:scope=>"row"}
           = boolean_to_image_lock(article.protected_record)
         %td{:scope=>"row"}
-          = link_to 'Ver', article_path(article), :target => "blank"
-        %td{:scope=>"row"}
           = link_to 'Editar', edit_admin_article_path(article)
         %td{:scope=>"row"}
-          = link_to 'Deletar', admin_article_path(article), :confirm => 'Are you sure?', :method => :delete
+          = link_to 'Deletar', admin_article_path(article), :confirm => 'Estas seguro que quieres deletar este articulo?', :method => :delete
 
 
 = will_paginate @articles

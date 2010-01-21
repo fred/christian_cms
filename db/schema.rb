@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 23) do
+ActiveRecord::Schema.define(:version => 20100121060219) do
 
   create_table "articles", :force => true do |t|
     t.integer  "user_id"
@@ -67,6 +67,8 @@ ActiveRecord::Schema.define(:version => 23) do
     t.string   "email",            :limit => 40
     t.string   "website_url",      :limit => 40
     t.boolean  "approved",                       :default => false
+    t.string   "user_agent"
+    t.string   "referrer"
   end
 
   add_index "comments", ["approved"], :name => "index_comments_on_approved"
@@ -106,6 +108,10 @@ ActiveRecord::Schema.define(:version => 23) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "message_read",   :default => false
+    t.string   "user_agent"
+    t.string   "referrer"
+    t.string   "remote_ip"
+    t.string   "user_id"
   end
 
   create_table "rates", :force => true do |t|
@@ -176,7 +182,19 @@ ActiveRecord::Schema.define(:version => 23) do
     t.string   "sacraments"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "approved",                                :default => true
+    t.datetime "last_seen_at"
+    t.boolean  "approved",                                :default => false
+    t.string   "website"
+    t.string   "login_key"
+    t.datetime "login_key_expires_at"
+    t.boolean  "activated",                               :default => false
+    t.string   "bio"
+    t.text     "bio_html"
+    t.string   "openid_url"
+    t.datetime "last_login_at"
+    t.integer  "posts_count",                             :default => 0
   end
+
+  add_index "users", ["last_seen_at"], :name => "index_users_on_last_seen_at"
 
 end

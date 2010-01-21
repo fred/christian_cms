@@ -86,15 +86,25 @@ class Admin::CommentsController < Admin::BaseController
     end
   end
   
+  def mark_spam
+    @comment = Comment.find(params[:id])
+    @comment.spam!
+    @comment.destroy
+    flash[:notice] = 'Comment was submitted as spam and Deleted.'
+    redirect_back_or_default(:action => 'index')
+  end
+  
   def approve
     @comment = Comment.find(params[:id])
     @comment.update_attributes(:approved => true)
+    flash[:notice] = 'Comment was approved.'
     redirect_back_or_default(:action => 'index')
   end
   
   def unapprove
     @comment = Comment.find(params[:id])
     @comment.update_attributes(:approved => false)
+    flash[:notice] = 'Comment was unapproved.'
     redirect_back_or_default(:action => 'index')
   end
 end

@@ -38,7 +38,7 @@
   Deje un Comentario
   
 #thankyou{:style=>"display: none"}
-  %p Gracias por su mensage. El mensage esta pendiente a ser autorizado.
+  %p Gracias por su mensaje. El mensaje esta pendiente a ser autorizado.
   
 - remote_form_for(@comment, :url => {:controller => "comments", :action => "create"}, :success => "Element.show('thankyou');ClearForm();Element.hide('new_comment');") do |f|
 

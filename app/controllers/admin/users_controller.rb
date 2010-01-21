@@ -3,15 +3,7 @@ class Admin::UsersController < Admin::BaseController
   # GET /admin/users
   # GET /admin/users.xml
   def index
-
-    if params[:sort]
-      order = case params[:sort]
-        when "first_name"   then "first_name ASC, last_name ASC"
-        when "last_name"    then "last_name ASC, first_name ASC"
-      end
-    else
-      order = "last_name ASC, first_name ASC"
-    end
+    order = "id DESC"
     per_page = 30
     @users = User.paginate :page => params[:page], 
       :per_page => per_page, 

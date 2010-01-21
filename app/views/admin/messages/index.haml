@@ -1,4 +1,4 @@
-- @title = "Mensages Dejadas en el Sitio"
+- @title = "Mensajes dejadas en el sitio"
 
 %h3 
   = @title
@@ -9,7 +9,7 @@
     %th Nombre
     %th Email
     %th Telefono
-    %th Mensage 
+    %th Mensaje 
     %th Urgente
     %th Fecha
     %th 
@@ -17,11 +17,11 @@
 
   - for message in @messages
     %tr{:class => display_bold(!message.message_read)}
-      %td= link_to((h message.name),admin_message_path(message))
-      %td=h message.email
-      %td=h message.phone_number
-      %td=h truncate(message.body, 46, "...")
+      %td{:class=> "mouse", :onclick => "document.location.href='#{admin_message_path(message)}'"}=h message.name
+      %td{:class=> "mouse", :onclick => "document.location.href='#{admin_message_path(message)}'"}=h message.email
+      %td{:class=> "mouse", :onclick => "document.location.href='#{admin_message_path(message)}'"}=h message.phone_number
+      %td{:class=> "mouse", :onclick => "document.location.href='#{admin_message_path(message)}'"}=h truncate(message.body, 46, "...")
       %td= boolean_to_word(message.urgent_contact)
-      %td= link_to(message.created_at.to_s(:short),admin_message_path(message))
+      %td= message.created_at.strftime("%d/%m/%y")
       %td= link_to 'Editar', edit_admin_message_path(message)
-      %td= link_to 'Deletar', admin_message_path(message), :confirm => 'Estas Seguro que quieres deletar este mensage?', :method => :delete
+      %td= link_to 'Deletar', admin_message_path(message), :confirm => 'Estas Seguro que quieres deletar este mensaje?', :method => :delete

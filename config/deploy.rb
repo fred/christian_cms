@@ -30,13 +30,13 @@ ssh_options[:paranoid] = false
 # This will cause your deployment to fail by default. To fix either upgrade git or do: set :scm_verbose, true 
 # You may also wish to use one of the following options if your git repo is very large – 
 #  otherwise each deploy will do a full repository clone every time. 
-set :deploy_via, :remote_cache
+#set :deploy_via, :remote_cache
 
 # Rails environment. Used by application setup tasks and migrate tasks.
 set :rails_env, "production"
 
 # mongrel port
-set :port, "3001"
+set :mongrel_port, "3001"
 
 
 #default_environment["PATH"] = "/opt/ree/bin:/opt/ree/lib/ruby/gems/1.8/bin:$PATH"
@@ -103,8 +103,7 @@ namespace :mongrel do
   end
   desc "Start this app's Mongrel Server" 
   task :start, :roles => :app do 
-    run "ruby #{current_path}/script/server -p #{port} -e #{rails_env} -d start"
-    #run "mongrel_rails start -P #{port} -e #{rails_env} -d"
+    run "ruby #{current_path}/script/server -p #{mongrel_port} -e #{rails_env} -d start"
   end
   desc "Restart this app's Mongrel Server" 
   task :restart, :roles => :app do 

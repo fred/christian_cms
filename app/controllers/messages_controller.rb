@@ -25,14 +25,14 @@ class MessagesController < ApplicationController
     if logged_in?
       @message.user_id = current_user.id
     end
-    
-    if @message.spam?
-       @message.marked_spam = true 
-       logger.warn "Contact Message marked as spam. Akismet Response: #{@message.akismet_response}"
-    end
+    # 
+    # if @message.spam?
+    #    @message.marked_spam = true 
+    #    logger.warn "Contact Message marked as spam. Akismet Response: #{@message.akismet_response}"
+    # end
 
     respond_to do |format|
-      if !@message.marked_spam && @message.save
+      if @message.save
         flash[:success] = 'Mensaje fue enviado con suceso.'
         format.html { redirect_to :action => "thank_you" }
         format.xml  { render :xml => @message, :status => :created, :location => @message }

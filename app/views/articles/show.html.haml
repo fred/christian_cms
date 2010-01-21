@@ -36,12 +36,17 @@
 %br
 %h4
   Deje un Comentario
+
+#comment_error{:style=>"display: none"}
+  .error
+    %p There was an error.
   
 #thankyou{:style=>"display: none"}
-  %p Gracias por su mensaje. El mensaje esta pendiente a ser autorizado.
-  
-- remote_form_for(@comment, :url => {:controller => "comments", :action => "create"}, :success => "Element.show('thankyou');ClearForm();Element.hide('new_comment');") do |f|
+  .success
+    %p Gracias por su mensaje. El mensaje esta pendiente a ser autorizado.
 
-  = render :partial => "/comments/form", :locals => {:f => f}
+#new_comment_form
+  - remote_form_for(@comment, :url => {:controller => "comments", :action => "create"}, :failure => "Element.show('comment_error');", :success => "Element.show('thankyou');ClearForm();Element.hide('new_comment_form');") do |f|
+    = render :partial => "/comments/form", :locals => {:f => f}
 
 

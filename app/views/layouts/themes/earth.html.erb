@@ -70,10 +70,25 @@ Released   : 20090918
   	<!-- end #menu -->
   	<div id="page">
   		<div id="content">
-  		    			
-  			<h2 class="flash_notice">
-  				<%= flash[:notice] %>
-  			</h2>
+  		  
+  			<% if flash[:error] %>
+          <div class="error">
+            <p><%= flash[:error] %></p>
+          </div>
+        <% end %>
+        
+        <% if flash[:notice] %>
+          <div class="notice">
+            <p><%= flash[:notice] %></p>
+          </div>
+        <% end %>
+        
+        <% if flash[:success] %>
+          <div class="success">
+            <p><%= flash[:success] %></p>
+          </div>
+        <% end %>
+        
   			<%= yield %>
 			
   			<div style="clear: both;">&nbsp;</div>

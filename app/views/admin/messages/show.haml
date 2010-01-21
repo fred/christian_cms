@@ -15,6 +15,18 @@
   =h @message.created_at.strftime("%d %b, %Y - %H:%M:%S")
 
 %p
+  %b IP:
+  =h @message.remote_ip
+
+%p
+  %b Referrer:
+  =h @message.referrer
+
+%p
+  %b User-Agent:
+  =h @message.user_agent
+
+%p
   %b Mensaje:
   =h @message.body
 

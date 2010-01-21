@@ -16,7 +16,15 @@ class Comment < ActiveRecord::Base
     :content => :comment,
     :user_ip => :remote_ip
   
+  validates_presence_of :comment
+  
   # Relationships  
   belongs_to :article, :foreign_key => :commentable_id
+  
+  before_save :check_spam
+  
+  def check_spam
+    self.marked_spam = true if self.spam?
+  end
   
 end

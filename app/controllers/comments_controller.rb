@@ -26,7 +26,8 @@ class CommentsController < ApplicationController
   def new
     @comment = Comment.new
     @comment.remote_ip = request.remote_ip
-
+    @comment.referrer  = request.referrer
+    @comment.user_agent = request.env["HTTP_USER_AGENT"]
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @comment }
@@ -36,19 +37,28 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.new(params[:comment])
     @comment.remote_ip = request.remote_ip
+    @comment.referrer  = request.referrer
+    @comment.user_agent = request.env["HTTP_USER_AGENT"]
     @article = Article.find(@comment.commentable_id)
     if logged_in?
       @comment.user_id = current_user.id
     end
-
+    
+    if @comment.spam?
+      @comment.marked_spam = true 
+      logger.warn "Message marked as spam. Akismet Response: #{@comment.akismet_response}"
+    end
+    
     respond_to do |format|
-      if @comment.save
-        flash[:notice] = 'Thank you. Your comment is awaiting approval.'
+      if @comment.valid? && !@comment.marked_spam && @comment.save
+        flash[:notice] = 'Gracias. Su mensaje estar a ser autorizado.'
         format.html { redirect_to article_path(@article) }
         format.xml  { render :xml => @comment, :status => :created, :location => @comment }
       else
+        flash[:error] = 'Mensaje marcado como SPAM, si eso fue engano, por favor contact el administrador.'
         format.html { redirect_to article_path(@article) }
-        format.xml  { render :xml => @comment.errors, :status => :unprocessable_entity }
+        format.js { render :xml => @comment.errors, :status => "405"}
+        format.xml  { render :xml => @comment.errors, :status => "405" }
       end
     end
   end

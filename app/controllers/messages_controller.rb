@@ -17,6 +17,19 @@ class MessagesController < ApplicationController
   # POST /messages.xml
   def create
     @message = Message.new(params[:message])
+    
+    @message.remote_ip = request.remote_ip
+    @message.referrer  = request.referrer
+    @message.user_agent = request.env["HTTP_USER_AGENT"]
+
+    if logged_in?
+      @message.user_id = current_user.id
+    end
+    
+    if @message.spam?
+      @message.marked_spam = true 
+      logger.warn "Contact Message marked as spam. Akismet Response: #{@message.akismet_response}"
+    end
 
     respond_to do |format|
       if @message.save

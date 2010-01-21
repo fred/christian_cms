@@ -35,6 +35,10 @@ set :deploy_via, :remote_cache
 # Rails environment. Used by application setup tasks and migrate tasks.
 set :rails_env, "production"
 
+# mongrel port
+set :port, "3001"
+
+
 #default_environment["PATH"] = "/opt/ree/bin:/opt/ree/lib/ruby/gems/1.8/bin:$PATH"
 
 # If you aren't deploying to /u/apps/#{application} on the target
@@ -91,6 +95,25 @@ namespace :passenger do
   end
 end
 
+
+namespace :mongrel do
+  desc "Stop this app's Mongrel Server" 
+  task :stop, :roles => :app do 
+    run "mongrel_rails -p #{shared_path}/pids/server.pid stop"
+  end
+  desc "Start this app's Mongrel Server" 
+  task :start, :roles => :app do 
+    run "ruby #{current_path}/script/server -p #{port} -e #{rails_env} -d start"
+    #run "mongrel_rails start -P #{port} -e #{rails_env} -d"
+  end
+  desc "Restart this app's Mongrel Server" 
+  task :restart, :roles => :app do 
+    find_and_execute_task("mongrel:stop")
+    find_and_execute_task("mongrel:start")
+  end
+end
+
+
 namespace :thin do 
   desc "Stop this app's Thin Server" 
   task :stop, :roles => :app do 
@@ -111,13 +134,11 @@ namespace :deploy do
   %w(start stop restart).each do |action| 
     desc "#{action} our server"
     task action.to_sym do 
-      find_and_execute_task("thin:#{action}")
+      find_and_execute_task("mongrel:#{action}")
     end
   end
 end
 
-#before "deploy", "sphinx:stop"
-#after "deploy", "sphinx:reload"
 
 task :after_symlink, :roles => :app do
   run "ln -nfs #{shared_path}/config/database.yml #{current_path}/config/database.yml"

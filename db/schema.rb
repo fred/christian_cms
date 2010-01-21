@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100121060219) do
+ActiveRecord::Schema.define(:version => 20100121073350) do
 
   create_table "articles", :force => true do |t|
     t.integer  "user_id"
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(:version => 20100121060219) do
     t.boolean  "approved",                       :default => false
     t.string   "user_agent"
     t.string   "referrer"
+    t.boolean  "marked_spam",                    :default => false
   end
 
   add_index "comments", ["approved"], :name => "index_comments_on_approved"
@@ -112,6 +113,7 @@ ActiveRecord::Schema.define(:version => 20100121060219) do
     t.string   "referrer"
     t.string   "remote_ip"
     t.string   "user_id"
+    t.boolean  "marked_spam",    :default => false
   end
 
   create_table "rates", :force => true do |t|

@@ -16,15 +16,20 @@ class Message < ActiveRecord::Base
     :content => :body,
     :user_ip => :remote_ip
   
-  # Validations
+  ### Validations ###
   validates_presence_of :name
   validates_presence_of :body
   validates_presence_of :email
   
-  # Filters
+  ### Filters ###
   after_create :deliver_notification
+  before_save :check_spam
+  
   
   ### Methods ### 
+  def check_spam
+    self.marked_spam = true if self.spam?
+  end
   
   def deliver_notification
     Notifications.deliver_new_message(self)

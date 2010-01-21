@@ -5,6 +5,9 @@
     %h4
       = boolean_to_image_small(t.approved)
     %p
+      %b Spam: 
+      = boolean_to_word(t.marked_spam)
+    %p
       %b Nombre:
       = h t.name
     %p 
@@ -20,14 +23,21 @@
       %b Fecha: 
       = t.created_at
     %p
+      %b IP: 
+      = t.remote_ip
+    %p
+      %b Referrer: 
+      = t.referrer
+    %p
+      %b User-Agent: 
+      = t.user_agent
+    %p
       %b Comentario:
       = h t.comment
     %p
       = approve_link(t)
       |
       = link_to "SPAM", :action => "mark_spam", :id => t.id
-      |
-      = link_to 'Leer', admin_comment_path(t)
       |
       = link_to 'Editar', edit_admin_comment_path(t)
       |

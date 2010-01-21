@@ -11,6 +11,8 @@
     %th Telefono
     %th Mensaje 
     %th Urgente
+    %th IP
+    %th Spam
     %th Fecha
     %th 
     %th 
@@ -20,8 +22,10 @@
       %td{:class=> "mouse", :onclick => "document.location.href='#{admin_message_path(message)}'"}=h message.name
       %td{:class=> "mouse", :onclick => "document.location.href='#{admin_message_path(message)}'"}=h message.email
       %td{:class=> "mouse", :onclick => "document.location.href='#{admin_message_path(message)}'"}=h message.phone_number
-      %td{:class=> "mouse", :onclick => "document.location.href='#{admin_message_path(message)}'"}=h truncate(message.body, 46, "...")
+      %td{:class=> "mouse", :onclick => "document.location.href='#{admin_message_path(message)}'"}=h truncate(message.body, :omission => "...", :length => 42)
       %td= boolean_to_word(message.urgent_contact)
+      %td= message.remote_ip
+      %td= boolean_to_word(message.marked_spam)
       %td= message.created_at.strftime("%d/%m/%y")
       %td= link_to 'Editar', edit_admin_message_path(message)
       %td= link_to 'Deletar', admin_message_path(message), :confirm => 'Estas Seguro que quieres deletar este mensaje?', :method => :delete

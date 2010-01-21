@@ -3,7 +3,10 @@ class Admin::CommentsController < Admin::BaseController
   # GET /admin/comments
   # GET /admin/comments.xml
   def index
-    @comments = Comment.find(:all, 
+    per_page = 10
+    @comments = Comment.paginate(:all, 
+      :per_page => per_page,
+      :page => params[:page],
       :order => "approved ASC, created_at DESC"
     )
 

@@ -13,8 +13,8 @@
 	<% for buletin in @buletins -%>
   	<tr>
 			<td class='table_center'><%= buletin.title %> </td>
-			<td class='table_center'><%= link_to "Download", buletin.public_filename %> </td>
-			<td class='table_center'><%= l(buletin.created_at, :format => "%d %b, %y") %> </td>
+			<td class='table_center'><%= link_to "Download", buletin.public_filename, :title => buletin.filename %> </td>
+			<td class='table_center'><%= l(buletin.created_at, :format => "%d %b, %Y") %> </td>
 		</tr>
 	<% end %>
 	</tbody>

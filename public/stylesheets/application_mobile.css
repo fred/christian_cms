@@ -1,0 +1,78 @@
+
+#container {
+  width: 98%;
+  margin: 0 auto;
+  background-color: #FFF;
+  padding: 20px 40px;
+  border: solid 1px black;
+  margin-top: 20px;
+}
+
+#flash_notice, #flash_error {
+  padding: 5px 8px;
+  margin: 10px 0;
+}
+
+#flash_notice {
+  background-color: #FFE3D4;
+  border: solid 1px #6C6;
+}
+
+#flash_error {
+  background-color: #FFE3D4;
+  border: solid 1px #C66;
+}
+
+.clear {
+  clear: both;
+}
+
+
+.fieldWithErrors {
+  display: inline;
+}
+
+.fieldWithErrors input {
+  border-color: red;
+}
+
+#errorExplanation {
+  font-size: 1.1em;
+  margin: 10px 0;
+  float: left;
+  text-align: left;
+  width: 280px;
+  border: 2px solid #CF0000;
+  padding: 0px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #FFE3D4;
+}
+
+#errorExplanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 1.2em;
+  margin: 0px;
+  background-color: #c00;
+  color: #fff;
+}
+
+#errorExplanation p {
+  color: #333;
+  margin-bottom: 0;
+  padding: 8px;
+}
+
+#errorExplanation ul {
+  margin: 2px 24px;
+}
+
+#errorExplanation ul li {
+  list-style: disc;
+}
+
+.fields {
+  margin: 8px 0;
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="keywords" content="technews, tech, news, homepage, Linux, Apple, iPhone, Android, OpenSource, Ruby, technews" />
+    <meta name="description" content="The Homepage for the Tech Savies. All Tech News for Android, Apple, Linux, iPhone, and Science and Technology" />
+    <meta name="author" content="The Tech News homepage" />
+    
+    <!-- Start iPhone -->
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+    <link rel="apple-touch-icon" href="/images/apple.png" />
+    <!-- End iPhone -->
+
+    <title><%= @title %></title>
+    <%= stylesheet_link_tag 'application_mobile' %>
+    <%= stylesheet_link_tag 'stylesheet_mobile'%>
+    <%= stylesheet_link_tag 'table' %>
+    <%= stylesheet_link_tag 'fieldset_mobile' %>
+    <%= stylesheet_link_tag 'nokia' if request.user_agent.downcase =~ /(nokia)|(symbian)/ %>
+    <%= yield(:head) %>
+  </head>
+  <body>
+    
+    <div class="wrapper"><!-- Begin wrapper -->
+
+  		<div class="header" id="top"><!-- Begin header -->
+  			<h1><a href="/" title="Back to home">All Tech News</a></h1>
+  			<ul>
+  			  <% Category.all.each do |t| %>
+  			    <li class="<%=highlight(t.id)%>"><%= link_to t.title, t %></li>
+  			  <% end %>
+  			</ul>
+  		</div>
+
+  		<div class="content"><!-- Begin outer-space -->
+			  <%- flash.each do |name, msg| -%>
+          <%= content_tag :div, msg, :id => "flash_#{name}" %>
+        <%- end -%>
+        <%= yield %>
+  		</div><!-- End content -->
+      
+      <%= render :partial => "/shared/footer" %>
+  		
+  	</div><!-- End wrapper -->
+  	
+  </body>
+</html>

@@ -1,21 +1,25 @@
 - @articles.each do |article|
-
-  .post
-    %h2.title 
-      = link_to(article.title, permalink_url(article.permalink))
-    %p.created_at_up
-      = l(article.published_at, :format => "%d de %B, %Y")
-    .entry
-      = article.short_body
-      %p.links
-        = link_to("leer mas...", permalink_url(article.permalink), :class => 'more')
-        = link_to("Commentarios",permalink_url(article.permalink), :class => "Commentarios")
+  %article
+    .article
+      %header
+        .header
+          %h2 
+            = link_to(article.title, permalink_url(article.permalink))
+          %p.created_at_up
+            <time datetime="#{article.created_at.strftime('%Y-%m-%d')}" pubdate>
+            = l(article.published_at, :format => "%d %B, %Y")
+            </time>
+      .entry
+        = article.short_body
+        %p.links
+          = link_to("leer mas...", permalink_url(article.permalink), :class => 'more')
+          = link_to("Commentarios",permalink_url(article.permalink), :class => "Commentarios")
         
-    /- if !article.tag_list.empty?
-    /  %p.item_tags 
-    /    Tags: 
-    /    - article.tag_list.each do |tag|
-    /      = link_to tag, tag_link(tag)
+      /- if !article.tag_list.empty?
+      /  %p.item_tags 
+      /    Tags: 
+      /    - article.tag_list.each do |tag|
+      /      = link_to tag, tag_link(tag)
 
       
 %h3 Paginas:

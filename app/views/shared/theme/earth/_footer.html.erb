@@ -1,15 +1,11 @@
-
-<div id="footer-content">
-
+<div id="footer-content">  
 	<div class="column1">
 		<h2> <%= Settings[:site_footer1] %> </h2>
 		<h3> <%= Settings[:site_footer2] %> </h3>
-		<h4> <%= Settings[:site_address] %> </h4>
+		<h4><address><%= Settings[:site_address] %></address></h4>
 		<p> <%= Settings[:site_email] %> </p>
 	</div>
-
 	<div class="column2">
     <% image_tag "/images/footer_logo.png" %>
 	</div>
-
 </div>

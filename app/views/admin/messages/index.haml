@@ -24,7 +24,7 @@
       %td{:class=> "mouse", :onclick => "document.location.href='#{admin_message_path(message)}'"}=h message.phone_number
       %td{:class=> "mouse", :onclick => "document.location.href='#{admin_message_path(message)}'"}=h truncate(message.body, :omission => "...", :length => 42)
       %td= boolean_to_word(message.urgent_contact)
-      %td= message.remote_ip
+      %td= link_to(message.remote_ip.to_s, "http://www.geoiptool.com/en/?IP=#{message.remote_ip}",:target=>"_blank") 
       %td= boolean_to_word(message.marked_spam)
       %td= message.created_at.strftime("%d/%m/%y")
       %td= link_to 'Editar', edit_admin_message_path(message)

@@ -1,0 +1,32 @@
+form { 
+  display: block;
+  margin: 0; 
+  padding: 0 6px;
+  width: 222px; 
+}
+form a { color: #336699; text-decoration: none; }
+
+div.error { margin: 20px; padding: 10px 30px; font-size: 15px; line-height: 22px; background: #FFE3D4 url('/images/exclamation.png') no-repeat 7px center; border: solid 1px #FF7348; }
+div.info { margin: 20px; padding: 10px 30px; font-size: 15px; line-height: 22px; background: #D4FFD4 url('/images/information.png') no-repeat 7px; border: solid 1px #00B900; }
+div.note { margin: 20px 40px; padding: 10px 15px; font-size: 12px; line-height: 20px; background-color: #F1F2F3; border: solid 1px #97A6B5; color: #556677; }
+
+fieldset { 
+  display: block; padding: 8px; background-color: #F1F2F3; border: solid #666 1px; margin: auto;
+  border-radius: 2%;
+  -moz-border-radius: 2%;
+  -webkit-border-radius: 6px; /* all corners */
+	-webkit-border-top-left-radius:10px; /* top left corner */
+	-webkit-border-top-right-radius:10px; /* top right corner */
+	-webkit-border-bottom-left-radius:10px; /* bottom left corner */
+	-webkit-border-bottom-right-radius:10px; /* bottom right corner */
+	-moz-box-shadow: 1px 1px 6px #999;
+  -webkit-box-shadow: 1px 1px 6px #999;
+  box-shadow: 1px 1px 6px #999;
+}
+legend { text-align: center; font-size: 1.6em; color: #556677; border: solid #C8CCD0 1px; background-color: #fff; padding: 6px 24px; }
+label { font-size: 1.4em; color: #556677; display: block; padding: 2px; }
+input { font-size: 1.2em; padding: 3px; margin-bottom: 4px; border: solid #BCC6CF 1px; color:#555; }
+div.submit { padding: 0; text-align: center; }
+div.submit > input { color: #444; font-size: 1.2em; padding: 4px 12px;  }
+p { font-size: 14px; padding: 10px; }
+

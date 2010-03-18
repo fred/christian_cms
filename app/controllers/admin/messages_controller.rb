@@ -3,7 +3,7 @@ class Admin::MessagesController < Admin::BaseController
   # GET /messages
   # GET /messages.xml
   def index
-    @messages = Message.find(:all)
+    @messages = Message.paginate(:page => params[:page], :order => "id DESC")
   end
 
   # GET /messages/1

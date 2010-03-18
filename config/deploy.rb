@@ -53,64 +53,7 @@ role :db,  domain, :primary => true
 role :scm, domain
 
 
-# following line added per latest railsmachine instructions
-#set :runner, 'deploy'
 
-namespace :sphinx do
-  desc "Generate the ThinkingSphinx configuration file"
-  task :configure do
-    run "cd #{current_path} && rake thinking_sphinx:configure"
-  end
-  desc "Generate Sphinx Index"
-  task :index do
-    run "cd #{current_path} && rake thinking_sphinx:index"
-  end
-  desc "Stop Sphinx"
-  task :stop do
-    run "cd #{current_path} && rake thinking_sphinx:stop"
-  end
-  desc "Start Sphinx"
-  task :start do
-    run "cd #{current_path} && rake thinking_sphinx:start"
-  end
-  desc "Restart Sphinx"
-  task :restart do
-    run "cd #{current_path} && rake thinking_sphinx:restart"
-  end
-  desc "Configure, index and start sphinx"
-  task :reload do
-    configure
-    index
-    start
-  end
-end
-
-
-namespace :passenger do 
-  %w(start stop restart).each do |action| 
-  desc "#{action} this app's passenger Server" 
-    task action.to_sym, :roles => :app do 
-      run "touch #{current_path}/tmp/restart.txt"
-    end
-  end
-end
-
-
-namespace :mongrel do
-  desc "Stop this app's Mongrel Server" 
-  task :stop, :roles => :app do 
-    run "mongrel_rails -p #{shared_path}/pids/server.pid stop"
-  end
-  desc "Start this app's Mongrel Server" 
-  task :start, :roles => :app do 
-    run "ruby #{current_path}/script/server -p #{mongrel_port} -e #{rails_env} -d start"
-  end
-  desc "Restart this app's Mongrel Server" 
-  task :restart, :roles => :app do 
-    find_and_execute_task("mongrel:stop")
-    find_and_execute_task("mongrel:start")
-  end
-end
 
 
 namespace :thin do 
@@ -133,16 +76,25 @@ namespace :deploy do
   %w(start stop restart).each do |action| 
     desc "#{action} our server"
     task action.to_sym do 
-      find_and_execute_task("mongrel:#{action}")
+      find_and_execute_task("thin:#{action}")
     end
   end
 end
 
 
-task :after_symlink, :roles => :app do
-  run "ln -nfs #{shared_path}/config/database.yml #{current_path}/config/database.yml"
-  run "ln -nfs #{shared_path}/assets/buletins #{current_path}/public/"
-  run "mkdir -p #{current_path}/tmp/cache"
-  run "mkdir -p #{current_path}/tmp/sessions"
+namespace(:customs) do
+  task :config, :roles => :app do
+    run "ln -nfs #{shared_path}/config/database.yml #{current_path}/config/database.yml"
+  end
+  task :symlink, :roles => :app do
+    run "ln -nfs #{shared_path}/assets/buletins #{current_path}/public/"
+    run "mkdir -p #{current_path}/tmp/cache"
+    run "mkdir -p #{current_path}/tmp/sessions"
+  end
 end
+
+
+after "deploy:symlink", "customs:config"
+after "deploy:symlink", "customs:symlink"
+after "deploy", "deploy:cleanup"
 

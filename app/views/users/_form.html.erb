@@ -5,7 +5,7 @@
 	</tr>
 	<tr>
 		<td> <label> Email </label></td>
-		<td><%= text_field :user, :email, :size => 32  %></td>
+		<td><%= text_field :user, :email, :size => 32, :type => "email"  %></td>
 	</tr>
 	<tr>
 		<td> </td>
@@ -13,11 +13,11 @@
 	</tr>
 	<tr>
 		<td> <label> Nombre </label></td>
-		<td><%= text_field :user, :first_name, :size => 32  %></td>
+		<td><%= text_field :user, :first_name, :size => 32, :type => "name"  %></td>
 	</tr>
 	<tr>
 		<td> <label> Apellido </label></td>
-		<td><%= text_field :user, :last_name, :size => 32  %></td>
+		<td><%= text_field :user, :last_name, :size => 32, :type => "name"  %></td>
 	</tr>
 	<tr>
 		<td> <label> Apellido Medio </label></td>
@@ -37,7 +37,7 @@
 	</tr>
 	<tr>
 		<td> <label> Cumpleaños </label></td>
-		<td><%= date_select :user, 'birthday', :start_year => 1940, :end_year => Time.now.year %></td>
+		<td><%= date_select :user, 'birthday', :start_year => 1940, :end_year => Time.now.year, :type => "date" %></td>
 	</tr>
 	<tr>
 		<td> El año no será mostrado </td>
@@ -53,11 +53,11 @@
 	</tr>
 	<tr>
 		<td> <label> Address 1 </label></td>
-		<td><%= text_field :user, 'address1', :size => 32  %></td>
+		<td><%= text_field :user, 'address1', :size => 32, :type => "address"  %></td>
 	</tr>
 	<tr>
 		<td> <label> Address 2 </label></td>
-		<td><%= text_field :user, 'address2', :size => 32  %></td>
+		<td><%= text_field :user, 'address2', :size => 32, :type => "address"  %></td>
 	</tr>
 	<tr>
 		<td> </td>
@@ -65,15 +65,15 @@
 	</tr>
 	<tr>
 		<td> <label> Casa </label></td>
-		<td><%= text_field :user, 'home_phone', :size => 32  %></td>
+		<td><%= text_field :user, 'home_phone', :size => 32, :type => "tel"  %></td>
 	</tr>
 	<tr>
 		<td> <label> Mobile </label></td>
-		<td><%= text_field :user, 'mobile_phone', :size => 32  %></td>
+		<td><%= text_field :user, 'mobile_phone', :size => 32, :type => "tel"  %></td>
 	</tr>
 	<tr>
 		<td> <label> Trabajo </label></td>
-		<td><%= text_field :user, 'office_phone', :size => 32  %></td>
+		<td><%= text_field :user, 'office_phone', :size => 32, :type => "tel"  %></td>
 	</tr>
 
 

@@ -1,52 +1,55 @@
-.post
-  %h2.title 
-    = link_to(@article.title, permalink_url(@article.permalink))
-  %p.created_at_up
-    = @article.published_at.strftime("%B %d, %Y")
-  .entry
-    - if !@article.body.empty?
-      = @article.body
-    - else
-      = @article.short_body
-    %p.created_at
-      = @article.created_at.strftime("%B %d, %Y")
+%article
+  .article
+    .header
+      %h2
+        = link_to(@article.title, permalink_url(@article.permalink))
+      %p.created_at_up
+        <time datetime="#{@article.created_at.strftime('%Y-%m-%d')}" pubdate>
+        = l(@article.published_at, :format => "%d %B, %Y")
+        </time>
+    .entry
+      - if !@article.body.empty?
+        = @article.body
+      - else
+        = @article.short_body
+    %br
     - if !@article.tag_list.empty?
       %p.item_tags 
         Tags
         - @article.tag_list.each do |tag|
           = link_to tag, tag_link(tag)
 
-= ratings_for @article
+  = ratings_for @article
 
-%br
+  %br
 
-%h3 Commentarios
-- @comments.each do |t|
-  .comment
-    %p 
-      %u 
-        %i
-          = user_comment_link(t)
-      dijo:
-    %p
-      = t.comment
-    %p.small 
-      = @comment.created_at.to_s
+  %h3 Commentarios
+  - @comments.each do |t|
+    .comment
+      %p 
+        %u 
+          %i
+            = user_comment_link(t)
+        dijo:
+      %p
+        = t.comment
+      %p.small 
+        = @comment.created_at.to_s
 
-%br
-%h4
-  Deje un Comentario
+  %br
+  %h4
+    Deje un Comentario
 
-#comment_error{:style=>"display: none"}
-  .error
-    %p There was an error.
+  #comment_error{:style=>"display: none"}
+    .error
+      %p There was an error.
   
-#thankyou{:style=>"display: none"}
-  .success
-    %p Gracias por su mensaje. El mensaje esta pendiente a ser autorizado.
+  #thankyou{:style=>"display: none"}
+    .success
+      %p Gracias por su mensaje. El mensaje esta pendiente a ser autorizado.
 
-#new_comment_form
-  - remote_form_for(@comment, :url => {:controller => "comments", :action => "create"}, :failure => "Element.show('comment_error');", :success => "Element.show('thankyou');ClearForm();Element.hide('new_comment_form');") do |f|
-    = render :partial => "/comments/form", :locals => {:f => f}
+  #new_comment_form
+    - remote_form_for(@comment, :url => {:controller => "comments", :action => "create"}, :failure => "Element.show('comment_error');", :success => "Element.show('thankyou');ClearForm();Element.hide('new_comment_form');") do |f|
+      = render :partial => "/comments/form", :locals => {:f => f}
 
 

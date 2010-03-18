@@ -66,6 +66,11 @@ h2 a {
 	text-decoration: none;
 }
 
+textarea {
+  font-family:  "Lucida Grande";
+}
+
+
 #wrapper {
 	margin: 0px;
 	padding: 0px;
@@ -226,9 +231,9 @@ h2 a {
 /* Page */
 
 #page {
-	width: 940px;
+	width: 950px;
 	margin: 0px auto;
-	padding: 20px 20px 0px 40px;
+	padding: 15px 15px 0px 35px;
 	background: #FFFFFF;
 }
 
@@ -239,18 +244,23 @@ h2 a {
 	width: 622px;
 	padding: 0px 0px 0px 0px;
 }
-
-.post {
-  margin: 20px 1px 40px 1px;
+#content label {
+  font-size: 1.2em;
+}
+#content input,
+#content textarea {
+  /*font-family:  "Lucida Grande" verdana;*/
+  font-size: 1.2em;
+  border: 1px solid #888;
+  padding: 4px;
+  color: #333;
 }
 
-.post-bgtop {
+.article {
+  margin: 0px 0px 80px 0px;
 }
 
-.post-bgbtm {
-}
-
-.post .title {
+.article .header {
   /*  height: 38px;*/
 	margin: 0px;
 	padding: 0px;
@@ -258,12 +268,12 @@ h2 a {
 	color: #493E2B;
 }
 
-.post .title a {
+.article .header a {
 	color: #493E2B;
 	border: none;
 }
 
-.post .meta {
+.article .meta {
 	margin: -10px 0px 0px 0px;
 	padding: 0px 0px 10px 0px;
 	letter-spacing: -1px;
@@ -273,27 +283,27 @@ h2 a {
 	font-family: Georgia, "Times New Roman", Times, serif;
 }
 
-.post .meta .date {
+.article .meta .date {
 	float: left;
 }
 
-.post .meta .posted {
+.article .meta .articleed {
 	float: right;
 }
 
-.post .meta a {
+.article .meta a {
 }
 
-.post .entry {
+.article .entry {
 	background: url(/images/earth/img08.jpg) no-repeat left top;
-	padding: 25px 0px 0px 0px;
+	padding: 22px 0px 0px 0px;
 	text-align: justify;
 	font-size: 1.1em;
 }
-.post ul {
+.article ul {
   margin: 20px 0 20px 0;
 }
-.post ul li {
+.article ul li {
   list-style-type: circle;
   margin: 6px 6px 6px 20px;
   padding: 0;
@@ -320,7 +330,6 @@ h2 a {
 	font-size: 12px;
 	font-weight: normal;
 }
-
 
 /* Sidebar */
 
@@ -535,3 +544,4 @@ h2 a {
 .error      { background: #FBE3E4; color: #8a1f11; border-color: #FBC2C4; }
 .notice     { background: #FFF6BF; color: #514721; border-color: #FFD324; }
 .success    { background: #E6EFC2; color: #264409; border-color: #C6D880; }
+

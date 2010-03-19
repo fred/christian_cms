@@ -1,12 +1,13 @@
 %article
   .article
-    .header
-      %h2
-        = link_to(@article.title, permalink_url(@article.permalink))
-      %p.created_at_up
-        <time datetime="#{@article.created_at.strftime('%Y-%m-%d')}" pubdate>
-        = l(@article.published_at, :format => "%d %B, %Y")
-        </time>
+    %header
+      %time{:datetime=>"#{@article.created_at.strftime('%Y-%m-%d')}" :pubdate=>"pubdate"}
+      .header
+        %h2
+          = link_to(@article.title, permalink_url(@article.permalink))
+        %p.created_at_up
+          = l(@article.published_at, :format => "%d %B, %Y")
+        
     .entry
       - if !@article.body.empty?
         = @article.body

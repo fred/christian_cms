@@ -2,7 +2,7 @@
   %article
     .article
       %header
-        %time{:datetime=>"#{@article.created_at.strftime('%Y-%m-%d')}" :pubdate=>"pubdate"}
+        %time{:datetime=>"#{@article.created_at.strftime('%Y-%m-%d')}", :pubdate=>"pubdate"}
         .header
           %h2 
             = link_to(article.title, permalink_url(article.permalink))

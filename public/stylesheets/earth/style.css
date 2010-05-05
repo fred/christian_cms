@@ -22,11 +22,11 @@ h1, h2, h3 {
 }
 
 h1 {
-	font-size: 2.2em;
+	font-size: 2.1em;
 }
 
 h2 {
-	font-size: 2.0em;
+	font-size: 1.8em;
 }
 
 h3 {
@@ -257,20 +257,23 @@ textarea {
 }
 
 .article {
-  margin: 0px 0px 80px 0px;
+  margin: 0px 0px 40px 0px;
 }
 
 .article .header {
-  /*  height: 38px;*/
 	margin: 0px;
 	padding: 0px;
-	letter-spacing: -.5px;
+	margin: 0 0 2px 0;
 	color: #493E2B;
 }
 
 .article .header a {
 	color: #493E2B;
 	border: none;
+  /*border-bottom: 1px dashed #aaa;*/
+}
+.article .header p {
+  margin: 4px 2px 4px 2px;
 }
 
 .article .meta {
@@ -295,7 +298,7 @@ textarea {
 }
 
 .article .entry {
-	background: url(/images/earth/img08.jpg) no-repeat left top;
+	background: url("/images/earth/img08.jpg") no-repeat left top;
 	padding: 22px 0px 0px 0px;
 	text-align: justify;
 	font-size: 1.1em;
@@ -394,8 +397,8 @@ textarea {
 #sidebar h2 {
 	height: 64px;
 	background: url(/images/earth/img09.jpg) no-repeat left bottom;
-	letter-spacing: -.5px;
-	font-size: 26px;
+	/*letter-spacing: -.5px;*/
+	font-size: 24px;
 	color: #493E2B;
 }
 
@@ -545,3 +548,13 @@ textarea {
 .notice     { background: #FFF6BF; color: #514721; border-color: #FFD324; }
 .success    { background: #E6EFC2; color: #264409; border-color: #C6D880; }
 
+
+blockquote {
+  font-style: italic;
+  font-size: 1.0em;
+  color: #333;
+  border: 1px dashed #bbb;
+  padding: 20px 20px 80px 20px;
+  margin: 20px 20px 5px 5px;
+  background: url("/images/mail.png") no-repeat bottom right;
+}

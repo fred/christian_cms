@@ -14,11 +14,11 @@
           = link_to("leer mas...", permalink_url(article.permalink), :class => 'more')
           = link_to("Commentarios",permalink_url(article.permalink), :class => "Commentarios")
         
-      /- if !article.tag_list.empty?
-      /  %p.item_tags 
-      /    Tags: 
-      /    - article.tag_list.each do |tag|
-      /      = link_to tag, tag_link(tag)
+        - unless article.tag_list.empty?
+          %p.item_tags 
+            Tags: 
+            - article.tag_list.each do |tag|
+              = link_to tag, tag_link(tag)
 
       
 %h3 Paginas:

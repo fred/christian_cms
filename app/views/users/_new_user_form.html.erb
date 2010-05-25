@@ -1,7 +1,12 @@
 <table>
 	<tr>
 		<td> </td>
-		<td><%= error_message_on :user, :email, "Email ", "","inputError" %></td>
+		
+		<td><%= error_message_on :user, :email,
+         :prepend_text => "Email  ",
+         :append_text => ".",
+         :css_class => "inputError" %>
+    </td>
 	</tr>
 	<tr>
 		<td> <label> Email </label></td>
@@ -10,7 +15,12 @@
 	
 	<tr>
 		<td> </td>
-		<td><%= error_message_on :user, :first_name, "Nombre ", "","inputError" %></td>
+		<td>
+		  <%= error_message_on :user, :first_name, 
+		    :prepend_text => "Nombre ", 
+		    :append_text => ".",
+		    :css_class => "inputError" %>
+		</td>
 	</tr>
 	<tr>
 		<td> <label> Nombre </label></td>
@@ -58,7 +68,11 @@
 
 	<tr>
 		<td> </td>
-		<td><%= error_message_on :user, :login, "Login ", "","inputError" %></td>
+		<td><%= error_message_on :user, :login, 
+		  :prepend_text => "Login ", 
+	    :append_text => ".",
+	    :css_class => "inputError" %>
+	  </td>
 	</tr>
 	<tr>
 		<td> <label> Login Username </label></td>
@@ -66,7 +80,9 @@
 	</tr>
 	<tr>
 		<td> </td>
-		<td><%= error_message_on :user, :password, "Password ", "","inputError" %></td>
+		<td><%= error_message_on :user, :password, 
+		    :prepend_text => "Password ", :append_text => ".", :css_class => "inputError" %>
+		</td>
 	</tr>
 	<tr>
 		<td> <label> Password </label></td>
@@ -74,7 +90,11 @@
 	</tr>
 	<tr>
 		<td> </td>
-		<td><%= error_message_on :user, :password_confirmation, "Confirmacion de Password ", "","inputError" %></td>
+		<td><%= error_message_on :user, :password_confirmation, 
+		    :prepend_text => "Confirmacion de Password ", 
+		    :append_text => ".",
+		    :css_class => "inputError" %>
+		</td>
 	</tr>
 	<tr>
 		<td> <label> Confirmación del Password </label></td>

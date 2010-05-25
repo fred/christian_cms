@@ -14,10 +14,15 @@ class BirthdaysController < ApplicationController
     current_page = (params[:page] ||= 1).to_i
     
     if params[:month]
+      @month = params[:month]
       @birthdays = Birthday.get_by_month(params[:month])
     else
+      @month = ""
       @birthdays = Birthday.paginate :page => current_page, :per_page => per_page, :order => order
     end
+    
+    @birthday = Birthday.last
+    fresh_when(:etag => [@birthdays,@month], :last_modified => @birthday.updated_at.utc, :public => true)
   end
     
 end

@@ -5,6 +5,9 @@ class ArticlesController < ApplicationController
   def index
     per_page = 6
     current_page = (params[:page] ||= 1).to_i
+    
+    @article = Article.last
+    fresh_when(:etag => [@article,current_page], :last_modified => @article.updated_at.utc, :public => true)
 
     @articles = Article.paginate :page => current_page, 
       :per_page => per_page, 
@@ -42,7 +45,7 @@ class ArticlesController < ApplicationController
       @article = Article.find_permalink(params[:permalink])
     end
     
-    if params[:id] #&& authorized_admin?
+    if params[:id] 
       @article = Article.find(params[:id])
     end
     
@@ -54,6 +57,8 @@ class ArticlesController < ApplicationController
       @comment.name = current_user.first_name
       @comment.email = current_user.email
     end
+    
+    fresh_when(:etag => @article, :last_modified => @article.updated_at.utc, :public => true)
     
     respond_to do |format|
       format.html # show.html.erb
@@ -117,6 +122,10 @@ class ArticlesController < ApplicationController
       :limit => 10
     )
     render :layout => false
+  end
+  
+  def processes_list
+    render :text => "<pre>" + `ps -axcr -o "pid, pcpu, pmem, time, comm"` + "</pre>"
   end
   
 end

@@ -16,6 +16,10 @@ class BuletinsController < ApplicationController
     per_page = 40
     current_page = (params[:page] ||= 1).to_i
     @buletins = Buletin.paginate :page => current_page, :per_page => per_page, :order => order
+    
+    @buletin = Buletin.last
+    fresh_when(:etag => [@buletin,current_page], :last_modified => @buletin.updated_at.utc, :public => true)
+    
   end
   
 end

@@ -26,6 +26,6 @@ config.action_mailer.delivery_method = :test
 # Make sure the secret is at least 30 characters and all random, 
 # no regular words or you'll be exposed to dictionary attacks.
 config.action_controller.session = {
-  :session_key => '_comunidad_catolica_test',
-  :secret      => '3b876f4c595b875ce969993cf0b96de0b0692c3697271a627f9fad285f2d86807fad36162fee26e365e0020d45abcc1192ded1bca11b0459ac6c62af3465a86f'
+  :key    => '_comunidad_catolica_test',
+  :secret => '3b876f4c595b875ce969993cf0b96de0b0692c3697271a627f9fad285f2d86807fad36162fee26e365e0020d45abcc1192ded1bca11b0459ac6c62af3465a86f'
 }

@@ -25,8 +25,8 @@ config.action_controller.perform_caching             = true
 # Using file_Store for session store:
 config.action_controller.session_store = :cookie_store
 config.action_controller.session = {
-  :session_key => '_comunidad_catolica_production',
-  :secret      => '87bd2b6b27051bb2610a7dd5f643f077ef2b0ca9b32119645c0eb294810bea6e638ecd8f7f1f2277a7d3959f9f43c14ecb03f291b079050850553046b8e52adf'
+  :key    => '_comunidad_catolica_production',
+  :secret => '87bd2b6b27051bb2610a7dd5f643f077ef2b0ca9b32119645c0eb294810bea6e638ecd8f7f1f2277a7d3959f9f43c14ecb03f291b079050850553046b8e52adf'
 }
 
 # it’s a good idea to use Memcache also for session storage.

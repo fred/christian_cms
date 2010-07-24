@@ -10,7 +10,8 @@ body {
 	background: #F7F7F7 url(/images/earth/img01.jpg) repeat left top;
 	font-family: Georgia, "Times New Roman", Times, serif;
 	font-size: 14px;
-	color: #5A554E;
+	/*color: #5A554E;*/
+	color: #333;
 }
 
 h1, h2, h3 {
@@ -22,15 +23,15 @@ h1, h2, h3 {
 }
 
 h1 {
-	font-size: 2.1em;
+	font-size: 2.0em;
 }
 
 h2 {
-	font-size: 1.8em;
+	font-size: 1.7em;
 }
 
 h3 {
-	font-size: 1.6em;
+	font-size: 1.4em;
 }
 
 h4 {
@@ -41,9 +42,9 @@ h4 {
 p {
   margin: 1px;
 }
-p, ul, ol {
+ul, ol {
 	margin-top: 0;
-	font-family: "Trebuchet MS", Georgia, "Times New Roman", Times, serif;
+  font-family: "Trebuchet MS", Georgia, "Times New Roman", Times, serif;*/
 }
 
 ul, ol {
@@ -260,6 +261,7 @@ textarea {
   margin: 0px 0px 40px 0px;
 }
 
+
 .article .header {
 	margin: 0px;
 	padding: 0px;
@@ -271,6 +273,7 @@ textarea {
 	color: #493E2B;
 	border: none;
   /*border-bottom: 1px dashed #aaa;*/
+  text-decoration: none;
 }
 .article .header p {
   margin: 4px 2px 4px 2px;
@@ -296,12 +299,26 @@ textarea {
 
 .article .meta a {
 }
+.article .entry h1 
+.article .entry h2,
+.article .entry h3  {
+  margin-bottom: 20px;
+}
 
 .article .entry {
 	background: url("/images/earth/img08.jpg") no-repeat left top;
-	padding: 22px 0px 0px 0px;
+	padding: 22px 2px 2px 2px;
 	text-align: justify;
-	font-size: 1.1em;
+  /*font-size: 1.1em;*/
+  overflow: hidden;
+  
+  font-family: Palatino, "Trebuchet MS" Georgia, Times, 'Times New Roman', serif;
+  font-size: 18px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  line-height: 24px;
+  
 }
 .article ul {
   margin: 20px 0 20px 0;
@@ -490,7 +507,7 @@ textarea {
 	height: 50px;
 	margin: 0 auto;
 	padding: 0px 0 15px 0;
-	font-family: Arial, Helvetica, sans-serif;
+/*  font-family: Arial, Helvetica, sans-serif;*/
 }
 
 #footer p {

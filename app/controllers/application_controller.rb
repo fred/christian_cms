@@ -17,8 +17,12 @@ class ApplicationController < ActionController::Base
   layout "themes/#{Settings.theme}" rescue "themes/default"
   
   before_filter :login_from_cookie
-  
   before_filter :get_links
+  before_filter :get_request_protocol
+  
+  def get_request_protocol
+    @request_protocol = request.protocol
+  end
   
   def get_links
     @sidebar_items = MenuItem.sidebar_items

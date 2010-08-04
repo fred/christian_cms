@@ -31,8 +31,8 @@ Rails::Initializer.run do |config|
   config.gem "factory_girl"
   config.gem "ajaxful_rating"
   config.gem 'rakismet', :version => "0.3.6"
-  # config.gem 'feedtools', :lib => 'feed_tools'
   config.gem 'haml'
+  # config.gem 'acts-as-taggable-on', :version => "2.0.6"
   
   # These cause problems with irb. Left in for reference
   # config.gem 'rspec-rails', :lib => 'spec/rails', :version => '1.1.11'

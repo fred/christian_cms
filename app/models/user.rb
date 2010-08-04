@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :login, :email, :case_sensitive => false
   
   # Filters
-  before_save :encrypt_password
+  before_save :encrypt_password, :set_full_name
   
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
@@ -45,6 +45,14 @@ class User < ActiveRecord::Base
   
   
   ### Class Methods ###
+  
+  def set_full_name
+    if self.first_name.blank? && self.last_name.blank?
+      self.full_name = self.login 
+    else
+      self.full_name = self.first_name.to_s + " " + self.middle_name + " " +self.last_name.to_s
+    end
+  end
 
   def self.human_attribute_name(attr)
     HUMANIZED_ATTRIBUTES[attr.to_sym] || super

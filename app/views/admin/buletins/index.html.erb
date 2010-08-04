@@ -27,7 +27,7 @@
 	</table>
 </div>
 
-<%= will_paginate @buletins %>
+<%= will_paginate @buletins, :previous_label => "Anterior", :next_label => "Siguiente" %>
 
 <h3> Upload Buletin </h3>
 <%= error_messages_for :buletin %>

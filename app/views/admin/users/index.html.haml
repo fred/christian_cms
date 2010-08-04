@@ -31,6 +31,6 @@
           = link_to 'Deletar', admin_user_path(user), :confirm => 'Estas seguro que quieres deletar este usuario?', :method => :delete
 
 
-= will_paginate @users
+= will_paginate @users, :previous_label => "Anterior", :next_label => "Siguiente"
 
 %h3= link_to 'Crear Usuario', new_admin_user_path 

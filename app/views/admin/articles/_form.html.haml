@@ -1,4 +1,3 @@
-= render :partial => "/shared/tiny_mce"
 
 %fieldset
   %legend 
@@ -19,14 +18,6 @@
     %br
     = f.text_field :permalink, :size => 60
   
-  %p
-    = f.label :tags
-    %br
-    = f.text_field :tag_list, {:size => 60, :value => @article.tag_list}
-    %br
-    %span.small_tip
-      Tags separados por coma. ex. "joking, clowning, sports, food"
-
   %p
     = f.label "Autor"
     %br
@@ -65,13 +56,13 @@
   %p
     = f.label "Texto Principal (1,000 caracteres)"
     %br
-    = f.text_area :short_body, :rows => 30, :cols => 120
+    = f.text_area :short_body, :rows => 30, :cols => 120, :class=>"ckeditor"
   
   %br
   
     %p
     = f.label "Text Secundario (longo 5,000 caracteres)"
     %br
-    = f.text_area :body, :rows => 30, :cols => 120
+    = f.text_area :body, :rows => 30, :cols => 120, :class=>"ckeditor"
     
 

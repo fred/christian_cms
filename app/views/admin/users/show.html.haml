@@ -4,9 +4,7 @@
     %tr
       %td.label Full Name :
       %td.value
-        = @user.first_name
-        = @user.middle_name
-        = @user.last_name
+        = @user.full_name
     %tr
       %td.label login:
       %td.value= @user.login

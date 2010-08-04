@@ -1,4 +1,8 @@
 - @title = "Editando Articulo:  #{@article.title}"
+
+= #render :partial => "/shared/tiny_mce"
+= render :partial => "/shared/ckeditor"
+
 %h2= @title
 
 %h3 

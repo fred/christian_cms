@@ -56,4 +56,4 @@
 
 
 - if !params[:month]
-  = will_paginate @birthdays
+  = will_paginate @birthdays, :previous_label => "Anterior", :next_label => "Siguiente"

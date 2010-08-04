@@ -13,12 +13,6 @@
         = @article.body
       - else
         = @article.short_body
-    %br
-    - if !@article.tag_list.empty?
-      %p.item_tags 
-        Tags
-        - @article.tag_list.each do |tag|
-          = link_to tag, tag_link(tag)
 
   %br
 

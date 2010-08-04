@@ -27,16 +27,24 @@ class Article < ActiveRecord::Base
   validates_uniqueness_of :title
   
   # Filters
+  before_save :set_author
   before_destroy :is_protected?
   after_save :sweep_partial_cache
   
   # Plugins
   has_permalink :title, :update => true
-  acts_as_taggable_on :tags
-  ajaxful_rateable :stars => 5
+
   
   
   ### Methods ###
+  
+  # set author name for the chosen user_id
+  def set_author
+    if self.user_id
+      user = User.find(self.user_id)
+      self.author = user.login if user
+    end
+  end
   
   # Last published date for an article
   def self.last_published_date
@@ -117,7 +125,7 @@ class Article < ActiveRecord::Base
   # Protected articles cant be deleted
   def is_protected?
     if self.protected_record
-      raise "Article is protected, You cannot delete it"
+      raise "Article Protected"
     else
       true
     end

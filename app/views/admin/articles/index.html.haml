@@ -8,32 +8,37 @@
     %tr
       %th ID
       %th Titulo
-      %th Fecha
+      %th Publicacion
       %th Activo
       %th Lock
       %th
       %th
-      %th
-      %tr
   %tbody
     - for article in @articles
       %tr
         %th{:scope=>"row", :id => article.id}
           = link_to article.id, admin_article_path(article)
+          
         %td{:scope=>"row", :class=> "mouse", :onclick => "document.location.href='#{admin_article_path(article)}'"}
           = link_to article.title, edit_admin_article_path(article)
+          
         %td{:scope=>"row", :class=> "mouse", :onclick => "document.location.href='#{admin_article_path(article)}'"} 
           = article.published_at.strftime("%d %b, %Y")
+          
         %td{:scope=>"row", :class=> "mouse", :onclick => "document.location.href='#{admin_article_path(article)}'"}
           = boolean_to_image_small(article.approved)
+          
         %td{:scope=>"row"}
           = boolean_to_image_lock(article.protected_record)
+          
         %td{:scope=>"row"}
           = link_to 'Editar', edit_admin_article_path(article)
+          
         %td{:scope=>"row"}
           = link_to 'Deletar', admin_article_path(article), :confirm => 'Estas seguro que quieres deletar este articulo?', :method => :delete
 
-
-= will_paginate @articles
+%br
+= will_paginate @articles, :previous_label => "Anterior", :next_label => "Siguiente"
+%br
 
 %h3= link_to 'Crear Articulo', new_admin_article_path 

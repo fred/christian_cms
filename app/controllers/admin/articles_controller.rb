@@ -84,7 +84,7 @@ class Admin::ArticlesController < Admin::BaseController
       redirect_to(admin_articles_url)
     end
     rescue
-      flash[:error] = "No puedes deletar este articulo, articulo protegido."
+      flash[:error] = "ERROR: No puedes deletar este articulo, articulo protegido."
       redirect_to(admin_articles_url)
   end
 end

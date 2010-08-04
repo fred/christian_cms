@@ -20,9 +20,7 @@ class BirthdaysController < ApplicationController
       @month = ""
       @birthdays = Birthday.paginate :page => current_page, :per_page => per_page, :order => order
     end
-    
-    @birthday = Birthday.last
-    fresh_when(:etag => [@birthdays,@month], :last_modified => @birthday.updated_at.utc, :public => true)
+
   end
     
 end

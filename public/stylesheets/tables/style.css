@@ -460,7 +460,7 @@ body table
 #gradient-style
 {
 	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
-	font-size: 12px;
+  font-size: 1.2em;
 	margin: 1px;
 	width: 99%;
 	text-align: left;
@@ -468,17 +468,17 @@ body table
 }
 #gradient-style th
 {
-	font-size: 1.2em;
 	font-weight: bold;
-	padding: 4px;
+	padding: 3px 0px 3px 3px;
 	background: #b9c9fe url('/images/table-images/gradhead.png') repeat-x;
 	border-top: 2px solid #d3ddff;
 	border-bottom: 1px solid #fff;
 	color: #039;
+	text-align: left;
 }
 #gradient-style td
 {
-	padding: 8px; 
+	padding: 4px 2px 4px 6px; 
 	border-bottom: 1px solid #fff;
 	color: #669;
 	border-top: 1px solid #fff;

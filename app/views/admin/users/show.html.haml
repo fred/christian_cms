@@ -1,58 +1,49 @@
 .article
 
-  %table
-    %tr
-      %td.label Full Name :
-      %td.value
-        = @user.full_name
-    %tr
-      %td.label login:
-      %td.value= @user.login
+  %p
+    %label Nombre
+    %label.value= @user.first_name
+  %p
+    %label Apellido
+    %label.value= @user.last_name
+  %p  
+    %label login
+    %label.value= @user.login
+  %p
+    %label E-mail
+    %label.value= h @user.email
+  %p
+    %label Phone Home
+    %label.value= h @user.home_phone 
+  %p
+    %label Mobile
+    %label.value= h @user.mobile_phone 
+  %p
+    %label Office Number
+    %label.value= h @user.office_phone 
+  %p
+    %label Address1
+    %label.value= h @user.address1 
+  %p
+    %label Address2
+    %label.value= h @user.address2 
+  %p
+    %label Nacionalidad
+    %label.value= h @user.nationality 
+  %p
+    %label Parentestco
+    %label.value= h @user.family_role 
+  %p
+    %label Estado Civil
+    %label.value= h @user.civil_state 
+  %p
+    %label Cumpleanos
+    %label.value= h @user.birthday.strftime("%b-%d") 
+  %p
+    %label Sacramentos
+    %label.value= h @user.sacraments 
 
-    %tr
-      %td.label E-mail: 
-      %td.value= h @user.email
-
-    %tr
-      %td.label Phone Home: 
-      %td.value= h @user.home_phone 
-
-    %tr
-      %td.label Mobile: 
-      %td.value= h @user.mobile_phone 
-
-    %tr
-      %td.label Office Number: 
-      %td.value= h @user.office_phone 
-
-    %tr
-      %td.label Address1: 
-      %td.value= h @user.address1 
-
-    %tr
-      %td.label Address2: 
-      %td.value= h @user.address2 
-
-    %tr
-      %td.label Nacionalidad: 
-      %td.value= h @user.nationality 
-
-    %tr
-      %td.label Parentestco: 
-      %td.value= h @user.family_role 
-
-    %tr
-      %td.label Estado Civil: 
-      %td.value= h @user.civil_state 
-
-    %tr
-      %td.label Cumpleanos: 
-      %td.value= h @user.birthday.strftime("%b-%d") 
-
-    %tr
-      %td.label Sacramentos: 
-      %td.value= h @user.sacraments 
-
+  %br
 
   %h4
     = link_to 'Crear Nuevo Usuario', new_admin_user_path

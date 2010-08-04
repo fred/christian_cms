@@ -9,8 +9,8 @@
    
 -------------------------------------------------------------- */
 
-label       { font-size:1.3em; color: #111;}
-label.value { margin: 1em; color: #666;}
+label       { font-size:1.2em; color: #777; padding: 0 6px 0 0;}
+label.value { font-size:1.2em; color: #333; padding: 0;}
 fieldset    { padding:1.4em; margin: 0 0 1.5em 0; border: 1px solid #4B7399; }
 legend      { font-size:1.6em; }
 

@@ -566,12 +566,12 @@ textarea {
 .success    { background: #E6EFC2; color: #264409; border-color: #C6D880; }
 
 
-blockquote {
+.quote, blockquote {
   font-style: italic;
   font-size: 1.0em;
   color: #333;
-  border: 1px dashed #bbb;
-  padding: 20px 20px 80px 20px;
-  margin: 20px 20px 5px 5px;
+  border: 2px dashed #ccc;
+  padding: 20px 40px 120px 20px;
+  margin: 15px 2px 4px 2px;
   background: url("/images/mail.png") no-repeat bottom right;
 }

@@ -57,7 +57,8 @@
     = f.label "Texto Principal (1,000 caracteres)"
     %br
     = f.text_area :short_body, :rows => 30, :cols => 120, :class=>"ckeditor"
-  
+  %p
+    = render :partial => "/shared/tiny_mce_footer", :locals => {:field_id => "article_short_body"}
   %br
   
     %p

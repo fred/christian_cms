@@ -1,6 +1,7 @@
 set :application, "comunidad-catolica.com"
 
 # Primary domain name of your application. Used as a default for all server roles.
+# set :domain, "comunidad-catolica.com"
 set :domain, "comunidad-catolica.com"
 
 # Login user for ssh.

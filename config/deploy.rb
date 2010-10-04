@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 set :application, "comunidad-catolica.com"
 
 # Primary domain name of your application. Used as a default for all server roles.
@@ -73,14 +74,39 @@ namespace :thin do
   end
 end
 
-namespace :deploy do 
-  %w(start stop restart).each do |action| 
-    desc "#{action} our server"
-    task action.to_sym do 
-      find_and_execute_task("thin:#{action}")
-    end
+# namespace :deploy do 
+#   %w(start stop restart).each do |action| 
+#     desc "#{action} our server"
+#     task action.to_sym do 
+#       find_and_execute_task("thin:#{action}")
+#     end
+#   end
+# end
+
+set :unicorn_binary, "/usr/local/bin/unicorn_rails"
+set :unicorn_config, "#{current_path}/config/unicorn.rb"
+set :unicorn_pid, "#{shared_path}/pids/unicorn.pid"
+set :unicorn_sock, "#{shared_path}/pids/unicorn.sock"
+
+namespace :deploy do
+  task :start, :roles => :app, :except => { :no_release => true } do 
+    run "cd #{current_path} && #{try_sudo} #{unicorn_binary} -c #{unicorn_config} -E #{rails_env} -D"
+  end
+  task :stop, :roles => :app, :except => { :no_release => true } do 
+    run "if [ -f #{unicorn_pid} ]; then #{try_sudo} kill `cat #{unicorn_pid}`; fi"
+  end
+  task :graceful_stop, :roles => :app, :except => { :no_release => true } do
+    run "if [ -f #{unicorn_pid} ]; then #{try_sudo} kill -s QUIT `cat #{unicorn_pid}`; fi"
+  end
+  task :reload, :roles => :app, :except => { :no_release => true } do
+    run "if [ -f #{unicorn_pid} ]; then #{try_sudo} kill -s USR2 `cat #{unicorn_pid}`; fi"
+  end
+  task :restart, :roles => :app, :except => { :no_release => true } do
+    stop
+    start
   end
 end
+
 
 
 namespace(:customs) do

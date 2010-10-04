@@ -8,24 +8,32 @@
 			<td class="value"><%= h @user.email %> </td>
 		</tr>
 		<tr>
-			<td class="label">Phone Home: </td>
+			<td class="label">Telefono Casa: </td>
 			<td class="value"><%= h @user.home_phone %> </td>
 		</tr>
 		<tr>
-			<td class="label">Mobile: </td>
+			<td class="label">Telefono Mobile: </td>
 			<td class="value"><%= h @user.mobile_phone %> </td>
 		</tr>
 		<tr>
-			<td class="label">Office Number: </td>
+			<td class="label">Telefono Trabajo: </td>
 			<td class="value"><%= h @user.office_phone %> </td>
 		</tr>
 		<tr>
-			<td class="label">Address1: </td>
+			<td class="label">Address 1: </td>
 			<td class="value"><%= h @user.address1 %> </td>
 		</tr>
 		<tr>
-			<td class="label">Address2: </td>
+			<td class="label">Address 2: </td>
 			<td class="value"><%= h @user.address2 %> </td>
+		</tr>
+		<tr>
+			<td class="label">Ciudad: </td>
+			<td class="value"><%= h @user.city %> </td>
+		</tr>
+		<tr>
+			<td class="label">Pais: </td>
+			<td class="value"><%= h @user.country %> </td>
 		</tr>
 		<tr>
 			<td class="label">Nacionalidad: </td>
@@ -44,13 +52,25 @@
 			<td class="value"><%= h @user.birthday.strftime("%b-%d") %> </td>
 		</tr>
 		<tr>
+			<td class="label">Fecha de Casamiento: </td>
+			<td class="value"><%= h @user.married_bday.strftime("%b-%d") if @user.married_bday %> </td>
+		</tr>
+		<tr>
 			<td class="label">Sacramentos: </td>
 			<td class="value"><%= h @user.sacraments %> </td>
 		</tr>
+		<tr>
+			<td class="label">Acerca de mi: </td>
+			<td class="value"><%= h @user.bio %> </td>
+		</tr>
+
 	</table>
 
 </div>
 
+<% if current_user %>
+  <p> <%= link_to "Editar my informacion", edit_user_path(current_user) %></p>
+<% end %>
 
 <h4> * Registrese para recibir mejor informacion de la Comunidad Catolica.</h4>
 	

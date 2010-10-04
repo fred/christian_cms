@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Admin::ArticlesController < Admin::BaseController
   
   #cache_sweeper :article_sweeper, :only => [ :create, :update, :destroy ] 

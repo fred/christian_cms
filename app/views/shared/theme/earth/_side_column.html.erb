@@ -9,6 +9,10 @@
 			  <% end %>
     		<li> <%= link_to "Dejar Mensaje", "/messages/new" %> </li>
     		<li> <%= link_to "Usuarios", users_path %></li>
+    		<% if current_user %>
+        <li> <%= link_to "Editar my informacion", edit_user_path(current_user) %> </li>
+        <li> <%= link_to "My Profile", current_user %> </li>
+        <% end %>
     	</ul>
     	<%= image_tag "/images/iglesia3.png" %>
 		</li>

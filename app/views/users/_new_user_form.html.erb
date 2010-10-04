@@ -10,7 +10,7 @@
 	</tr>
 	<tr>
 		<td> <label> Email </label></td>
-		<td><%= text_field :user, 'email', :size => 22  %></td>
+		<td><%= text_field :user, :email, :size => 22  %></td>
 	</tr>
 	
 	<tr>
@@ -24,21 +24,21 @@
 	</tr>
 	<tr>
 		<td> <label> Nombre </label></td>
-		<td><%= text_field :user, 'first_name', :size => 22  %></td>
+		<td><%= text_field :user, :first_name, :size => 22  %></td>
 	</tr>
 	
 	<tr>
 		<td> <label> Apellido </label></td>
-		<td><%= text_field :user, 'last_name', :size => 22  %></td>
+		<td><%= text_field :user, :last_name, :size => 22  %></td>
 	</tr>
 	
 	<tr>
 		<td> <label> Nacionalidad </label></td>
-		<td><%= text_field :user, 'nationality', :size => 22  %></td>
+		<td><%= text_field :user, :nationality, :size => 22  %></td>
 	</tr>
 	<tr>
 		<td> <label> Cumpleaños </label></td>
-		<td><%= date_select :user, 'birthday', :start_year => 1940, :end_year => Time.now.year %></td>
+		<td><%= date_select :user, :birthday, :start_year => 1940, :end_year => Time.now.year %></td>
 	</tr>
 	
 	<tr>
@@ -53,11 +53,11 @@
 	
 	<tr>
 		<td> <label> Telefono Casa </label></td>
-		<td><%= text_field :user, 'home_phone', :size => 22  %></td>
+		<td><%= text_field :user, :home_phone, :size => 22  %></td>
 	</tr>
 	<tr>
 		<td> <label> Telefono Mobile </label></td>
-		<td><%= text_field :user, 'mobile_phone', :size => 22  %></td>
+		<td><%= text_field :user, :mobile_phone, :size => 22  %></td>
 	</tr>
 
 
@@ -76,7 +76,7 @@
 	</tr>
 	<tr>
 		<td> <label> Login Username </label></td>
-		<td><%= text_field :user, 'login', :size => 22  %></td>
+		<td><%= text_field :user, :login, :size => 22  %></td>
 	</tr>
 	<tr>
 		<td> </td>
@@ -86,7 +86,7 @@
 	</tr>
 	<tr>
 		<td> <label> Password </label></td>
-		<td><%= password_field :user, 'password', :size => 22  %></td>
+		<td><%= password_field :user, :password, :size => 22  %></td>
 	</tr>
 	<tr>
 		<td> </td>
@@ -98,7 +98,7 @@
 	</tr>
 	<tr>
 		<td> <label> Confirmación del Password </label></td>
-		<td><%= password_field :user, 'password_confirmation', :size => 22  %></td>
+		<td><%= password_field :user, :password_confirmation, :size => 22  %></td>
 	</tr>
 	
 	<tr>
@@ -108,7 +108,7 @@
 	
 	<tr>
 		<td> <label> Disponer my información al público? </label></td>
-		<td><%= check_box :user, 'approved', :checked => true %></td>
+		<td><%= check_box :user, :approved, :checked => true %></td>
 	</tr>
 	
 </table>

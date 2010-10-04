@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Admin::BuletinsController < Admin::BaseController
   
   # GET /articles

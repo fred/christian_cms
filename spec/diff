@@ -1,0 +1,97 @@
+diff --git a/spec/factories/article.rb b/spec/factories/article.rb
+deleted file mode 100644
+index b1225c9..0000000
+--- a/spec/factories/article.rb
++++ /dev/null
+@@ -1,38 +0,0 @@
+-############
+-### Articles
+-############
+-Factory.define :article_one, :class => Article do |u|
+-  u.title "Quienes Somos"
+-  u.permalink "quienes_somes"
+-  u.category "otro"
+-  u.user { Factory(:marcela) }
+-  u.author "marcela"
+-  u.short_body "There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain..."
+-end
+-Factory.define :article_two, :class => Article do |u|
+-  u.title "Consejo Pastoral/Horarios"
+-  u.permalink "contactenos"
+-  u.category "otro"
+-  u.user { Factory(:marcela) }
+-  u.author "marcela"
+-  u.short_body "There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain..."
+-end
+-
+-Factory.define :article_three, :class => Article do |u|
+-  u.title "Mapa / Como llegar"
+-  u.permalink "mapa"
+-  u.category "otro"
+-  u.user { Factory(:fred) }
+-  u.author "fred"
+-  u.short_body "There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain..."
+-end
+-
+-Factory.define :article_four, :class => Article do |u|
+-  u.title "Fotos de despedida de la Familia Rodriguez 2008"
+-  u.permalink "fotos-de-despedida-de-la-familia-rodriguez-2008"
+-  u.category "noticia"
+-  u.user { Factory(:admin) }
+-  u.author "admin"
+-  u.short_body "There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain..."
+-end
+-
+diff --git a/spec/factories/user.rb b/spec/factories/user.rb
+deleted file mode 100644
+index 53050be..0000000
+--- a/spec/factories/user.rb
++++ /dev/null
+@@ -1,47 +0,0 @@
+-#############
+-### Users ###
+-#############
+-Factory.define :visitor, :class => User do |u|
+-  u.first_name 'John'
+-  u.login 'john'
+-  u.email 'john@localhost.local'
+-  u.password 'welcome'
+-  u.password_confirmation 'welcome'
+-  u.salt '622e1d1c910993450952455ce479374d5392aeba'
+-  u.crypted_password '50723e324f13ce37e27e26632ff0218747a2d67f' # welcome
+-  u.admin false
+-end
+-
+-Factory.define :fred, :class => User do |u|
+-  u.first_name 'Fred'
+-  u.login 'fred'
+-  u.email "fred@localhost.local"
+-  u.password 'welcome'
+-  u.password_confirmation 'welcome'
+-  u.salt '622e1d1c910993450952455ce479374d5392aeba'
+-  u.crypted_password '50723e324f13ce37e27e26632ff0218747a2d67f' # welcome
+-  u.admin true
+-end
+-
+-Factory.define :admin, :class => User do |u|
+-  u.first_name 'Admin'
+-  u.login  'admin'
+-  u.email 'admin@localhost.local'
+-  u.password 'welcome'
+-  u.password_confirmation 'welcome'
+-  u.salt '622e1d1c910993450952455ce479374d5392aeba'
+-  u.crypted_password '50723e324f13ce37e27e26632ff0218747a2d67f' # welcome
+-  u.admin true
+-end
+-
+-Factory.define :marcela, :class => User do |u|
+-  u.first_name "marcela"
+-  u.login  'marcela'
+-  u.email 'marcela@localhost.local'
+-  u.password 'welcome'
+-  u.password_confirmation 'welcome'
+-  u.salt '622e1d1c910993450952455ce479374d5392aeba'
+-  u.crypted_password '50723e324f13ce37e27e26632ff0218747a2d67f' # welcome
+-  u.admin false
+-end
+-

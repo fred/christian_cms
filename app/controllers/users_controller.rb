@@ -1,6 +1,9 @@
+# -*- encoding : utf-8 -*-
 require 'digest/sha1'
 class UsersController < ApplicationController
 
+  before_filter :login_required, :only => [ :edit, :update ]
+  
   def index
     if params[:sort]
       order = case params[:sort]
@@ -47,7 +50,7 @@ class UsersController < ApplicationController
     if @user.valid?
       @user.save!
       self.current_user = @user
-      redirect_back_or_default('/')
+      redirect_to @user
       flash[:notice] = "Gracias por registrarse!"
     else
       flash[:notice] = "Verifique los campos abajo corectamente!"
@@ -59,7 +62,7 @@ class UsersController < ApplicationController
   
 
   def show
-    conditions = ["users.approved = ?", true]
+    conditions = ["users.approved = ? OR users.id = ?", true, current_user.id]
     @user = User.find(params[:id],
       :conditions => conditions
     )      

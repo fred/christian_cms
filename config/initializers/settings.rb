@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 begin
   Settings.defaults[:theme] = "toader"
   Settings.defaults[:subtitle] = 'Comunidad Catolica'

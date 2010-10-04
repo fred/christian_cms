@@ -1,6 +1,9 @@
+# -*- encoding : utf-8 -*-
 class MessagesController < ApplicationController
   
-  before_filter :login_required, :only => [ :index, :show, :edit, :update, :destroy ]
+  def index
+    redirect_to :action => "new"
+  end
 
   # GET /messages/new
   # GET /messages/new.xml

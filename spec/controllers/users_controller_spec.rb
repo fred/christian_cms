@@ -1,60 +1,73 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-# Be sure to include AuthenticatedTestHelper in spec/spec_helper.rb instead
-# Then, you can remove it from this and the units test.
-include AuthenticatedTestHelper
-
-describe UsersController do
+describe UsersController, "Not logged in" do
   
-  def setup
+  before(:each) do
     @user = Factory(:visitor)
-    login_as @user
+    @user_valid_attributes = { 
+      :login => "blahblah", 
+      :email => "email@bugus.com", 
+      :password => "password", 
+      :password_confirmation => "password"
+    }
   end
   
-  it 'allows signup' do
-    lambda do
-      create_user
-      response.should be_redirect      
-    end.should change(User, :count).by(1)
-  end
-  
-  it 'requires login on signup' do
-    lambda do
-      create_user(:login => nil)
-      assigns[:user].errors.on(:login).should_not be_nil
-      response.should be_success
-    end.should_not change(User, :count)
-  end
-  
-  it 'requires password on signup' do
-    lambda do
-      create_user(:password => nil)
-      assigns[:user].errors.on(:password).should_not be_nil
-      response.should be_success
-    end.should_not change(User, :count)
-  end
-  
-  it 'requires password confirmation on signup' do
-    lambda do
-      create_user(:password_confirmation => nil)
-      assigns[:user].errors.on(:password_confirmation).should_not be_nil
-      response.should be_success
-    end.should_not change(User, :count)
-  end
-  
-  it 'requires email on signup' do
-    lambda do
-      create_user(:email => nil)
-      assigns[:user].errors.on(:email).should_not be_nil
-      response.should be_success
-    end.should_not change(User, :count)
-  end
-  
-  
-  
-  def create_user(options = {})
-    post :create, :user => { :login => 'quire', :email => 'quire@example.com',
-      :password => 'quire', :password_confirmation => 'quire', :first_name => "quire"}.merge(options)
+  test "should show list of users" do
+    get :index
+    assert_response 200
+    assert_not_nil assigns(:users)
   end
 
+  test "should not show user but redirect to users list" do
+    get :show, :id => @user.id
+    assert_response 302
+    assert_redirected_to users_path
+  end
+
+  test "should not get edit but redirect to login page" do
+    get :edit, :id => @user.id
+    assert_response 302
+    assert_redirected_to new_session_path
+  end
+
+  test "should not update user but redirect to login page" do
+    put :update, :id => @user.id, :user => {}
+    assert_response 302
+    assert_redirected_to new_session_path
+  end
+
+end
+
+
+describe UsersController, "Logged in as normal user" do
+
+  before(:each) do
+    @visitor = Factory(:visitor)
+    login_as(@visitor)
+  end
+
+  test "should get index" do
+    get :index
+    assert_response 200
+    assert_not_nil assigns(:users)
+    assert_not_nil assigns(:current_user)
+  end
+  
+  test "should show user" do
+    get :show, :id => @visitor.id
+    assert_response :success
+    assert_not_nil assigns(:current_user)
+  end
+  
+  test "should get edit" do
+    get :edit
+    assert_response :success
+    assert_not_nil assigns(:current_user)
+  end
+  
+  test "should update user" do
+    put :update, :user => { }
+    assert_redirected_to user_path(@visitor)
+  end
+  
 end

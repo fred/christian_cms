@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class ArticleSweeper < ActionController::Caching::Sweeper
   observe Article, Birthday, Settings, MenuItem, Event
 

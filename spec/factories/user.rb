@@ -10,6 +10,7 @@ Factory.define :visitor, :class => User do |u|
   u.salt '622e1d1c910993450952455ce479374d5392aeba'
   u.crypted_password '50723e324f13ce37e27e26632ff0218747a2d67f' # welcome
   u.admin false
+  u.approved false
 end
 
 Factory.define :fred, :class => User do |u|
@@ -44,4 +45,3 @@ Factory.define :marcela, :class => User do |u|
   u.crypted_password '50723e324f13ce37e27e26632ff0218747a2d67f' # welcome
   u.admin false
 end
-

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Admin::MenuItemsController < Admin::BaseController
   
   # GET /menu_items

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Notifications < ActionMailer::Base
 
   def new_message(message)

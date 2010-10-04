@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Admin::EventsController < Admin::BaseController
   
   # GET /events

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class ArticlesController < ApplicationController
 
   # GET /articles

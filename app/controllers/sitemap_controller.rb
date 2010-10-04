@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class SitemapController < ApplicationController
   def sitemap
     @articles = Article.find(:all, :select => 'id, permalink, updated_at, created_at', :order => "updated_at DESC")

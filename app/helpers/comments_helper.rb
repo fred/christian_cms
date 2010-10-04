@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module CommentsHelper
   
   def user_comment_link(comment)

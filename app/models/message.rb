@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Message < ActiveRecord::Base
   
   # author        : name submitted with the comment
@@ -28,7 +29,9 @@ class Message < ActiveRecord::Base
   
   ### Methods ### 
   def check_spam
-    self.marked_spam = true if self.spam?
+    if Rails.env == "production"
+      self.marked_spam = true if self.spam?
+    end
   end
   
   def deliver_notification

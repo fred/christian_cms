@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'digest/sha1'
 class User < ActiveRecord::Base
   
@@ -33,7 +34,7 @@ class User < ActiveRecord::Base
     :first_name, :middle_name, :last_name, :family_name, :full_name, :display_name,
     :mobile_phone, :home_phone, :office_phone, :address1, :address2, :city, :country,
     :nationality, :birthday, :display_address, :display_name, 
-    :family_role, :civil_state, :sacraments
+    :family_role, :civil_state, :sacraments, :approved
   
   cattr_accessor :current_user
   
@@ -50,8 +51,10 @@ class User < ActiveRecord::Base
     if self.first_name.blank? && self.last_name.blank?
       self.full_name = self.login 
     else
-      self.full_name = self.first_name.to_s + " " + self.middle_name + " " +self.last_name.to_s
+      self.full_name = self.first_name.to_s + " " + self.middle_name.to_s + " " +self.last_name.to_s
+      self.full_name.strip!
     end
+    true
   end
 
   def self.human_attribute_name(attr)

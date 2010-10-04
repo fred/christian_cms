@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Be sure to restart your server when you modify this file
 
 # Uncomment below to force Rails into production mode when
@@ -23,15 +24,23 @@ Rails::Initializer.run do |config|
   # Specify gems that this application depends on. 
   # They can then be installed with "rake gems:install" on new installations.
   # You have to specify the <tt>:lib</tt> option for libraries, where the Gem name (<em>sqlite3-ruby</em>) differs from the file itself (_sqlite3_)
-  config.gem 'will_paginate'
-  config.gem 'mini_magick'
   config.gem 'RedCloth'
   config.gem 'json'
   config.gem "calendar_date_select"
-  config.gem "factory_girl"
   config.gem "ajaxful_rating"
   config.gem 'rakismet', :version => "0.3.6"
   config.gem 'haml'
+  config.gem 'will_paginate', :version => "2.3.15"
+  config.gem 'mini_magick', :version => "1.2.5"
+
+  config.gem "factory_girl"
+  config.gem 'ZenTest', :lib => 'zentest'
+  config.gem 'test-unit', :lib => 'test/unit', :version => '1.2.3'
+  config.gem 'autotest'
+  config.gem 'rspec', :lib => false, :version => '>= 1.3.0'
+  config.gem 'rspec-rails', :lib => false, :version => '>= 1.3.0'
+  config.gem 'thoughtbot-shoulda', :lib => 'shoulda'
+
   # config.gem 'acts-as-taggable-on', :version => "2.0.6"
   
   # These cause problems with irb. Left in for reference

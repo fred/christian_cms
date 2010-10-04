@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Admin::BaseHelper
   
   def approve_link(obj)

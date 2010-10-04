@@ -1,5 +1,5 @@
+# -*- encoding : utf-8 -*-
 # Methods added to this helper will be available to all templates in the application.
-require 'md5'
 module ApplicationHelper
   
   def w3c_date(date)
@@ -92,10 +92,6 @@ module ApplicationHelper
 
   def ajax_spinner_for(id, spinner="spinner.gif")
     "<img src='/images/#{spinner}' style='display:none; vertical-align:middle;' id='#{id.to_s}_spinner'> "
-  end
-
-  def avatar_for(user, size=32)
-    image_tag "http://www.gravatar.com/avatar.php?gravatar_id=#{MD5.md5(user.email)}&rating=PG&size=#{size}", :size => "#{size}x#{size}", :class => 'photo'
   end
 
   def feed_icon_tag(title, url)

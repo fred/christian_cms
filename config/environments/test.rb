@@ -30,3 +30,12 @@ config.action_controller.session = {
   :key    => '_comunidad_catolica_test',
   :secret => '3b876f4c595b875ce969993cf0b96de0b0692c3697271a627f9fad285f2d86807fad36162fee26e365e0020d45abcc1192ded1bca11b0459ac6c62af3465a86f'
 }
+
+begin
+  Settings.defaults[:email] = "fred@localhost"
+  Settings.defaults[:notifications_email] = "fred@localhost"
+  Settings.defaults[:site_email] = "fred@localhost"
+rescue => e
+  puts "Please run pending migrations first. Settings table was not found"
+end
+  

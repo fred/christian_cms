@@ -3,6 +3,8 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 describe Admin::MessagesController do
   
   before(:each) do
+    setting1=Factory(:notifications_email)
+    setting2=Factory(:site_email)
     @admin = Factory(:admin)
     login_as(@admin)
     @message = Factory(:message_one)

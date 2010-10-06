@@ -3,6 +3,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe MessagesController do
   
   before(:each) do
+    setting1=Factory(:notifications_email)
+    setting2=Factory(:site_email)
     @message_one = Factory(:message_one)
     @message_valid_attributes = { 
       :name => "my name", 

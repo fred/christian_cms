@@ -49,7 +49,8 @@ class ApplicationController < ActionController::Base
   
   def admin
     unless authorized_admin?
-      redirect_to "/"
+      store_location
+      redirect_to new_session_path
     end
   end
   
